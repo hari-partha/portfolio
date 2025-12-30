@@ -5,7 +5,6 @@ import { LoadingScreen } from '@/components/LoadingScreen';
 import { HomePage } from '@/components/HomePage';
 import { HoverCard } from '@/components/HoverCard';
 import { HoverTooltip } from '@/components/HoverTooltip';
-import { TileCloud } from '@/components/TileCloud';
 import { Icons } from '@/components/Icons';
 import { InteractionHint } from '@/components/InteractionHint';
 import { useReducedMotion, motion } from 'framer-motion';
@@ -77,7 +76,6 @@ export default function MainPage() {
       {/* 3. Foreground Content Layer */}
       {isExploring && !reduced && (
         <>
-          <TileCloud tileMarkers={tileMarkers} />
           <HoverCard />
           <HoverTooltip />
           <InteractionHint />
@@ -111,7 +109,7 @@ export default function MainPage() {
           >
             <div className="container flex flex-col md:flex-row justify-between items-end gap-12">
               <div className="font-serif">
-                <h2 className="text-5xl mb-4 text-white">The Synthesis</h2>
+                <h2 className="text-5xl mb-4 text-white">Synthesis of Bio & Capital</h2>
                 <p className="font-ui text-sm text-text-secondary max-w-sm leading-relaxed">
                   Exploring the fundamental code of venture and design. Built with Three.js and Framer Motion.
                 </p>
