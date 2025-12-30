@@ -6,6 +6,8 @@ import { HomePage } from '@/components/HomePage';
 import { HoverCard } from '@/components/HoverCard';
 import { HoverTooltip } from '@/components/HoverTooltip';
 import { TileCloud } from '@/components/TileCloud';
+import { Icons } from '@/components/Icons';
+import { InteractionHint } from '@/components/InteractionHint';
 import { useReducedMotion, motion } from 'framer-motion';
 import { useScrollStore } from '@/store/useScrollStore';
 import { sections } from '@/data/sections';
@@ -78,6 +80,7 @@ export default function MainPage() {
           <TileCloud tileMarkers={tileMarkers} />
           <HoverCard />
           <HoverTooltip />
+          <InteractionHint />
         </>
       )}
 
@@ -117,9 +120,15 @@ export default function MainPage() {
               <div className="flex flex-col items-end gap-8 font-ui uppercase tracking-[0.2em] text-[11px]">
                 {/* Socials (Replaces Email) */}
                 <div className="flex gap-12 text-base">
-                  <a href="https://linkedin.com/in/hari-a-parthasarathy" target="_blank" className="text-white hover:text-accent-gold transition-colors hover:scale-110">LI</a>
-                  <a href="https://twitter.com" target="_blank" className="text-white hover:text-accent-gold transition-colors hover:scale-110">TW</a>
-                  <a href="mailto:hari.parthasarathy@berkeley.edu" className="text-white hover:text-accent-gold transition-colors hover:scale-110">EM</a>
+                  <a href="https://linkedin.com/in/hari-a-parthasarathy" target="_blank" className="text-white hover:text-accent-gold transition-colors hover:scale-110">
+                    <Icons.LinkedIn className="w-5 h-5" />
+                  </a>
+                  <a href="tel:+14084427278" className="text-white hover:text-accent-gold transition-colors hover:scale-110">
+                    <Icons.Phone className="w-5 h-5" />
+                  </a>
+                  <a href="mailto:hari.parthasarathy@berkeley.edu" className="text-white hover:text-accent-gold transition-colors hover:scale-110">
+                    <Icons.Email className="w-5 h-5" />
+                  </a>
                 </div>
 
                 {/* Functional Links */}

@@ -10,6 +10,7 @@ export function MolecularHelix() {
     const goldAtomsRef = useRef<THREE.InstancedMesh>(null);
     const bondsMeshRef = useRef<THREE.InstancedMesh>(null);
     const hitboxMeshRef = useRef<THREE.InstancedMesh>(null);
+    const hoverTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
     const {
         isExploring, progress, activeSectionIndex, activeTileIndex, setAtomPosition,
@@ -315,6 +316,14 @@ export function MolecularHelix() {
                     if (!isExploring) return;
                     e.stopPropagation();
 
+                    // CLEAR TIMEOUT immediately to prevent "residual tile" bug
+                    // If we are moving *within* the helix, we don't want the previous 'out' event
+                    // to fire later and clear our state.
+                    if (hoverTimeoutRef.current) {
+                        clearTimeout(hoverTimeoutRef.current);
+                        hoverTimeoutRef.current = null;
+                    }
+
                     // Check if we are hitting a hotspot
                     const instanceId = e.instanceId;
                     if (instanceId !== undefined) {
@@ -336,8 +345,14 @@ export function MolecularHelix() {
                     }
                 }}
                 onPointerOut={() => {
-                    useScrollStore.setState({ hoveredSectionIndex: null, hoveredAtomPosition: null });
                     document.body.style.cursor = 'auto';
+                    // Add grace period
+                    hoverTimeoutRef.current = setTimeout(() => {
+                        const { isHoveringCard } = useScrollStore.getState();
+                        if (!isHoveringCard) {
+                            useScrollStore.setState({ hoveredSectionIndex: null, hoveredAtomPosition: null });
+                        }
+                    }, 300);
                 }}
             >
                 <sphereGeometry args={[1.6, 8, 8]} />

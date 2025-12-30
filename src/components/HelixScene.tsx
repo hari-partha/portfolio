@@ -244,7 +244,7 @@ function SceneContent() {
   );
 }
 
-export function HelixScene({ tileMarkers }: { tileMarkers: number[] }) {
+export function HelixScene({ tileMarkers, eventSource }: { tileMarkers: number[], eventSource?: React.MutableRefObject<HTMLElement | null> }) {
   const progress = useScrollStore((s) => s.progress);
   const shouldHide = progress >= 0.99;
   const [domElement, setDomElement] = useState<HTMLElement | null>(null);
@@ -261,7 +261,7 @@ export function HelixScene({ tileMarkers }: { tileMarkers: number[] }) {
       <Canvas
         dpr={[1, 2]}
         gl={{ antialias: true, alpha: true }}
-        eventSource={domElement ?? undefined}
+        eventSource={eventSource?.current ?? domElement ?? undefined}
         eventPrefix="client"
       >
         <SceneContent />
