@@ -4,8 +4,15 @@ import { Environment, Float, Sparkles, PerspectiveCamera } from '@react-three/dr
 import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader.js';
 import * as THREE from 'three';
 import { Suspense, useMemo, useRef, useState, useEffect } from 'react';
-import { EffectComposer, Bloom, Vignette, DepthOfField, Noise } from '@react-three/postprocessing';
+import { EffectComposer, Bloom, Vignette, DepthOfField as DepthOfFieldImpl, Noise as NoiseImpl } from '@react-three/postprocessing';
 import { useScrollStore } from '@/store/useScrollStore';
+
+import React from 'react';
+
+// Fix for library type definitions
+// Fix for library type definitions
+const Noise = (props: any): any => <NoiseImpl {...props} />;
+const DepthOfField = (props: any): any => <DepthOfFieldImpl {...props} />;
 import { sections } from '@/data/sections';
 import { MolecularHelix } from './MolecularHelix';
 
@@ -221,30 +228,34 @@ function SceneContent() {
         <Bubbles count={60} />
         <Environment preset="studio" />
 
-        <EffectComposer disableNormalPass>
+        <EffectComposer enableNormalPass={false}>
           {/* Subtle, soft bloom - not neon */}
-          <Bloom
-            luminanceThreshold={0.8}
-            mipmapBlur
-            intensity={0.4}
-            radius={0.7}
-          />
-          <Vignette darkness={1.1} offset={0.1} />
-          {/* Film grain for cinematic feel */}
-          <Noise opacity={0.03} />
-          <DepthOfField
-            focusDistance={0}
-            focalLength={0.02}
-            bokehScale={4}
-            height={480}
-          />
+          {(
+            <>
+              <Bloom
+                luminanceThreshold={0.8}
+                mipmapBlur
+                intensity={0.4}
+                radius={0.7}
+              />
+              <Vignette darkness={1.1} offset={0.1} />
+              {/* Film grain for cinematic feel */}
+              <Noise opacity={0.03} />
+              <DepthOfField
+                focusDistance={0}
+                focalLength={0.02}
+                bokehScale={4}
+                height={480}
+              />
+            </>
+          ) as any}
         </EffectComposer>
       </Suspense>
     </>
   );
 }
 
-export function HelixScene({ tileMarkers, eventSource }: { tileMarkers: number[], eventSource?: React.MutableRefObject<HTMLElement | null> }) {
+export function HelixScene({ tileMarkers, eventSource }: { tileMarkers: number[], eventSource?: HTMLElement | null }) {
   const progress = useScrollStore((s) => s.progress);
   const shouldHide = progress >= 0.99;
   const [domElement, setDomElement] = useState<HTMLElement | null>(null);
@@ -261,7 +272,7 @@ export function HelixScene({ tileMarkers, eventSource }: { tileMarkers: number[]
       <Canvas
         dpr={[1, 2]}
         gl={{ antialias: true, alpha: true }}
-        eventSource={eventSource?.current ?? domElement ?? undefined}
+        eventSource={eventSource ?? domElement ?? undefined}
         eventPrefix="client"
       >
         <SceneContent />

@@ -1,5 +1,5 @@
 'use client';
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, useRef } from 'react';
 import { HelixScene } from '@/components/HelixScene';
 import { LoadingScreen } from '@/components/LoadingScreen';
 import { HomePage } from '@/components/HomePage';
@@ -10,7 +10,13 @@ import { InteractionHint } from '@/components/InteractionHint';
 import { useReducedMotion, motion } from 'framer-motion';
 import { useScrollStore } from '@/store/useScrollStore';
 import { sections } from '@/data/sections';
-import { ScrollOrchestrator } from '@/components/ScrollOrchestrator';
+import { Navigation } from '@/components/Navigation';
+import gsap from 'gsap';
+import ScrollTrigger from 'gsap/ScrollTrigger';
+
+if (typeof window !== 'undefined') {
+  gsap.registerPlugin(ScrollTrigger);
+}
 
 function ScrollHint() {
   const progress = useScrollStore((s) => s.progress);
@@ -26,6 +32,63 @@ function ScrollHint() {
         <div className="w-px h-12 bg-white/20" />
       </div>
     </motion.div>
+  );
+}
+
+function ScrollHandler() {
+  const setProgress = useScrollStore((s) => s.setProgress);
+
+  useEffect(() => {
+    // We listen to the main scroll container, but since we are using native scrolling on the body/main,
+    // we can trigger off the spacers container or just the document.
+    // However, the original ScrollOrchestrator used a ref to a wrapper div.
+    // Here we will use the main document scroll.
+
+    let st: ScrollTrigger | null = null;
+
+    const setup = () => {
+      const footer = document.getElementById('footer');
+      const main = document.querySelector('main');
+
+      if (!main) return;
+
+      st = ScrollTrigger.create({
+        trigger: main,
+        start: 'top top',
+        end: footer ? 'top top' : 'bottom bottom',
+        endTrigger: footer || undefined,
+        scrub: 1,
+        onUpdate: (self) => {
+          setProgress(self.progress);
+        }
+      });
+    };
+
+    // Slight delay to ensure DOM is ready
+    const timer = setTimeout(setup, 200);
+
+    return () => {
+      clearTimeout(timer);
+      if (st) st.kill();
+    };
+  }, [setProgress]);
+
+  return null;
+}
+
+function ScrollSpacers() {
+  const blocks = useMemo(() => Array.from({ length: 8 }, (_, i) => ({ id: `block-${i}`, heightVh: 100 })), []);
+
+  return (
+    <div className="relative w-full">
+      {blocks.map((b) => (
+        <section
+          key={b.id}
+          style={{ height: `${b.heightVh}vh` }}
+          className="pointer-events-none"
+        />
+      ))}
+    </div>
   );
 }
 
@@ -95,10 +158,13 @@ export default function MainPage() {
 
       {isExploring && (
         <>
+          <Navigation />
           {/* Main Scroll Container - Pointer Events ENABLED for native scrolling */}
           <main className="relative z-10 w-full overflow-x-hidden">
             <ScrollHint />
-            <ScrollOrchestrator />
+            {/* Inlined Scroll Logic */}
+            <ScrollHandler />
+            <ScrollSpacers />
             {/* Extra scrolling room to allow hovering last sector before footer */}
             <div className="h-[50vh] w-full pointer-events-none" />
           </main>
@@ -136,9 +202,8 @@ export default function MainPage() {
                   <button
                     onClick={() => {
                       window.scrollTo({ top: 0, behavior: 'smooth' });
-                      // Optional: reset logic if needed, but native scroll drives the state
                     }}
-                    className="hover:text-white transition-colors uppercase tracking-[0.2em]"
+                    className="hover:text-white transition-colors uppercase tracking-[0.2em] cursor-pointer"
                   >
                     Back to Top
                   </button>
