@@ -11,10 +11,12 @@ import React from 'react';
 
 // Fix for library type definitions
 // Fix for library type definitions
-const Noise = (props: any): any => <NoiseImpl {...props} />;
-const DepthOfField = (props: any): any => <DepthOfFieldImpl {...props} />;
 import { sections } from '@/data/sections';
 import { MolecularHelix } from './MolecularHelix';
+
+// Fix for library type definitions
+const Noise = (props: any): any => <NoiseImpl {...props} />;
+const DepthOfField = (props: any): any => <DepthOfFieldImpl {...props} />;
 
 // Preload the model
 if (typeof window !== 'undefined') {
