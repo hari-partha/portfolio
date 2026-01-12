@@ -88,18 +88,24 @@ export function LoadingScreen({ onComplete }: { onComplete: () => void }) {
   const [progress, setProgress] = useState(0);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setProgress((prev) => {
-        if (prev >= 100) {
-          clearInterval(interval);
-          setTimeout(onComplete, 1000); // Slight delay for full bar visibility
-          return 100;
-        }
-        return prev + Math.random() * 3;
-      });
-    }, 60);
+    // Slight delay before starting
+    const startDelay = setTimeout(() => {
+      const interval = setInterval(() => {
+        setProgress((prev) => {
+          if (prev >= 100) {
+            clearInterval(interval);
+            setTimeout(onComplete, 1000);
+            return 100;
+          }
+          // Slower increment: 0.5 to 1.5 instead of 0 to 3
+          return prev + (0.5 + Math.random());
+        });
+      }, 100); // Slower interval: 100ms instead of 60ms
 
-    return () => clearInterval(interval);
+      return () => clearInterval(interval);
+    }, 1000); // 1 second delay before loading starts
+
+    return () => clearTimeout(startDelay);
   }, [onComplete]);
 
   return (

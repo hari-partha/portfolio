@@ -148,6 +148,20 @@ function DNAModel() {
       return progress >= s.marker && (!next || progress < next.marker);
     });
 
+    // Dynamic Gold Color Transition
+    // We want the 'goldMaterial' (which is used for the non-highlighted gold strands) 
+    // to match the active section's color theme.
+    if (activeSectionIndex !== -1) {
+      const targetColor = new THREE.Color(sections[activeSectionIndex].color);
+      // Lerp current color to target
+      goldMaterial.color.lerp(targetColor, 0.05);
+      goldMaterial.emissive.lerp(targetColor, 0.05);
+    } else {
+      // Fallback to default gold
+      goldMaterial.color.lerp(new THREE.Color('#ECB365'), 0.05);
+      goldMaterial.emissive.lerp(new THREE.Color('#ECB365'), 0.05);
+    }
+
     meshes.forEach((mesh, i) => {
       const isBasePair = i % 4 === 0;
       const sectionForMesh = Math.floor((i / meshes.length) * sections.length);
@@ -225,7 +239,6 @@ function SceneContent() {
         ) : (
           <MolecularHelix />
         )}
-        <Bubbles count={60} />
         <Environment preset="studio" />
 
         <EffectComposer enableNormalPass={false}>

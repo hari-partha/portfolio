@@ -9,23 +9,25 @@ export function Navigation() {
 
     const handleScrollTo = (marker: number, index: number) => {
         // Calculate target scroll position
-        // We scroll based on the progress marker (0 to 1) relative to total scrollable height
-        // Total scrollable height = body height - window height
         const scrollableHeight = document.documentElement.scrollHeight - window.innerHeight;
-        const targetY = marker * scrollableHeight;
+
+        // Target Y:
+        // If it's the last section (Projects, index === sections.length - 1), 
+        // we scroll all the way to the bottom to ensure full rotation and visibility.
+        let targetY = marker * scrollableHeight;
+
+        if (index === sections.length - 1) {
+            targetY = scrollableHeight;
+        }
 
         window.scrollTo({
             top: targetY,
             behavior: 'smooth'
         });
 
-        // Automatically "open" the tile by setting hover state
-        // We add a small delay to allow scroll to start, or set it immediately
+        // Automatically "open" the tile by setting selected state
         useScrollStore.setState({
             hoveredSectionIndex: index,
-            // We ensure the HoverCard knows we are "hovering" (conceptually) so it doesn't close immediately
-            // However, HoverCard logic relies on isHoveringCard or hoveredSectionIndex.
-            // We'll set hoveredSectionIndex. The HoverCard component checks this.
         });
     };
 

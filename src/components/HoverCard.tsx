@@ -1,6 +1,7 @@
 'use client';
 
 import { motion, AnimatePresence } from 'framer-motion';
+import { useRef } from 'react';
 import { useScrollStore } from '@/store/useScrollStore';
 import { sections } from '@/data/sections';
 
@@ -23,7 +24,7 @@ export function HoverCard() {
                         initial={{ opacity: 0, x: 20, scale: 0.95 }}
                         animate={{ opacity: 1, x: 0, scale: 1 }}
                         exit={{ opacity: 0, x: 20, scale: 0.95 }}
-                        transition={{ duration: 0.3, ease: 'easeOut' }}
+                        transition={{ duration: 0.5, ease: 'easeOut' }}
                         className="fixed right-4 md:right-12 top-1/2 -translate-y-1/2 z-40 w-[min(450px,94vw)]"
                     >
                         {/* Glass Panel */}

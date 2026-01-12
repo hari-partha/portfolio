@@ -122,7 +122,7 @@ export default function MainPage() {
             transition={{ duration: 2, ease: "easeOut" }}
             className="font-serif text-[28vw] whitespace-nowrap select-none tracking-tight"
           >
-            GENOMIC
+            SYNTHESIS
           </motion.h1>
         </div>
       )}
@@ -200,6 +200,7 @@ export default function MainPage() {
                   <a href="#" className="hover:text-white transition-colors">Archive</a>
                   <a href="#" className="hover:text-white transition-colors">Manifesto</a>
                   <button
+                    type="button"
                     onClick={() => {
                       window.scrollTo({ top: 0, behavior: 'smooth' });
                     }}

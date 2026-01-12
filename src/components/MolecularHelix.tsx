@@ -4,6 +4,8 @@ import * as THREE from 'three';
 import { useScrollStore } from '@/store/useScrollStore';
 import { HELIX_CONFIG } from '@/config/helix-config';
 
+import { sections } from '@/data/sections';
+
 export function MolecularHelix() {
     const groupRef = useRef<THREE.Group>(null);
     const whiteAtomsRef = useRef<THREE.InstancedMesh>(null);
@@ -196,6 +198,13 @@ export function MolecularHelix() {
     useFrame((state) => {
         if (!groupRef.current) return;
 
+        // Color Lerp REMOVED - User requested just Gold
+        // const targetColorHex = computedSectionIndex !== -1 ? sections[computedSectionIndex].color : '#ECB365';
+        // const targetColor = new THREE.Color(targetColorHex);
+
+        // goldPulseMaterial.color.lerp(targetColor, 0.05);
+        // goldPulseMaterial.emissive.lerp(targetColor, 0.05);
+
         // Pulse the gold atoms
         const pulse = 1 + Math.sin(state.clock.getElapsedTime() * 3) * 0.3; // 1 to 1.3 intensity
         goldPulseMaterial.emissiveIntensity = 0.5 * pulse;
@@ -338,9 +347,13 @@ export function MolecularHelix() {
                             });
                             document.body.style.cursor = 'pointer';
                         } else {
-                            // We are on the helix, but NOT a hotspot. Clear hover.
-                            useScrollStore.setState({ hoveredSectionIndex: null, hoveredAtomPosition: null });
-                            document.body.style.cursor = 'auto';
+                            // We are on the helix, but NOT a hotspot.
+                            // Only clear if we are NOT currently hovering the card to prevent flickering
+                            const { isHoveringCard } = useScrollStore.getState();
+                            if (!isHoveringCard) {
+                                useScrollStore.setState({ hoveredSectionIndex: null, hoveredAtomPosition: null });
+                                document.body.style.cursor = 'auto';
+                            }
                         }
                     }
                 }}
@@ -352,7 +365,7 @@ export function MolecularHelix() {
                         if (!isHoveringCard) {
                             useScrollStore.setState({ hoveredSectionIndex: null, hoveredAtomPosition: null });
                         }
-                    }, 300);
+                    }, 1000);
                 }}
             >
                 <sphereGeometry args={[1.6, 8, 8]} />
