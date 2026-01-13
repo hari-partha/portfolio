@@ -21,7 +21,7 @@ export function HoverTooltip() {
             >
                 <div className="backdrop-blur-md bg-white/10 border border-white/20 px-4 py-2 rounded-full shadow-[0_0_20px_rgba(236,179,101,0.3)]">
                     <span className="text-xs font-mono tracking-widest text-[#ECB365] uppercase">
-                        Sector {hoveredSectionIndex + 1} // Access Detected
+                        Sector {String(hoveredSectionIndex).padStart(2, '0')} // Access Detected
                     </span>
                 </div>
                 <div className="h-4 w-[1px] bg-gradient-to-b from-[#ECB365] to-transparent"></div>

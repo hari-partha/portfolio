@@ -23,6 +23,8 @@ interface ScrollState {
   setHoveredAtomPosition: (pos: { x: number; y: number } | null) => void;
   isHoveringCard: boolean;
   setHoveringCard: (h: boolean) => void;
+  isLocked: boolean;
+  setLocked: (l: boolean) => void;
 }
 
 export const useScrollStore = create<ScrollState>((set) => ({
@@ -46,4 +48,6 @@ export const useScrollStore = create<ScrollState>((set) => ({
   setHoveredAtomPosition: (pos) => set({ hoveredAtomPosition: pos }),
   isHoveringCard: false,
   setHoveringCard: (h) => set({ isHoveringCard: h }),
+  isLocked: false,
+  setLocked: (l) => set({ isLocked: l }),
 }));

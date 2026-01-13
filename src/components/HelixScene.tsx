@@ -255,17 +255,17 @@ function SceneContent() {
               />
               <Vignette darkness={1.1} offset={0.1} />
               {/* Film grain for cinematic feel */}
-              <Noise opacity={0.03} />
+              {/* <Noise opacity={0.03} />
               <DepthOfField
                 focusDistance={0}
                 focalLength={0.02}
                 bokehScale={4}
                 height={480}
-              />
+              /> */}
             </>
           ) as any}
         </EffectComposer>
-      </Suspense>
+      </Suspense >
     </>
   );
 }

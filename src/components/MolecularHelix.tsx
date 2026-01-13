@@ -385,17 +385,7 @@ export function MolecularHelix() {
                 <primitive object={bondMaterial} />
             </instancedMesh>
 
-            {/* Active Marker Atom (Gold) - Only visible when exploring */}
-            <mesh ref={markerMeshRef} visible={isExploring}>
-                <sphereGeometry args={[0.4, 16, 16]} />
-                <meshPhysicalMaterial
-                    color="#ECB365"
-                    emissive="#ECB365"
-                    emissiveIntensity={2}
-                    roughness={0.2}
-                    metalness={1}
-                />
-            </mesh>
+            {/* Active Marker Atom (Gold) - Removed as per user request */}
         </group>
     );
 }

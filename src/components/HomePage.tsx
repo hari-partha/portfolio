@@ -78,13 +78,13 @@ export function HomePage({ onEnter }: HomePageProps) {
               className="flex flex-col items-start md:items-end gap-8 font-mono text-[11px] tracking-[0.2em] uppercase z-30 pointer-events-auto"
             >
               <div className="flex gap-8">
-                <a href="https://linkedin.com/in/hari-a-parthasarathy" target="_blank" className="text-white/60 hover:text-accent-gold transition-colors hover:scale-110">
+                <a href="https://linkedin.com/in/hari-a-parthasarathy" target="_blank" className="text-white/60 hover:text-accent-gold transition-colors hover:scale-110 p-2">
                   <Icons.LinkedIn className="w-5 h-5" />
                 </a>
-                <a href="tel:+14084427278" className="text-white/60 hover:text-accent-gold transition-colors hover:scale-110">
+                <a href="tel:+14084427278" className="text-white/60 hover:text-accent-gold transition-colors hover:scale-110 p-2">
                   <Icons.Phone className="w-5 h-5" />
                 </a>
-                <a href="mailto:hari.parthasarathy@berkeley.edu" className="text-white/60 hover:text-accent-gold transition-colors hover:scale-110">
+                <a href="https://mail.google.com/mail/?view=cm&fs=1&to=hari.parthasarathy@berkeley.edu" target="_blank" rel="noopener noreferrer" className="text-white/60 hover:text-accent-gold transition-colors hover:scale-110 p-2">
                   <Icons.Email className="w-5 h-5" />
                 </a>
               </div>

@@ -4,7 +4,14 @@ export type Section = {
   marker: number;
   color: string;
   summary?: string;
-  items?: { title: string; subtitle?: string; href?: string; img?: string }[];
+  items?: {
+    title: string;
+    subtitle?: string;
+    description?: string;
+    href?: string;
+    img?: string;
+    subItems?: { title: string; href: string }[];
+  }[];
 };
 
 export const sections: Section[] = [
@@ -12,32 +19,29 @@ export const sections: Section[] = [
     id: 'research',
     title: 'Research Areas',
     marker: 0.1,
-    color: '#ECB365',
-    summary: 'Innovating at the intersection of AI/ML, biotech, and business strategy.',
+    color: '#ECB365', // Gold
+    summary: 'Innovating at the intersection of AI/ML and Space Biosciences.',
     items: [
+      {
+        title: 'NASA OSDR',
+        subtitle: 'Open Science Data Repository Analysis',
+        description: 'Building AI pipelines to analyze the effects of spaceflight on aging and inflammation pathways.',
+        href: 'https://www.nasa.gov/osdr-testimonials/',
+        img: '/img/test_tube_1768202821193.png'
+      },
+      {
+        title: 'NASA NBISC',
+        subtitle: 'Biosciences Internship',
+        description: 'Automated Data Pipelines to Reduce Manual Input; Made Years of Scientific Data Open.',
+        href: 'https://www.nasa.gov/ames/research/space-biosciences',
+        img: '/img/test_tube_1768202821193.png'
+      },
       {
         title: 'Nature Comms Medicine',
         subtitle: 'Co-author, Vol 4, Art 106 (2024)',
-        href: 'https://www.nature.com/ncomms/',
-        img: '/img/crispr.jpg'
-      },
-      {
-        title: 'Renasant Biology',
-        subtitle: 'Computational Bioinformatics Intern',
-        href: 'https://www.renasantbio.com/',
-        img: '/img/opto.jpg'
-      },
-      {
-        title: 'Regel Biotherapeutics',
-        subtitle: 'Bioinformatics Intern',
-        href: 'https://www.regelbio.com/',
-        img: '/img/crispr.jpg'
-      },
-      {
-        title: 'NASA Ames Research Center',
-        subtitle: 'Research Intern (NBISC)',
-        href: 'https://www.nasa.gov/ames',
-        img: '/img/opto.jpg'
+        description: 'Co-authored high-impact paper on CRISPR-Cas9 off-target detection.',
+        href: 'https://www.nature.com/articles/s43856-024-00532-9',
+        img: '/img/test_tube_1768202821193.png'
       },
     ],
   },
@@ -49,22 +53,25 @@ export const sections: Section[] = [
     summary: 'Building and scaling high-impact biotech ventures.',
     items: [
       {
-        title: 'ShellGel',
-        subtitle: 'Cofounder & Head of Business',
-        href: '#',
-        img: '/img/neural.jpg'
+        title: 'Renasant Biology',
+        subtitle: 'Computational Bioinformatics Intern',
+        description: 'Developed pipelines for analyzing single-cell RNA-seq data to optimize drug targets.',
+        href: 'https://www.renasantbio.com/',
+        img: '/img/lightbulb_1768202834112.png'
       },
       {
-        title: 'VTOL at Berkeley',
-        subtitle: 'Cofounder & Business Advisor',
-        href: 'https://vtol.berkeley.edu/',
-        img: '/img/syn.jpg'
+        title: 'Regel Biotherapeutics',
+        subtitle: 'Bioinformatics Intern',
+        description: 'Designed AAV vector plasmids and analyzed sequencing data for gene therapy applications.',
+        href: 'https://regeltherapeutics.com/',
+        img: '/img/lightbulb_1768202834112.png'
       },
       {
         title: 'Synkrino Biotherapeutics',
         subtitle: 'Data Engineering Intern',
-        href: 'https://www.synkrino.com/',
-        img: '/img/neural.jpg'
+        description: 'Built Data Preprocessing Tools for Synkrino\'s AI Platform; 20+ Unique Ulcerative Colitis Targets Identified.',
+        href: 'https://synkrino.dev/',
+        img: '/img/lightbulb_1768202834112.png'
       },
     ],
   },
@@ -73,43 +80,41 @@ export const sections: Section[] = [
     title: 'Venture Capital',
     marker: 0.5,
     color: '#8b5cf6', // Violet
-    summary: 'Investing in the next generation of life-science founders.',
+    summary: 'Sourcing and supporting the next generation of founders.',
     items: [
-      {
-        title: 'Daxe',
-        subtitle: 'Enterprise AI for RAG Solutions',
-        href: 'https://daxe.ai/',
-        img: '/img/vc.jpg'
-      },
-      {
-        title: 'Code Blue AI',
-        subtitle: 'Stroke Detection',
-        href: 'https://www.code-blue.ai/',
-        img: '/img/vc.jpg'
-      },
-      {
-        title: 'Ilume Tech',
-        subtitle: 'Personalised Pet Health',
-        href: 'https://us-shop.weareilume.com/',
-        img: '/img/vc.jpg'
-      },
-      {
-        title: 'Stratify AI',
-        subtitle: 'AI-Powered User Research',
-        href: 'https://www.trystratify.com/',
-        img: '/img/vc.jpg'
-      },
-      {
-        title: 'HOPO Therapeutics',
-        subtitle: 'Heavy Metal Chelation',
-        href: 'https://www.hopotx.com/',
-        img: '/img/vc.jpg'
-      },
       {
         title: 'Clear Ventures',
         subtitle: 'Deeptech Fellow',
+        description: 'Deeptech Fellow specializing in AI x Bio investment theses and sourcing.',
         href: 'https://www.clear.ventures/',
-        img: '/img/vc.jpg'
+        img: '/img/chart_1768202847065.png'
+      },
+      {
+        title: 'Draper Venture Network',
+        subtitle: 'Venture Scout',
+        description: 'Scouting high-potential startups and aiding in fellowship development.',
+        href: 'https://drapernetwork.com/',
+        img: '/img/chart_1768202847065.png'
+      },
+      {
+        title: 'ORCA Network',
+        subtitle: 'Venture Fellow',
+        description: 'Spearheaded the expansion of the fellows program and led GTM strategies.',
+        href: 'https://www.orcanetwork.com/',
+        img: '/img/chart_1768202847065.png'
+      },
+      {
+        title: 'Companies of Interest',
+        subtitle: 'Sourced Companies',
+        description: 'A curated list of high-potential startups sourced and evaluated.',
+        img: '/img/chart_1768202847065.png',
+        subItems: [
+          { title: 'Daxe - Enterprise AI for RAG', href: 'https://daxe.ai/' },
+          { title: 'HOPO Tx - Heavy Metal Chelation', href: 'https://www.hopotx.com/' },
+          { title: 'Code Blue AI - Stroke Detection', href: 'https://www.code-blue.ai/' },
+          { title: 'Stratify AI - User Research Platform', href: 'https://www.trystratify.com/' },
+          { title: 'GRU - Moon Hotel', href: 'https://gru.space' },
+        ]
       },
     ],
   },
@@ -120,10 +125,30 @@ export const sections: Section[] = [
     color: '#10b981', // Emerald
     summary: 'Creative pursuits outside the lab.',
     items: [
-      { title: 'Indian Classical Music', subtitle: 'Performer', img: '/img/art.jpg' },
-      { title: 'EDM Fusion', subtitle: 'Producer', img: '/img/art.jpg' },
-      { title: 'Origami', subtitle: 'Artist', img: '/img/mount.jpg' },
-      { title: 'Mountaineering', subtitle: 'Alpinism', img: '/img/mount.jpg' },
+      {
+        title: 'Travel & Photography',
+        subtitle: 'Explorer',
+        description: 'Capturing landscapes and cultures from around the globe.',
+        img: '/img/lightbulb_1768202834112.png'
+      },
+      {
+        title: 'Sci-Fi & Cinema',
+        subtitle: 'Narrative Explorer',
+        description: 'Analyzing cinematography and exploring future narratives through film and literature.',
+        img: '/img/test_tube_1768202821193.png'
+      },
+      {
+        title: 'Trivia Competitor',
+        subtitle: 'Facts & Logic',
+        description: 'Collecting random facts and competing in trivia nights.',
+        img: '/img/chart_1768202847065.png'
+      },
+      {
+        title: 'Music Production',
+        subtitle: 'Fusion',
+        description: 'Mixing electronic beats with classical Indian melodies.',
+        img: '/img/gear_1768202859954.png'
+      },
     ],
   },
   {
@@ -134,16 +159,25 @@ export const sections: Section[] = [
     summary: 'Hacking on fun ideas and experiments.',
     items: [
       {
-        title: 'MET Strategy Group',
-        subtitle: 'Financial & Business Consultant',
-        href: 'https://met.berkeley.edu/',
-        img: '/img/port.jpg'
+        title: 'VTOL at Berkeley',
+        subtitle: 'Vertical Flight Club',
+        description: 'Cofounded the student organization dedicated to vertical takeoff and landing aircraft.',
+        href: 'https://vtol.berkeley.edu/',
+        img: '/img/gear_1768202859954.png'
       },
       {
         title: 'MET Student Board',
-        subtitle: 'Executive Board Member',
+        subtitle: 'Strategy Group Lead',
+        description: 'Provided strategic consulting services to tech clients and startups.',
         href: 'https://met.berkeley.edu/',
-        img: '/img/port.jpg'
+        img: '/img/gear_1768202859954.png'
+      },
+      {
+        title: 'ShellGel',
+        subtitle: 'Marine Bioreactor Co-founder',
+        description: 'Developed a novel bioreactor design for sustainable marine compound production.',
+        href: '#',
+        img: '/img/gear_1768202859954.png'
       },
     ],
   },

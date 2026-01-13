@@ -25,9 +25,10 @@ export function Navigation() {
             behavior: 'smooth'
         });
 
-        // Automatically "open" the tile by setting selected state
+        // Automatically "open" and LOCK the tile so it stays up
         useScrollStore.setState({
             hoveredSectionIndex: index,
+            isLocked: true
         });
     };
 
