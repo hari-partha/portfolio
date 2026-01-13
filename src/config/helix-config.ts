@@ -3,7 +3,7 @@ export const HELIX_CONFIG = {
     radius: 2.5, // Increased slightly for better spread
     risePerBasePair: 0.8, // Slightly taller
     twistPerBasePair: Math.PI / 8, // 22.5 degrees twist
-    pairs: 120, // Increased to extend scroll range for final section
+    pairs: 150, // Increased to extend scroll range for final Library section
 
     // Animation / Scroll
     scrollRotationTurns: 3, // Restored Asimovian speed

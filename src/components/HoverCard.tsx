@@ -28,7 +28,9 @@ export function HoverCard() {
                         animate={{ opacity: 1, x: 0, scale: 1 }}
                         exit={{ opacity: 0, x: 20, scale: 0.95 }}
                         transition={{ duration: 0.5, ease: 'easeOut' }}
-                        className="fixed right-4 md:right-12 top-1/2 -translate-y-1/2 z-40 w-[min(450px,94vw)] pointer-events-auto"
+                        className="fixed md:right-12 md:top-1/2 md:-translate-y-1/2 md:w-[min(450px,94vw)] 
+                                   bottom-0 left-0 w-full rounded-t-2xl md:rounded-lg
+                                   z-40 pointer-events-auto"
                     >
                         {/* Glass Panel */}
                         <div className="bg-bg-dark-teal/90 backdrop-blur-xl border border-white/10 shadow-2xl overflow-hidden relative group">
@@ -71,7 +73,7 @@ export function HoverCard() {
                             </div>
 
                             {/* Items Grid */}
-                            <div className="p-8 pt-0 flex flex-col gap-4">
+                            <div className="p-8 pt-0 flex flex-col gap-4 max-h-[50vh] overflow-y-auto custom-scrollbar md:max-h-none md:overflow-visible">
                                 {activeSection.items?.map((item, i) => (
                                     <div key={i}>
                                         {/* Dropdown / Sub-items logic */}

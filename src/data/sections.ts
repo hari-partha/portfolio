@@ -181,4 +181,40 @@ export const sections: Section[] = [
       },
     ],
   },
+  {
+    id: 'library',
+    title: 'The Library',
+    marker: 1.1,
+    color: '#818cf8', // Indigo
+    summary: 'Curated collection of influential narratives and media.',
+    items: [
+      {
+        title: 'Science Fiction Books',
+        subtitle: 'Influential Reads',
+        description: 'Stories that have shaped my perspective on technology and humanity.',
+        img: '/img/test_tube_1768202821193.png',
+        subItems: [
+          { title: 'Dune', href: 'https://en.wikipedia.org/wiki/Dune_(novel)' },
+          { title: 'Three-Body Problem', href: 'https://en.wikipedia.org/wiki/The_Three-Body_Problem_(novel)' },
+          { title: 'Red Planet', href: 'https://en.wikipedia.org/wiki/Red_Planet_(novel)' },
+          { title: 'Caves of Steel', href: 'https://en.wikipedia.org/wiki/The_Caves_of_Steel' },
+          { title: 'Fantastic Voyage', href: 'https://en.wikipedia.org/wiki/Fantastic_Voyage' },
+        ]
+      },
+      {
+        title: 'Feature Films',
+        subtitle: 'Cinematic Inspirations',
+        description: 'Films that explore complex scientific and philosophical themes.',
+        img: '/img/gear_1768202859954.png',
+        subItems: [
+          { title: 'Interstellar', href: 'https://www.imdb.com/title/tt0816692/' },
+          { title: 'Inception', href: 'https://www.imdb.com/title/tt1375666/' },
+          { title: 'Tenet', href: 'https://www.imdb.com/title/tt6723592/' },
+          { title: 'Avatar', href: 'https://www.imdb.com/title/tt0499549/' },
+          { title: 'Arrival', href: 'https://www.imdb.com/title/tt2543164/' },
+          { title: 'Coherence', href: 'https://www.imdb.com/title/tt2866360/' },
+        ]
+      },
+    ],
+  },
 ];

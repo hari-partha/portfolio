@@ -32,7 +32,7 @@ export function HomePage({ onEnter }: HomePageProps) {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="z-30 pointer-events-auto"
           >
-            <div className="font-serif text-2xl tracking-[0.05em] uppercase leading-none font-light">
+            <div className="font-serif text-xl md:text-2xl tracking-[0.05em] uppercase leading-none font-light">
               <span className="block opacity-90">Hari</span>
               <span className="block text-accent-gold font-normal">Parthasarathy</span>
             </div>
@@ -46,10 +46,10 @@ export function HomePage({ onEnter }: HomePageProps) {
               initial={{ opacity: 0, x: -30 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 1, delay: 0.4 }}
-              className="max-w-xl z-30 pointer-events-auto"
+              className="max-w-xl z-30 pointer-events-auto bg-black/20 backdrop-blur-sm rounded-xl p-6 -ml-6 md:ml-0 md:bg-transparent md:backdrop-blur-none"
             >
-              <div className="w-16 h-px bg-accent-gold/50 mb-8" />
-              <p className="font-sans text-base text-text-secondary leading-loose mb-12 font-light tracking-wide">
+              <div className="w-16 h-px bg-accent-gold/50 mb-6 md:mb-8" />
+              <p className="font-sans text-sm md:text-base text-text-secondary leading-loose mb-8 md:mb-12 font-light tracking-wide">
                 Welcome to my portfolio. Mapping the intersection of <span className="text-white hover:text-accent-gold transition-colors duration-300">biotechnology</span>, <span className="text-white hover:text-accent-gold transition-colors duration-300">venture capital</span>, and <span className="text-white hover:text-accent-gold transition-colors duration-300">design</span> through the lens of genetic transcription and systemic evolution.
               </p>
 
@@ -60,12 +60,12 @@ export function HomePage({ onEnter }: HomePageProps) {
                 transition={{ duration: 0.4 }}
               >
                 <div className="flex items-center gap-4">
-                  <span className="font-serif text-5xl italic tracking-wide text-white group-hover:text-accent-gold transition-colors duration-500">
+                  <span className="font-serif text-3xl md:text-5xl italic tracking-wide text-white group-hover:text-accent-gold transition-colors duration-500">
                     Explore the Genome
                   </span>
                   <span className="opacity-0 group-hover:opacity-100 transition-opacity duration-500 text-accent-gold text-2xl">→</span>
                 </div>
-                <span className="text-xs font-mono uppercase tracking-[0.2em] text-white/50 group-hover:text-accent-gold/80 transition-colors">Portfolio Unlocked</span>
+                <span className="text-[10px] md:text-xs font-mono uppercase tracking-[0.2em] text-white/50 group-hover:text-accent-gold/80 transition-colors">Portfolio Unlocked</span>
                 <div className="h-px w-12 bg-white/30 group-hover:w-full group-hover:bg-accent-gold transition-all duration-700 ease-in-out mt-1" />
               </motion.button>
             </motion.div>

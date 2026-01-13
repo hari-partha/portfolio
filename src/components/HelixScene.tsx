@@ -186,22 +186,23 @@ function DNAModel() {
 }
 
 function SceneContent() {
-  const { progress, isExploring, isLoading } = useScrollStore();
+  const { progress, isExploring, isLoading, isMobile } = useScrollStore();
   const cameraRef = useRef<THREE.PerspectiveCamera>(null);
 
   useFrame(() => {
     if (!cameraRef.current) return;
 
     if (isLoading) {
-      cameraRef.current.position.lerp(new THREE.Vector3(0, 0, 10), 0.05);
+      cameraRef.current.position.lerp(new THREE.Vector3(0, 0, isMobile ? 15 : 10), 0.05);
       cameraRef.current.lookAt(0, 0, 0);
     } else if (!isExploring) {
-      // Landing: Wide view
-      cameraRef.current.position.lerp(new THREE.Vector3(0, 0, 15), 0.05);
+      // Landing: Wide view - Push back to 30 on mobile to clear text
+      cameraRef.current.position.lerp(new THREE.Vector3(0, 0, isMobile ? 30 : 15), 0.05);
       cameraRef.current.lookAt(0, 0, 0);
     } else {
       // Exploration: Closer view
-      const targetPos = new THREE.Vector3(0, 0, 15);
+      // On mobile, keep it further back (20) so tiles don't overlap too much
+      const targetPos = new THREE.Vector3(0, 0, isMobile ? 20 : 15);
       cameraRef.current.position.lerp(targetPos, 0.05);
     }
   });

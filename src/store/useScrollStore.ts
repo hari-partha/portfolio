@@ -25,6 +25,8 @@ interface ScrollState {
   setHoveringCard: (h: boolean) => void;
   isLocked: boolean;
   setLocked: (l: boolean) => void;
+  isMobile: boolean;
+  setIsMobile: (m: boolean) => void;
 }
 
 export const useScrollStore = create<ScrollState>((set) => ({
@@ -50,4 +52,6 @@ export const useScrollStore = create<ScrollState>((set) => ({
   setHoveringCard: (h) => set({ isHoveringCard: h }),
   isLocked: false,
   setLocked: (l) => set({ isLocked: l }),
+  isMobile: false,
+  setIsMobile: (m) => set({ isMobile: m }),
 }));

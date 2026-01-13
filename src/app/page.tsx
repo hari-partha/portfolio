@@ -93,8 +93,16 @@ function ScrollSpacers() {
 }
 
 export default function MainPage() {
-  const { isExploring, setExploring, setProgress, isLoading, setLoading } = useScrollStore();
+  const { isExploring, setExploring, setProgress, isLoading, setLoading, setIsMobile } = useScrollStore();
   const reduced = useReducedMotion();
+
+  // Mobile Detection
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, [setIsMobile]);
 
   // Ref for the main container to act as the event source for 3D interaction
   const containerRef = useState<HTMLDivElement | null>(null);
