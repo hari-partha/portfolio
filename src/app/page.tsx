@@ -168,7 +168,7 @@ export default function MainPage() {
         <>
           <Navigation />
           {/* Main Scroll Container - Pointer Events ENABLED for native scrolling */}
-          <main className="relative z-10 w-full overflow-x-hidden">
+          <main className="relative z-10 w-full overflow-x-hidden pointer-events-none">
             <ScrollHint />
             {/* Inlined Scroll Logic */}
             <ScrollHandler />
