@@ -290,7 +290,7 @@ export function HelixScene({ tileMarkers, eventSource }: { tileMarkers: number[]
         gl={{ antialias: true, alpha: true }}
         eventSource={eventSource ?? domElement ?? undefined}
         eventPrefix="client"
-        style={{ touchAction: 'pan-y' }}
+        style={{ touchAction: 'pan-y', pointerEvents: 'auto' }}
       >
         <SceneContent />
       </Canvas>

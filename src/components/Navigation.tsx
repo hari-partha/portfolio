@@ -39,7 +39,7 @@ export function Navigation() {
             initial={{ y: -50, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.8, delay: 0.5 }}
-            className="fixed top-6 left-1/2 -translate-x-1/2 z-50 pointer-events-auto flex items-center gap-4 w-full justify-center px-4"
+            className="fixed top-6 left-1/2 -translate-x-1/2 z-50 pointer-events-none flex items-center gap-4 w-full justify-center px-4"
         >
             {/* Back to Landing Button */}
             <button
@@ -47,7 +47,7 @@ export function Navigation() {
                     useScrollStore.setState({ isExploring: false, progress: 0 });
                     window.scrollTo({ top: 0, behavior: 'auto' });
                 }}
-                className="hidden md:flex absolute left-8 top-1/2 -translate-y-1/2 items-center gap-2 text-white/50 hover:text-accent-gold transition-colors group"
+                className="hidden md:flex absolute left-8 top-1/2 -translate-y-1/2 items-center gap-2 text-white/50 hover:text-accent-gold transition-colors group pointer-events-auto"
             >
                 <span className="text-xl">←</span>
                 <span className="font-ui text-[10px] uppercase tracking-[0.2em] opacity-0 group-hover:opacity-100 transition-opacity -translate-x-2 group-hover:translate-x-0">Orbit</span>
@@ -59,12 +59,12 @@ export function Navigation() {
                     useScrollStore.setState({ isExploring: false, progress: 0 });
                     window.scrollTo({ top: 0, behavior: 'auto' });
                 }}
-                className="md:hidden absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-black/40 backdrop-blur-md rounded-full flex items-center justify-center text-white/50 border border-white/10 active:scale-95 transition-transform"
+                className="md:hidden absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-black/40 backdrop-blur-md rounded-full flex items-center justify-center text-white/50 border border-white/10 active:scale-95 transition-transform pointer-events-auto"
             >
                 ←
             </button>
 
-            <div className="bg-bg-dark-teal/40 backdrop-blur-xl border border-white/10 rounded-full px-8 py-3 shadow-2xl flex gap-8 overflow-x-auto max-w-[90vw] md:max-w-none no-scrollbar">
+            <div className="bg-bg-dark-teal/40 backdrop-blur-xl border border-white/10 rounded-full px-8 py-3 shadow-2xl flex gap-8 overflow-x-auto max-w-[90vw] md:max-w-none no-scrollbar pointer-events-auto">
                 {sections.map((section, i) => (
                     <button
                         key={section.id}
