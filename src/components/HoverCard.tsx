@@ -30,7 +30,7 @@ export function HoverCard() {
                         transition={{ duration: 0.5, ease: 'easeOut' }}
                         className="fixed md:right-12 md:top-1/2 md:-translate-y-1/2 md:w-[min(450px,94vw)] 
                                    bottom-0 left-0 w-full rounded-t-2xl md:rounded-lg
-                                   z-40 pointer-events-none"
+                                   z-50 pointer-events-none"
                     >
                         {/* Glass Panel */}
                         <div className="bg-bg-dark-teal/90 backdrop-blur-xl border border-white/10 shadow-2xl overflow-hidden relative group pointer-events-auto">

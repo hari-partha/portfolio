@@ -193,7 +193,7 @@ export function MolecularHelix() {
 
 
     // --- TRACKING LOGIC ---
-    const markerMeshRef = useRef<THREE.Mesh>(null);
+
 
     useFrame((state) => {
         if (!groupRef.current) return;
@@ -275,22 +275,13 @@ export function MolecularHelix() {
                 return;
             }
 
-            // Get local position from matrix
-            const position = new THREE.Vector3();
-            position.setFromMatrixPosition(matrix);
-
-            // Convert to World Position
-            position.applyMatrix4(groupRef.current.matrixWorld);
-
-            // Move Marker Mesh (Visual Debug + Cool Effect)
-            if (markerMeshRef.current) {
-                markerMeshRef.current.position.copy(position);
-            }
-
             // Project to Screen
-            position.project(state.camera);
-            const x = (position.x * .5 + .5) * state.size.width;
-            const y = (position.y * -.5 + .5) * state.size.height;
+            const vector = new THREE.Vector3();
+            vector.setFromMatrixPosition(matrix);
+            vector.applyMatrix4(groupRef.current.matrixWorld);
+            vector.project(state.camera);
+            const x = (vector.x * .5 + .5) * state.size.width;
+            const y = (vector.y * -.5 + .5) * state.size.height;
 
             setAtomPosition({ x, y });
         }
