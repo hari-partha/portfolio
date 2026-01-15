@@ -19,6 +19,9 @@ export function MolecularHelix() {
         setHoveredSectionIndex, setHoveredAtomPosition, isMobile
     } = useScrollStore();
 
+    // Debounce Ref for Mobile
+    const lastScrollUpdateRef = useRef<number>(0);
+
     // Define 5 Hotspots (clusters of base pairs)
     // HELIX_CONFIG.pairs is usually around 100? Let's check or assume.
     // We'll distribute them evenly.
@@ -287,13 +290,19 @@ export function MolecularHelix() {
         }
 
         // --- MOBILE AUTO-TRIGGER ---
+        // --- MOBILE AUTO-TRIGGER ---
         if (isMobile && isExploring && activeSectionIndex !== -1) {
             // Deduplicate state updates to prevent render spam/scroll jank
-            const currentHover = useScrollStore.getState().hoveredSectionIndex;
-            if (currentHover !== activeSectionIndex) {
-                useScrollStore.setState({
-                    hoveredSectionIndex: activeSectionIndex
-                });
+            // Throttle to every 100ms
+            const now = Date.now();
+            if (now - lastScrollUpdateRef.current > 100) {
+                const currentHover = useScrollStore.getState().hoveredSectionIndex;
+                if (currentHover !== activeSectionIndex) {
+                    useScrollStore.setState({
+                        hoveredSectionIndex: activeSectionIndex
+                    });
+                    lastScrollUpdateRef.current = now;
+                }
             }
         }
     });
@@ -314,6 +323,7 @@ export function MolecularHelix() {
             <instancedMesh
                 ref={goldAtomsRef}
                 args={[undefined, undefined, atomTransforms.length]}
+                visible={isExploring} // FIX: Hide on landing to remove "Yellow Artifact"
             >
                 <sphereGeometry args={[0.32, 16, 16]} />
                 <primitive object={goldPulseMaterial} />
@@ -324,6 +334,7 @@ export function MolecularHelix() {
                 ref={hitboxMeshRef} // Attached Ref
                 args={[undefined, undefined, atomTransforms.length]}
                 onPointerMove={(e) => {
+                    console.log('Hitbox Move', e.instanceId); // DEBUG
                     if (!isExploring) return;
                     e.stopPropagation();
 
@@ -342,6 +353,7 @@ export function MolecularHelix() {
                         const hotspot = HOTSPOTS.find(h => basePairIndex >= h.startPair && basePairIndex <= h.endPair);
 
                         if (hotspot) {
+                            console.log('Hovering Hotspot:', hotspot.sectionIndex); // DEBUG
                             // Store hover state
                             useScrollStore.setState({
                                 hoveredSectionIndex: hotspot.sectionIndex,
@@ -360,6 +372,7 @@ export function MolecularHelix() {
                     }
                 }}
                 onPointerOut={() => {
+                    console.log('Hitbox Out'); // DEBUG
                     document.body.style.cursor = 'auto';
                     // Add grace period
                     hoverTimeoutRef.current = setTimeout(() => {

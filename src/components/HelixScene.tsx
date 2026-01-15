@@ -26,7 +26,7 @@ if (typeof window !== 'undefined') {
 function Bubbles({ count = 20 }) {
   return (
     <group>
-      <Sparkles count={count} scale={10} size={1} speed={0.4} opacity={0.2} color="#ECB365" />
+      <Sparkles count={count} scale={10} size={1} speed={0.4} opacity={0.2} color="#FFFFFF" />
       <Sparkles count={count * 2} scale={15} size={0.5} speed={0.2} opacity={0.1} color="#FFFFFF" />
     </group>
   );
@@ -46,7 +46,7 @@ function MiniHelix() {
       const x = Math.cos(angle) * 1.8;
       const y = (i - count / 2) * 0.2;
       const z = Math.sin(angle) * 1.8;
-      s.push({ pos: [x, y, z] as [number, number, number], color: '#ECB365' });
+      s.push({ pos: [x, y, z] as [number, number, number], color: '#FFFFFF' });
       s.push({ pos: [Math.cos(angle + Math.PI) * 1.8, y, Math.sin(angle + Math.PI) * 1.8] as [number, number, number], color: '#FFFFFF' });
     }
     return s;

@@ -136,12 +136,17 @@ export default function MainPage() {
       )}
 
       {/* 2. Unified 3D Layer - Always present to maintain WebGL context */}
+      {/* 2. Unified 3D Layer - Always present to maintain WebGL context */}
       {/* Pass the container ref as the event source */}
-      {!reduced && <HelixScene tileMarkers={tileMarkers} eventSource={containerRef[0]} />}
+      {!reduced && (
+        <div className="fixed inset-0 z-0">
+          <HelixScene tileMarkers={tileMarkers} eventSource={containerRef[0]} />
+        </div>
+      )}
 
-      {/* Cinematic Vignette Overlay (Contrast Fix) */}
+      {/* Cinematic Vignette Overlay (Contrast Fix) - NOW POINTER EVENTS NONE */}
       <div
-        className="fixed bottom-0 left-0 w-full h-[40vh] bg-gradient-to-t from-bg-dark-teal via-bg-dark-teal/60 to-transparent pointer-events-none z-[1]"
+        className="fixed bottom-0 left-0 w-full h-[40vh] bg-gradient-to-t from-bg-dark-teal via-bg-dark-teal/60 to-transparent pointer-events-none z-10"
       />
 
       {/* 3. Foreground Content Layer */}

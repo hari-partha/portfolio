@@ -73,7 +73,7 @@ export function HoverCard() {
                             </div>
 
                             {/* Items Grid */}
-                            <div className="p-8 pt-0 pb-8 flex flex-col gap-4 max-h-[50vh] overflow-y-auto custom-scrollbar md:max-h-[70vh] overscroll-contain">
+                            <div className="p-8 pt-0 pb-8 flex flex-col gap-4 max-h-[60vh] md:max-h-[75vh] overflow-y-auto overscroll-contain custom-scrollbar">
                                 {activeSection.items?.map((item, i) => (
                                     <div key={i}>
                                         {/* Dropdown / Sub-items logic */}
