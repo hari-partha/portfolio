@@ -285,109 +285,115 @@ export function MolecularHelix() {
 
             setAtomPosition({ x, y });
         }
-        setAtomPosition({ x, y });
-    }
 
         // --- MOBILE AUTO-TRIGGER ---
         if (isMobile && isExploring && activeSectionIndex !== -1) {
-        // Automatically hover the active section if we are scrolling through it
-        // This replaces the need for clicking or hovering on mobile
-        useScrollStore.setState({
-            hoveredSectionIndex: activeSectionIndex
-        });
-    }
-});
+            // Deduplicate state updates to prevent render spam/scroll jank
+            const currentHover = useScrollStore.getState().hoveredSectionIndex;
+            if (currentHover !== activeSectionIndex) {
+                useScrollStore.setState({
+                    hoveredSectionIndex: activeSectionIndex
+                });
+            }
+        }
+    });
 
 
-return (
-    <group ref={groupRef}>
-        {/* White Atoms (Standard) */}
-        <instancedMesh
-            ref={whiteAtomsRef}
-            args={[undefined, undefined, atomTransforms.length]} // Max count, will be less usually
-        >
-            <sphereGeometry args={[0.32, 16, 16]} />
-            <primitive object={atomMaterial} />
-        </instancedMesh>
+    return (
+        <group ref={groupRef}>
+            {/* White Atoms (Standard) */}
+            <instancedMesh
+                ref={whiteAtomsRef}
+                args={[undefined, undefined, atomTransforms.length]} // Max count, will be less usually
+            >
+                <sphereGeometry args={[0.32, 16, 16]} />
+                <primitive object={atomMaterial} />
+            </instancedMesh>
 
-        {/* Gold Atoms (Hotspots - Pulsing) */}
-        <instancedMesh
-            ref={goldAtomsRef}
-            args={[undefined, undefined, atomTransforms.length]}
-        >
-            <sphereGeometry args={[0.32, 16, 16]} />
-            <primitive object={goldPulseMaterial} />
-        </instancedMesh>
+            {/* Gold Atoms (Hotspots - Pulsing) */}
+            <instancedMesh
+                ref={goldAtomsRef}
+                args={[undefined, undefined, atomTransforms.length]}
+            >
+                <sphereGeometry args={[0.32, 16, 16]} />
+                <primitive object={goldPulseMaterial} />
+            </instancedMesh>
 
-        {/* Hit Box Layer for Interaction (Transparent but captures events) */}
-        <instancedMesh
-            ref={hitboxMeshRef} // Attached Ref
-            args={[undefined, undefined, atomTransforms.length]}
-            onPointerMove={(e) => {
-                if (!isExploring) return;
-                e.stopPropagation();
+            {/* Hit Box Layer for Interaction (Transparent but captures events) */}
+            <instancedMesh
+                ref={hitboxMeshRef} // Attached Ref
+                args={[undefined, undefined, atomTransforms.length]}
+                onPointerMove={(e) => {
+                    if (!isExploring) return;
+                    e.stopPropagation();
 
-                // CLEAR TIMEOUT immediately to prevent "residual tile" bug
-                // If we are moving *within* the helix, we don't want the previous 'out' event
-                // to fire later and clear our state.
-                if (hoverTimeoutRef.current) {
-                    clearTimeout(hoverTimeoutRef.current);
-                    hoverTimeoutRef.current = null;
-                }
+                    // CLEAR TIMEOUT immediately to prevent "residual tile" bug
+                    // If we are moving *within* the helix, we don't want the previous 'out' event
+                    // to fire later and clear our state.
+                    if (hoverTimeoutRef.current) {
+                        clearTimeout(hoverTimeoutRef.current);
+                        hoverTimeoutRef.current = null;
+                    }
 
-                // Check if we are hitting a hotspot
-                const instanceId = e.instanceId;
-                if (instanceId !== undefined) {
-                    const basePairIndex = Math.floor(instanceId / 4);
-                    const hotspot = HOTSPOTS.find(h => basePairIndex >= h.startPair && basePairIndex <= h.endPair);
+                    // Check if we are hitting a hotspot
+                    const instanceId = e.instanceId;
+                    if (instanceId !== undefined) {
+                        const basePairIndex = Math.floor(instanceId / 4);
+                        const hotspot = HOTSPOTS.find(h => basePairIndex >= h.startPair && basePairIndex <= h.endPair);
 
-                    if (hotspot) {
-                        // Store hover state
-                        useScrollStore.setState({
-                            hoveredSectionIndex: hotspot.sectionIndex,
-                            hoveredAtomPosition: { x: e.clientX, y: e.clientY }
-                        });
-                        document.body.style.cursor = 'pointer';
-                    } else {
-                        // We are on the helix, but NOT a hotspot.
-                        // Only clear if we are NOT currently hovering the card to prevent flickering
+                        if (hotspot) {
+                            // Store hover state
+                            useScrollStore.setState({
+                                hoveredSectionIndex: hotspot.sectionIndex,
+                                hoveredAtomPosition: { x: e.clientX, y: e.clientY }
+                            });
+                            document.body.style.cursor = 'pointer';
+                        } else {
+                            // We are on the helix, but NOT a hotspot.
+                            // Only clear if we are NOT currently hovering the card to prevent flickering
+                            const { isHoveringCard } = useScrollStore.getState();
+                            if (!isHoveringCard) {
+                                useScrollStore.setState({ hoveredSectionIndex: null, hoveredAtomPosition: null });
+                                document.body.style.cursor = 'auto';
+                            }
+                        }
+                    }
+                }}
+                onPointerOut={() => {
+                    document.body.style.cursor = 'auto';
+                    // Add grace period
+                    hoverTimeoutRef.current = setTimeout(() => {
                         const { isHoveringCard } = useScrollStore.getState();
                         if (!isHoveringCard) {
                             useScrollStore.setState({ hoveredSectionIndex: null, hoveredAtomPosition: null });
-                            document.body.style.cursor = 'auto';
                         }
-                    }
-                }
-            }}
-            onPointerOut={() => {
-                document.body.style.cursor = 'auto';
-                // Add grace period
-                hoverTimeoutRef.current = setTimeout(() => {
-                    const { isHoveringCard } = useScrollStore.getState();
-                    if (!isHoveringCard) {
-                        useScrollStore.setState({ hoveredSectionIndex: null, hoveredAtomPosition: null });
-                    }
-                }, 1000);
-            }}
-        >
-            <sphereGeometry args={[1.6, 8, 8]} />
-            <meshBasicMaterial transparent opacity={0} depthWrite={false} color="black" />
-        </instancedMesh>
+                    }, 1000);
+                }}
+            >
+                <sphereGeometry args={[1.6, 8, 8]} />
+                <meshBasicMaterial
+                    transparent
+                    opacity={0}
+                    depthWrite={false}
+                    color="black"
+                    visible={true}
+                />
+            </instancedMesh>
 
-        {/* Visual Indicators (Rings) - REMOVED */}
+            {/* Visual Indicators (Rings) - REMOVED */}
 
-        {/* Bonds */}
+            {/* Bonds */}
 
-        {/* Bonds */}
-        <instancedMesh
-            ref={bondsMeshRef}
-            args={[undefined, undefined, bondTransforms.length]}
-        >
-            <cylinderGeometry args={[0.12, 0.12, 1, 8]} />
-            <primitive object={bondMaterial} />
-        </instancedMesh>
+            {/* Bonds */}
+            <instancedMesh
+                ref={bondsMeshRef}
+                args={[undefined, undefined, bondTransforms.length]}
+            >
+                <cylinderGeometry args={[0.12, 0.12, 1, 8]} />
+                <primitive object={bondMaterial} />
+            </instancedMesh>
 
-        {/* Active Marker Atom (Gold) - Removed as per user request */}
-    </group>
-);
+            {/* Active Marker Atom (Gold) - Removed as per user request */}
+        </group>
+    );
 }
