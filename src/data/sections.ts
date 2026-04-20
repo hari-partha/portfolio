@@ -195,9 +195,13 @@ export const sections: Section[] = [
         img: '/img/test_tube_1768202821193.png',
         subItems: [
           { title: 'Dune', href: 'https://en.wikipedia.org/wiki/Dune_(novel)' },
+          { title: 'The Martian', href: 'https://en.wikipedia.org/wiki/The_Martian_(Weir_novel)' },
+          { title: 'Project Hail Mary', href: 'https://en.wikipedia.org/wiki/Project_Hail_Mary' },
           { title: 'Three-Body Problem', href: 'https://en.wikipedia.org/wiki/The_Three-Body_Problem_(novel)' },
           { title: 'Red Planet', href: 'https://en.wikipedia.org/wiki/Red_Planet_(novel)' },
           { title: 'Caves of Steel', href: 'https://en.wikipedia.org/wiki/The_Caves_of_Steel' },
+          { title: 'The Naked Sun', href: 'https://en.wikipedia.org/wiki/The_Naked_Sun' },
+          { title: 'The Robots of Dawn', href: 'https://en.wikipedia.org/wiki/The_Robots_of_Dawn' },
           { title: 'Fantastic Voyage', href: 'https://en.wikipedia.org/wiki/Fantastic_Voyage' },
         ]
       },

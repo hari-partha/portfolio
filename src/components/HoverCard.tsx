@@ -32,7 +32,7 @@ export function HoverCard() {
                                    z-50 pointer-events-none"
                     >
                         {/* Glass Panel */}
-                        <div className="bg-bg-dark-teal/90 backdrop-blur-xl border border-white/10 shadow-2xl overflow-hidden relative group pointer-events-auto">
+                        <div className="bg-bg-dark-teal/90 backdrop-blur-xl border border-white/10 shadow-2xl overflow-hidden relative group pointer-events-auto flex flex-col h-full">
 
                             {/* Colored Accent Line */}
                             <div
@@ -51,7 +51,7 @@ export function HoverCard() {
                             )}
 
                             {/* Header */}
-                            <div className="p-8 pb-4">
+                            <div className="p-8 pb-4 shrink-0">
                                 <div className="flex justify-between items-center mb-2">
                                     <span className="font-mono text-[10px] tracking-[0.2em] uppercase text-white/40">
                                         SECTOR_{String(hoveredSectionIndex).padStart(2, '0')}
@@ -72,7 +72,7 @@ export function HoverCard() {
                             </div>
 
                             {/* Items Grid */}
-                            <div className="p-8 pt-0 pb-8 flex flex-col gap-4 max-h-[56vh] md:max-h-[65vh] overflow-y-auto overscroll-contain custom-scrollbar touch-pan-y">
+                            <div className="p-8 pt-0 pb-8 flex-1 min-h-0 flex flex-col gap-4 overflow-y-auto overscroll-contain custom-scrollbar touch-pan-y">
                                 {activeSection.items?.map((item, i) => (
                                     <div key={i}>
                                         {/* Dropdown / Sub-items logic */}

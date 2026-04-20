@@ -42,6 +42,13 @@ function ScrollHandler() {
     let st: ScrollTrigger | null = null;
     let timer: ReturnType<typeof setTimeout> | null = null;
 
+    const updateProgressFromNativeScroll = () => {
+      const doc = document.documentElement;
+      const scrollable = Math.max(1, doc.scrollHeight - window.innerHeight);
+      const p = Math.min(1, Math.max(0, window.scrollY / scrollable));
+      setProgress(p);
+    };
+
     const setup = () => {
       const footer = document.getElementById('footer');
       const main = document.querySelector('main');
@@ -55,20 +62,24 @@ function ScrollHandler() {
         end: footer ? 'top top' : 'bottom bottom',
         endTrigger: footer || undefined,
         scrub: 1,
+        invalidateOnRefresh: true,
         onUpdate: (self) => {
           setProgress(self.progress);
         }
       });
 
       ScrollTrigger.refresh();
+      updateProgressFromNativeScroll();
     };
 
     timer = setTimeout(setup, 200);
     window.addEventListener('resize', setup);
+    window.addEventListener('scroll', updateProgressFromNativeScroll, { passive: true });
 
     return () => {
       if (timer) clearTimeout(timer);
       window.removeEventListener('resize', setup);
+      window.removeEventListener('scroll', updateProgressFromNativeScroll);
       if (st) st.kill();
     };
   }, [setProgress]);
@@ -98,10 +109,12 @@ export default function MainPage() {
 
   // Mobile Detection
   useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth < 768);
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
+    const media = window.matchMedia('(hover: none), (pointer: coarse)');
+    const updateInputMode = () => setIsMobile(media.matches);
+
+    updateInputMode();
+    media.addEventListener('change', updateInputMode);
+    return () => media.removeEventListener('change', updateInputMode);
   }, [setIsMobile]);
 
   // Ref for the main container to act as the event source for 3D interaction
@@ -119,7 +132,7 @@ export default function MainPage() {
   return (
     <div
       ref={containerRef[1]}
-      className="bg-bg-dark-teal selection:bg-accent-gold selection:text-bg-dark-teal min-h-screen relative w-full h-full"
+      className="bg-bg-dark-teal selection:bg-accent-gold selection:text-bg-dark-teal min-h-screen relative w-full"
     >
       {/* 1. Background Layer (Text) */}
       {!isLoading && !isExploring && (
@@ -173,7 +186,7 @@ export default function MainPage() {
         <>
           <Navigation />
           {/* Main Scroll Container - Pointer Events ENABLED for native scrolling */}
-          <main className="relative z-10 w-full overflow-x-hidden pointer-events-none">
+          <main className="relative z-10 w-full overflow-x-hidden">
             <ScrollHint />
             {/* Inlined Scroll Logic */}
             <ScrollHandler />
@@ -211,7 +224,7 @@ export default function MainPage() {
                 {/* Functional Links */}
                 <div className="flex gap-8 text-white/40 mt-4">
                   <a href="/brainfood#archives" className="hover:text-white transition-colors">Archive</a>
-                  <a href="/brainfood#manifesto" className="hover:text-white transition-colors">Manifesto</a>
+                  <a href="/brainfood#musings" className="hover:text-white transition-colors">Musings</a>
                   <button
                     type="button"
                     onClick={() => {

@@ -2,7 +2,7 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { useScrollStore } from '@/store/useScrollStore';
 import { Icons } from './Icons';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 type HomePageProps = {
   onEnter: () => void;
@@ -10,6 +10,11 @@ type HomePageProps = {
 
 export function HomePage({ onEnter }: HomePageProps) {
   const [isTransitioning, setIsTransitioning] = useState(false);
+
+  const openMusings = () => {
+    window.location.href = '/brainfood#musings';
+  };
+
   const handleExplore = () => {
     setIsTransitioning(true);
     // Wait for fade out animation before calling onEnter
@@ -17,6 +22,23 @@ export function HomePage({ onEnter }: HomePageProps) {
       onEnter();
     }, 800);
   };
+
+  useEffect(() => {
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.defaultPrevented || isTransitioning) return;
+      const target = event.target as HTMLElement | null;
+      const tagName = target?.tagName?.toLowerCase();
+      if (target?.isContentEditable || tagName === 'input' || tagName === 'textarea' || tagName === 'select') return;
+
+      if (event.key.toLowerCase() === 'm') {
+        event.preventDefault();
+        openMusings();
+      }
+    };
+
+    window.addEventListener('keydown', onKeyDown);
+    return () => window.removeEventListener('keydown', onKeyDown);
+  }, [isTransitioning]);
 
   return (
     <AnimatePresence>
@@ -68,6 +90,14 @@ export function HomePage({ onEnter }: HomePageProps) {
                 <span className="text-[10px] md:text-xs font-mono uppercase tracking-[0.2em] text-white/50 group-hover:text-accent-gold/80 transition-colors">Portfolio Unlocked</span>
                 <div className="h-px w-12 bg-white/30 group-hover:w-full group-hover:bg-accent-gold transition-all duration-700 ease-in-out mt-1" />
               </motion.button>
+
+              <button
+                type="button"
+                onClick={openMusings}
+                className="mt-6 text-[10px] md:text-xs font-mono uppercase tracking-[0.2em] text-white/60 hover:text-accent-gold transition-colors pointer-events-auto"
+              >
+                Open Musings (M)
+              </button>
             </motion.div>
 
             {/* Bottom Right: Socials & Metadata */}
