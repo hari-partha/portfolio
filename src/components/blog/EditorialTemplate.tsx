@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { ReactNode } from 'react';
 
 export type TocItem = {
@@ -17,6 +18,8 @@ type EditorialTemplateProps = {
   tocItems?: TocItem[];
   children: ReactNode;
   footer?: string;
+  /** Shows a compact control to return to the Brainfood musings landing page. */
+  backToMusings?: boolean;
 };
 
 export function EditorialTemplate({
@@ -30,6 +33,7 @@ export function EditorialTemplate({
   tocItems = [],
   children,
   footer,
+  backToMusings = false,
 }: EditorialTemplateProps) {
   return (
     <main className="editorial-theme min-h-screen">
@@ -62,7 +66,16 @@ export function EditorialTemplate({
         )}
       </section>
 
-      <article className="editorial-article">{children}</article>
+      <article className="editorial-article">
+        {backToMusings && (
+          <div className="editorial-post-nav">
+            <Link href="/brainfood#musings" className="editorial-back-musings">
+              ← Back to Musings
+            </Link>
+          </div>
+        )}
+        {children}
+      </article>
       {footer && <footer className="editorial-footer">{footer}</footer>}
     </main>
   );
@@ -79,18 +92,16 @@ type EditorialSectionProps = {
 export function EditorialSection({ badge, title, subTag, subtitle, children }: EditorialSectionProps) {
   return (
     <section className="editorial-section">
-      {(badge || subtitle) && (
-        <div className="editorial-section-header">
-          {badge && <div className="editorial-badge">{badge}</div>}
-          <div>
-            <h2 className="editorial-section-title">
-              {title}
-              {subTag && <span className="editorial-sub-tag">{subTag}</span>}
-            </h2>
-            {subtitle && <p className="editorial-section-subtitle">{subtitle}</p>}
-          </div>
+      <div className="editorial-section-header">
+        {badge && <div className="editorial-badge">{badge}</div>}
+        <div>
+          <h2 className="editorial-section-title">
+            {title}
+            {subTag && <span className="editorial-sub-tag">{subTag}</span>}
+          </h2>
+          {subtitle && <p className="editorial-section-subtitle">{subtitle}</p>}
         </div>
-      )}
+      </div>
       {children}
     </section>
   );

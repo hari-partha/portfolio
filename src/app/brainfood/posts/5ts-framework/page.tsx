@@ -11,6 +11,7 @@ const tocItems = [
 export default function FiveTsFrameworkPostPage() {
   return (
     <EditorialTemplate
+      backToMusings
       coverLabel="A Scout's Playbook"
       title={
         <>
