@@ -319,6 +319,17 @@ body::after {
   margin-bottom: 20px;
 }
 
+.editorial-note {
+  font-size: 14px;
+  line-height: 1.65;
+  color: var(--ed-ink-mid);
+  opacity: 0.88;
+  font-style: italic;
+  margin: 28px 0 8px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(30, 41, 59, 0.12);
+}
+
 .editorial-section-header {
   display: flex;
   gap: 20px;
@@ -462,8 +473,21 @@ body::after {
 }
 
 .editorial-close {
-  padding: 72px 0;
+  padding: 72px 0 96px;
   text-align: center;
+}
+
+.editorial-close .editorial-section-title {
+  max-width: 22ch;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.editorial-close .editorial-p {
+  max-width: 38rem;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: left;
 }
 
 .editorial-close-mark {
@@ -471,6 +495,75 @@ body::after {
   font-size: 48px;
   color: var(--ed-accent);
   margin-bottom: 24px;
+}
+
+/* Recap: balanced rows (3 + 2), light chips — avoids uneven flex-wrap */
+.editorial-recap {
+  margin-top: 44px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+}
+
+.editorial-recap-row {
+  width: 100%;
+  max-width: 42rem;
+  gap: 10px;
+}
+
+.editorial-recap-row--three {
+  display: grid;
+  grid-template-columns: 1fr;
+}
+
+.editorial-recap-row--two {
+  display: grid;
+  grid-template-columns: 1fr;
+  max-width: 28rem;
+}
+
+@media (min-width: 520px) {
+  .editorial-recap-row--three {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .editorial-recap-row--two {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.editorial-recap-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 16px;
+  border-radius: 999px;
+  font-family: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  line-height: 1.35;
+  color: var(--ed-ink);
+  background: #fff;
+  border: 1px solid var(--ed-rule);
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+  text-align: center;
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+.editorial-recap-pill:hover {
+  border-color: var(--ed-accent);
+  box-shadow: 0 2px 8px rgba(29, 78, 216, 0.08);
+}
+
+@media (max-width: 519px) {
+  .editorial-recap-pill {
+    width: 100%;
+  }
 }
 
 .editorial-footer {

@@ -54,6 +54,10 @@ export default function FiveTsFrameworkPostPage() {
           no path. And a Term Sheet without a Thesis is a check written without a real reason.
         </p>
         <p className="editorial-p">This is my attempt to name those shadows explicitly.</p>
+        <p className="editorial-note">
+          Cipher and Solara are fictional company names. The case studies below are composites based on real diligence I worked on,
+          with identifying details changed.
+        </p>
       </section>
 
       <EditorialSection
@@ -487,18 +491,21 @@ export default function FiveTsFrameworkPostPage() {
           this company is exactly the right bet.&quot;
         </p>
         <p className="editorial-p">The rest is execution — which, unfortunately, no framework can guarantee.</p>
-        <div className="flex flex-wrap justify-center gap-2 mt-6">
-          {[
-            'TAM + Threats',
-            'Team = Talent + Trust + Depth',
-            'Technology + Trademark',
-            'Traction + Timeline',
-            'Term Sheet + Thesis',
-          ].map((pill) => (
-            <span key={pill} className="rounded-full bg-[#0f172a] px-4 py-2 font-serif text-sm text-white">
-              {pill}
-            </span>
-          ))}
+        <div className="editorial-recap" aria-label="5Ts and their shadows">
+          <div className="editorial-recap-row editorial-recap-row--three">
+            {['TAM + Threats', 'Team = Talent + Trust + Depth', 'Technology + Trademark'].map((pill) => (
+              <span key={pill} className="editorial-recap-pill">
+                {pill}
+              </span>
+            ))}
+          </div>
+          <div className="editorial-recap-row editorial-recap-row--two">
+            {['Traction + Timeline', 'Term Sheet + Thesis'].map((pill) => (
+              <span key={pill} className="editorial-recap-pill">
+                {pill}
+              </span>
+            ))}
+          </div>
         </div>
       </section>
     </EditorialTemplate>
