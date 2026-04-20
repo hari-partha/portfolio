@@ -1,5 +1,5 @@
 'use client';
-import { useState, useEffect, useMemo, useRef } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { HelixScene } from '@/components/HelixScene';
 import { LoadingScreen } from '@/components/LoadingScreen';
 import { HomePage } from '@/components/HomePage';
@@ -39,12 +39,8 @@ function ScrollHandler() {
   const setProgress = useScrollStore((s) => s.setProgress);
 
   useEffect(() => {
-    // We listen to the main scroll container, but since we are using native scrolling on the body/main,
-    // we can trigger off the spacers container or just the document.
-    // However, the original ScrollOrchestrator used a ref to a wrapper div.
-    // Here we will use the main document scroll.
-
     let st: ScrollTrigger | null = null;
+    let timer: ReturnType<typeof setTimeout> | null = null;
 
     const setup = () => {
       const footer = document.getElementById('footer');
@@ -52,6 +48,7 @@ function ScrollHandler() {
 
       if (!main) return;
 
+      st?.kill();
       st = ScrollTrigger.create({
         trigger: main,
         start: 'top top',
@@ -62,13 +59,16 @@ function ScrollHandler() {
           setProgress(self.progress);
         }
       });
+
+      ScrollTrigger.refresh();
     };
 
-    // Slight delay to ensure DOM is ready
-    const timer = setTimeout(setup, 200);
+    timer = setTimeout(setup, 200);
+    window.addEventListener('resize', setup);
 
     return () => {
-      clearTimeout(timer);
+      if (timer) clearTimeout(timer);
+      window.removeEventListener('resize', setup);
       if (st) st.kill();
     };
   }, [setProgress]);
@@ -210,8 +210,8 @@ export default function MainPage() {
 
                 {/* Functional Links */}
                 <div className="flex gap-8 text-white/40 mt-4">
-                  <a href="https://hari-parthasarathy.medium.com/" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">Archive</a>
-                  <a href="https://hariparthasarathy.substack.com/about" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">Manifesto</a>
+                  <a href="/brainfood#archives" className="hover:text-white transition-colors">Archive</a>
+                  <a href="/brainfood#manifesto" className="hover:text-white transition-colors">Manifesto</a>
                   <button
                     type="button"
                     onClick={() => {

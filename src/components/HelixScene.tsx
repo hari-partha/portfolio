@@ -273,6 +273,7 @@ function SceneContent() {
 
 export function HelixScene({ tileMarkers, eventSource }: { tileMarkers: number[], eventSource?: HTMLElement | null }) {
   const progress = useScrollStore((s) => s.progress);
+  const isMobile = useScrollStore((s) => s.isMobile);
   const shouldHide = progress >= 0.99;
   const [domElement, setDomElement] = useState<HTMLElement | null>(null);
 
@@ -290,7 +291,7 @@ export function HelixScene({ tileMarkers, eventSource }: { tileMarkers: number[]
         gl={{ antialias: true, alpha: true }}
         eventSource={eventSource ?? domElement ?? undefined}
         eventPrefix="client"
-        style={{ touchAction: 'pan-y', pointerEvents: 'auto' }}
+        style={{ touchAction: isMobile ? 'pan-y' : 'none', pointerEvents: isMobile ? 'none' : 'auto' }}
       >
         <SceneContent />
       </Canvas>

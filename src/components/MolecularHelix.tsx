@@ -22,18 +22,16 @@ export function MolecularHelix() {
     // Debounce Ref for Mobile
     const lastScrollUpdateRef = useRef<number>(0);
 
-    // Define 5 Hotspots (clusters of base pairs)
-    // HELIX_CONFIG.pairs is usually around 100? Let's check or assume.
-    // We'll distribute them evenly.
     const HOTSPOTS = useMemo(() => {
         const total = HELIX_CONFIG.pairs;
-        const gap = Math.floor(total / 5);
-        return [0, 1, 2, 3, 4].map(i => {
-            const start = (i * gap) + 10; // Offset start
+        const count = sections.length;
+        const gap = Math.floor(total / count);
+        return Array.from({ length: count }, (_, i) => {
+            const start = (i * gap) + 8;
             return {
                 sectionIndex: i,
                 startPair: start,
-                endPair: start + 3 // 3 base pairs long (Reduced from 6 to fix "too many" comment)
+                endPair: start + 3
             };
         });
     }, []);
@@ -57,7 +55,6 @@ export function MolecularHelix() {
 
         for (let i = 0; i < SETTINGS.pairs; i++) {
             // Position along the helix
-            const t = i / SETTINGS.pairs;
             // Center geometry perfectly around (0,0,0) for correct rotation
             const totalHeight = SETTINGS.pairs * SETTINGS.risePerBasePair;
             const yOffset = totalHeight / 2;
@@ -105,24 +102,7 @@ export function MolecularHelix() {
             dummy.updateMatrix();
             bTransforms.push(dummy.matrix.clone());
 
-            // --- EXTRA ATOMS (Detail) ---
-            // Add smaller atoms along the rung to look "molecular"
-            // 2 small atoms per rung
-            const atomPos1 = new THREE.Vector3().lerpVectors(pos1, pos2, 0.35);
-            const atomPos2 = new THREE.Vector3().lerpVectors(pos1, pos2, 0.65);
-
-            dummy.rotation.set(0, 0, 0);
-            dummy.scale.setScalar(0.6); // Smaller internal atoms
-
-            dummy.position.copy(atomPos1);
-            dummy.updateMatrix();
-            aTransforms.push(dummy.matrix.clone());
-
-            dummy.position.copy(atomPos2);
-            dummy.updateMatrix();
-            aTransforms.push(dummy.matrix.clone());
-
-            // VERTICAL BONDS REMOVED TO CLEAR ARTIFACTS
+            // Keep only the two backbone atoms per pair for a cleaner center.
         }
 
         return { atomTransforms: aTransforms, bondTransforms: bTransforms };
@@ -134,13 +114,11 @@ export function MolecularHelix() {
 
         // Sort atoms
         atomTransforms.forEach((matrix, i) => {
-            const basePairIndex = Math.floor(i / 4);
+            const basePairIndex = Math.floor(i / 2);
             const hotspot = HOTSPOTS.find(h => basePairIndex >= h.startPair && basePairIndex <= h.endPair);
 
             if (hotspot) {
-                const m = matrix.clone();
-                m.scale(new THREE.Vector3(1.4, 1.4, 1.4)); // Make gold atoms larger anchors
-                goldMatrices.push(m);
+                goldMatrices.push(matrix);
             } else {
                 whiteMatrices.push(matrix);
             }
@@ -252,8 +230,8 @@ export function MolecularHelix() {
                 basePairIndex = HELIX_CONFIG.tileAnchors[activeTileIndex];
             }
 
-            // 4 atoms per iteration: Strand1, Strand2, Detail1, Detail2
-            const atomIndex = basePairIndex * 4;
+            // 2 atoms per base pair: Strand1, Strand2
+            const atomIndex = basePairIndex * 2;
 
             const matrix = new THREE.Matrix4();
             // We need to get the matrix from the correct instanced mesh (white or gold)
@@ -264,12 +242,7 @@ export function MolecularHelix() {
             if (whiteAtomsRef.current && goldAtomsRef.current) {
                 const hotspot = HOTSPOTS.find(h => basePairIndex >= h.startPair && basePairIndex <= h.endPair);
                 if (hotspot) {
-                    // Find the corresponding gold atom's matrix
-                    // This is complex as goldMatrices is a filtered list.
-                    // A simpler approach for tracking is to use the original atomTransforms and apply the scale.
-                    // Or, just get the matrix from the hitbox which contains all original positions.
                     hitboxMeshRef.current?.getMatrixAt(atomIndex, matrix);
-                    matrix.scale(new THREE.Vector3(1.4, 1.4, 1.4)); // Apply the same scale as gold atoms
                 } else {
                     hitboxMeshRef.current?.getMatrixAt(atomIndex, matrix);
                 }
@@ -334,7 +307,6 @@ export function MolecularHelix() {
                 ref={hitboxMeshRef} // Attached Ref
                 args={[undefined, undefined, atomTransforms.length]}
                 onPointerMove={(e) => {
-                    console.log('Hitbox Move', e.instanceId); // DEBUG
                     if (!isExploring) return;
                     e.stopPropagation();
 
@@ -349,11 +321,10 @@ export function MolecularHelix() {
                     // Check if we are hitting a hotspot
                     const instanceId = e.instanceId;
                     if (instanceId !== undefined) {
-                        const basePairIndex = Math.floor(instanceId / 4);
+                        const basePairIndex = Math.floor(instanceId / 2);
                         const hotspot = HOTSPOTS.find(h => basePairIndex >= h.startPair && basePairIndex <= h.endPair);
 
                         if (hotspot) {
-                            console.log('Hovering Hotspot:', hotspot.sectionIndex); // DEBUG
                             // Store hover state
                             useScrollStore.setState({
                                 hoveredSectionIndex: hotspot.sectionIndex,
@@ -372,7 +343,6 @@ export function MolecularHelix() {
                     }
                 }}
                 onPointerOut={() => {
-                    console.log('Hitbox Out'); // DEBUG
                     document.body.style.cursor = 'auto';
                     // Add grace period
                     hoverTimeoutRef.current = setTimeout(() => {

@@ -1,7 +1,6 @@
 'use client';
 
 import { motion, AnimatePresence } from 'framer-motion';
-import { useRef } from 'react';
 import { useScrollStore } from '@/store/useScrollStore';
 import { sections } from '@/data/sections';
 
@@ -29,7 +28,7 @@ export function HoverCard() {
                         exit={{ opacity: 0, x: 20, scale: 0.95 }}
                         transition={{ duration: 0.5, ease: 'easeOut' }}
                         className="fixed md:right-12 md:top-1/2 md:-translate-y-1/2 md:w-[min(450px,94vw)] 
-                                   bottom-0 left-0 w-full rounded-t-2xl md:rounded-lg
+                                   bottom-0 left-0 w-full md:max-h-[85vh] max-h-[78vh] rounded-t-2xl md:rounded-lg
                                    z-50 pointer-events-none"
                     >
                         {/* Glass Panel */}
@@ -73,7 +72,7 @@ export function HoverCard() {
                             </div>
 
                             {/* Items Grid */}
-                            <div className="p-8 pt-0 pb-8 flex flex-col gap-4 max-h-[60vh] md:max-h-[75vh] overflow-y-auto overscroll-contain custom-scrollbar">
+                            <div className="p-8 pt-0 pb-8 flex flex-col gap-4 max-h-[56vh] md:max-h-[65vh] overflow-y-auto overscroll-contain custom-scrollbar touch-pan-y">
                                 {activeSection.items?.map((item, i) => (
                                     <div key={i}>
                                         {/* Dropdown / Sub-items logic */}
@@ -108,7 +107,7 @@ export function HoverCard() {
                                                 </summary>
 
                                                 {/* Dropdown Content */}
-                                                <div className="pl-6 ml-8 border-l border-white/10 mt-2 flex flex-col gap-2">
+                                                <div className="pl-6 ml-8 border-l border-white/10 mt-2 max-h-40 overflow-y-auto overscroll-contain custom-scrollbar flex flex-col gap-2">
                                                     {item.subItems.map((sub, j) => (
                                                         <a
                                                             key={j}
