@@ -1,21 +1,9 @@
-const posts = [
-  {
-    title: 'The 5Ts: A Scout Framework for Startups',
-    summary: 'A long-form framework for evaluating early-stage startups through TAM, team, technology, traction, and term-sheet design.',
-    href: '/brainfood/posts/5ts-framework',
-    tag: 'Venture',
-    date: 'Apr 2026',
-  },
-  {
-    title: 'Brainfood Chapter 1 | Venturing into the Caves of Steel',
-    summary: 'What Asimov can still teach us about AI, biology, and the essence of being human.',
-    href: '/brainfood/posts/caves-of-steel',
-    tag: 'Brainfood',
-    date: 'Nov 2025',
-  },
-];
+import { getVisibleBrainfoodPosts } from '@/data/brainfoodPosts';
+
+export const dynamic = 'force-dynamic';
 
 export default function BrainfoodPage() {
+  const posts = getVisibleBrainfoodPosts();
   return (
     <main className="editorial-theme min-h-screen">
       <section className="editorial-cover">
@@ -67,16 +55,39 @@ export default function BrainfoodPage() {
           <p className="editorial-kicker">Archives</p>
           <h2 className="editorial-section-title">Latest posts</h2>
           <div className="mt-8 grid gap-5 md:grid-cols-2">
-            {posts.map((post) => (
-              <a key={post.title} href={post.href} className="group rounded-lg border border-[#cbd5e1] bg-white p-6 transition-colors hover:border-[#1d4ed8]/40">
-                <div className="mb-4 flex items-center justify-between text-[11px] uppercase tracking-[0.2em]">
-                  <span style={{ color: '#1d4ed8' }}>{post.tag}</span>
-                  <span style={{ color: '#64748b' }}>{post.date}</span>
+            {posts.map((post) =>
+              post.comingSoon || !post.href ? (
+                <div
+                  key={post.title}
+                  className="rounded-lg border border-dashed border-[#94a3b8] bg-[#f8fafc] p-6 text-[#475569]"
+                  aria-label={`${post.title} — coming ${post.date}`}
+                >
+                  <div className="mb-4 flex flex-wrap items-center justify-between gap-2 text-[11px] uppercase tracking-[0.2em]">
+                    <span style={{ color: '#64748b' }}>{post.tag}</span>
+                    <span className="rounded-full bg-[#e2e8f0] px-3 py-1 text-[10px] font-semibold tracking-[0.14em] text-[#334155]">
+                      Coming {post.date}
+                    </span>
+                  </div>
+                  <h3 className="font-serif text-2xl leading-tight text-[#64748b]">{post.title}</h3>
+                  <p className="mt-3 text-sm leading-relaxed text-[#64748b]">{post.summary}</p>
                 </div>
-                <h3 className="font-serif text-2xl leading-tight text-[#0f172a] transition-colors group-hover:text-[#1e3a8a]">{post.title}</h3>
-                <p className="mt-3 text-sm leading-relaxed text-[#334155]">{post.summary}</p>
-              </a>
-            ))}
+              ) : (
+                <a
+                  key={post.title}
+                  href={post.href}
+                  className="group rounded-lg border border-[#cbd5e1] bg-white p-6 transition-colors hover:border-[#1d4ed8]/40"
+                >
+                  <div className="mb-4 flex items-center justify-between text-[11px] uppercase tracking-[0.2em]">
+                    <span style={{ color: '#1d4ed8' }}>{post.tag}</span>
+                    <span style={{ color: '#64748b' }}>{post.date}</span>
+                  </div>
+                  <h3 className="font-serif text-2xl leading-tight text-[#0f172a] transition-colors group-hover:text-[#1e3a8a]">
+                    {post.title}
+                  </h3>
+                  <p className="mt-3 text-sm leading-relaxed text-[#334155]">{post.summary}</p>
+                </a>
+              ),
+            )}
           </div>
         </div>
       </section>

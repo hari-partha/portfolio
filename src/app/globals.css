@@ -397,6 +397,10 @@ body::after {
   margin: 0;
 }
 
+.editorial-essay-lede p + p {
+  margin-top: 1.1em;
+}
+
 /* Long-form essay body: continuous paragraphs, no per-block headers */
 .editorial-essay-flow {
   margin-bottom: 8px;
@@ -404,6 +408,33 @@ body::after {
 
 .editorial-essay-flow .editorial-p:first-of-type {
   margin-top: 0;
+}
+
+.editorial-insight-block {
+  margin-bottom: 8px;
+}
+
+.editorial-insight-block .editorial-h3 {
+  margin-top: 0;
+  margin-bottom: 12px;
+}
+
+.editorial-abridged {
+  font-size: 15px;
+  line-height: 1.65;
+  font-style: italic;
+  color: var(--ed-ink-mid);
+  margin: 0 0 22px;
+  padding: 14px 18px;
+  background: var(--ed-paper-warm);
+  border-left: 3px solid var(--ed-accent);
+  border-radius: 0 8px 8px 0;
+}
+
+.editorial-essay-break {
+  margin: 40px 0 36px;
+  border: 0;
+  border-top: 1px solid var(--ed-rule);
 }
 
 .editorial-signoff {
