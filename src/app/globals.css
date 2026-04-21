@@ -152,6 +152,7 @@ body::after {
   padding: 80px 48px 64px;
   position: relative;
   overflow: hidden;
+  isolation: isolate;
 }
 
 .editorial-cover::before {
@@ -334,6 +335,12 @@ body::after {
   margin: -4px 0 32px;
 }
 
+.editorial-post-nav--cover {
+  position: relative;
+  z-index: 1;
+  margin: 0 0 22px;
+}
+
 .editorial-back-musings {
   display: inline-flex;
   align-items: center;
@@ -360,6 +367,19 @@ body::after {
   background: var(--ed-accent-light);
 }
 
+/* Dark hero: back link sits above cover label */
+.editorial-back-musings--cover {
+  color: rgba(226, 232, 240, 0.95);
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+}
+
+.editorial-back-musings--cover:hover {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.14);
+  border-color: rgba(147, 197, 253, 0.55);
+}
+
 .editorial-essay-lede {
   margin: 0 0 44px;
   padding: 28px 24px 28px 28px;
@@ -377,6 +397,15 @@ body::after {
   margin: 0;
 }
 
+/* Long-form essay body: continuous paragraphs, no per-block headers */
+.editorial-essay-flow {
+  margin-bottom: 8px;
+}
+
+.editorial-essay-flow .editorial-p:first-of-type {
+  margin-top: 0;
+}
+
 .editorial-signoff {
   margin-top: 8px;
   padding-top: 28px;
@@ -391,22 +420,30 @@ body::after {
   margin-bottom: 12px;
 }
 
-.editorial-substack-cta {
-  margin-top: 40px;
-  padding: 20px 22px;
-  background: #fff;
-  border: 1px solid var(--ed-rule);
-  border-radius: 8px;
-  font-size: 14px;
-  line-height: 1.65;
-  color: var(--ed-ink-mid);
+/* Inline “first published” line — no bordered card */
+.editorial-source-note {
+  margin-top: 28px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(203, 213, 225, 0.65);
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--ed-ink-soft);
+  text-align: center;
 }
 
-.editorial-substack-cta a {
+.editorial-source-note a {
   color: var(--ed-accent);
-  font-weight: 600;
-  text-decoration: underline;
-  text-underline-offset: 3px;
+  font-weight: 500;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(29, 78, 216, 0.35);
+  transition:
+    color 0.15s ease,
+    border-color 0.15s ease;
+}
+
+.editorial-source-note a:hover {
+  color: var(--ed-accent-dark);
+  border-bottom-color: var(--ed-accent);
 }
 
 .editorial-section-header {

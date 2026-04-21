@@ -1,6 +1,6 @@
 'use client';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useScrollStore } from '@/store/useScrollStore';
+import Link from 'next/link';
 import { Icons } from './Icons';
 import { useEffect, useState } from 'react';
 
@@ -91,13 +91,15 @@ export function HomePage({ onEnter }: HomePageProps) {
                 <div className="h-px w-12 bg-white/30 group-hover:w-full group-hover:bg-accent-gold transition-all duration-700 ease-in-out mt-1" />
               </motion.button>
 
-              <button
-                type="button"
-                onClick={openMusings}
-                className="mt-6 text-[10px] md:text-xs font-mono uppercase tracking-[0.2em] text-white/60 hover:text-accent-gold transition-colors pointer-events-auto"
-              >
-                Open Musings (M)
-              </button>
+              <div className="mt-6 flex flex-col items-start gap-2 pointer-events-auto">
+                <Link
+                  href="/brainfood#musings"
+                  className="inline-flex items-center rounded-full border border-accent-gold/45 bg-black/30 px-5 py-2.5 text-[11px] md:text-xs font-mono uppercase tracking-[0.2em] text-white/95 backdrop-blur-sm transition-colors hover:border-accent-gold hover:bg-accent-gold/10 hover:text-accent-gold"
+                >
+                  Musings
+                </Link>
+                <span className="text-[9px] font-mono uppercase tracking-[0.18em] text-white/35">Optional shortcut · M</span>
+              </div>
             </motion.div>
 
             {/* Bottom Right: Socials & Metadata */}

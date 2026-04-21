@@ -38,6 +38,13 @@ export function EditorialTemplate({
   return (
     <main className="editorial-theme min-h-screen">
       <section className="editorial-cover">
+        {backToMusings && (
+          <div className="editorial-post-nav editorial-post-nav--cover">
+            <Link href="/brainfood#musings" className="editorial-back-musings editorial-back-musings--cover">
+              ← Back to Musings
+            </Link>
+          </div>
+        )}
         <div className="editorial-cover-label">{coverLabel}</div>
         <h1 className="editorial-cover-title">{title}</h1>
         <p className="editorial-cover-sub">{subtitle}</p>
@@ -66,16 +73,7 @@ export function EditorialTemplate({
         )}
       </section>
 
-      <article className="editorial-article">
-        {backToMusings && (
-          <div className="editorial-post-nav">
-            <Link href="/brainfood#musings" className="editorial-back-musings">
-              ← Back to Musings
-            </Link>
-          </div>
-        )}
-        {children}
-      </article>
+      <article className="editorial-article">{children}</article>
       {footer && <footer className="editorial-footer">{footer}</footer>}
     </main>
   );

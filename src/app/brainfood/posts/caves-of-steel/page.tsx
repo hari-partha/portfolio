@@ -1,4 +1,4 @@
-import { EditorialSection, EditorialTemplate } from '@/components/blog/EditorialTemplate';
+import { EditorialTemplate } from '@/components/blog/EditorialTemplate';
 
 const SUBSTACK_URL = 'https://hariparthasarathy.substack.com/p/brainfood-chapter-1-venturing-into';
 
@@ -33,7 +33,7 @@ export default function CavesOfSteelPostPage() {
         </p>
       </div>
 
-      <EditorialSection title="Fiction on the commute">
+      <section className="editorial-essay-flow">
         <p className="editorial-p">
           This summer, my frequent BART rides up to Berkeley left me with ample free time, and I found myself reconnecting with an old
           habit -- reading fiction. Thanks to a conversation with a colleague at Bakar Labs (shoutout to Josh Holter!), I picked up
@@ -41,9 +41,6 @@ export default function CavesOfSteelPostPage() {
           famous by Will Smith), I instead found myself diving into &quot;The Caves of Steel,&quot; the true origin of Asimov&apos;s
           exploration into human-machine relationships.
         </p>
-      </EditorialSection>
-
-      <EditorialSection title="Megacities and mirrors">
         <p className="editorial-p">
           &quot;The Caves of Steel&quot; immerses us in a future Earth dominated by vast, enclosed megacities -- the titular caves of
           steel -- where detective Elijah Baley partners with R. Daneel Olivaw, an advanced humanoid robot, to solve a gripping murder. It
@@ -57,9 +54,6 @@ export default function CavesOfSteelPostPage() {
           indistinguishably from their human counterparts) to seek and synthesize knowledge. To echo Asimov, two years ago was the age of
           R. Sammy; today&apos;s world marks the introduction of R. Daneel!
         </p>
-      </EditorialSection>
-
-      <EditorialSection title="Three Laws and biochemistry">
         <p className="editorial-p">
           But to me, it is Asimov&apos;s famous Three Laws of Robotics that stand out. Not merely because these laws echo our
           contemporary ethical frameworks for AI, but more so due to the remarkable &quot;biology&quot; inherent in their logic.
@@ -70,9 +64,6 @@ export default function CavesOfSteelPostPage() {
           itself. They are mirrors reflecting our reasoning, emotions, and our intricate pathways for determining self-worth and
           validating our actions.
         </p>
-      </EditorialSection>
-
-      <EditorialSection title="Positronics and curiosity">
         <p className="editorial-p">
           There is a clear element of psychology and an intentional commentary on human logic embedded in the fabric of Asimov&apos;s
           robotic universe. Consider the positronic brain, running not on neurons, synapses, and action potentials but on
@@ -82,9 +73,6 @@ export default function CavesOfSteelPostPage() {
           new experiences to deep chemical responses (i.e., dopamine for happiness, adrenaline for fear, or cortisol for calmness). This
           fundamental neurological difference subtly underscores our human uniqueness.
         </p>
-      </EditorialSection>
-
-      <EditorialSection title="Emotion and contrast">
         <p className="editorial-p">
           The theme deepens further with emotion. Asimov&apos;s robots display emotional cues only as contextually appropriate responses
           -- they don&apos;t truly feel. A robot can smile, yet the smile holds no authentic emotional foundation (a common recurring
@@ -96,9 +84,6 @@ export default function CavesOfSteelPostPage() {
           biochemical &quot;dance&quot; of neurotransmitters and hormones -- that defines the essence of humanity within Asimov&apos;s
           carefully structured robotic universe.
         </p>
-      </EditorialSection>
-
-      <EditorialSection title="Machines in our image">
         <p className="editorial-p">
           Ultimately, Asimov&apos;s profound insight is that humanity&apos;s true strength isn&apos;t just in our intelligence or
           capacity for logic (qualities we can increasingly replicate digitally) but rather in our nuanced biology, our complex
@@ -110,19 +95,20 @@ export default function CavesOfSteelPostPage() {
           explore ourselves, our neurology, our logic, and our emotional complexity. And perhaps, as we embrace our creations,
           we&apos;ll begin to better grasp our own humanity, and let it flourish!
         </p>
-      </EditorialSection>
+      </section>
 
       <div className="editorial-signoff">
         <p>A Food For Thought,</p>
         <p style={{ marginBottom: 0 }}>— Hari</p>
       </div>
 
-      <div className="editorial-substack-cta">
-        Read the original post on Substack:{' '}
+      <p className="editorial-source-note">
+        First published on{' '}
         <a href={SUBSTACK_URL} target="_blank" rel="noopener noreferrer">
-          hariparthasarathy.substack.com
+          Substack
         </a>
-      </div>
+        <span className="opacity-70"> · hariparthasarathy.substack.com</span>
+      </p>
     </EditorialTemplate>
   );
 }
