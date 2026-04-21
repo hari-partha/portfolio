@@ -76,19 +76,26 @@ export function HomePage({ onEnter }: HomePageProps) {
               </p>
 
               <motion.button
+                type="button"
                 onClick={handleExplore}
-                className="group relative flex flex-col items-start gap-1 pointer-events-auto py-2 w-full"
-                whileHover={{ x: 10 }}
-                transition={{ duration: 0.4 }}
+                className="group pointer-events-auto w-full max-w-lg text-left rounded-2xl border border-white/25 bg-black/35 px-5 py-4 md:px-6 md:py-5 shadow-[0_0_0_1px_rgba(212,175,55,0.12)] backdrop-blur-md transition-all duration-300 hover:border-accent-gold/55 hover:bg-black/45 hover:shadow-[0_0_24px_rgba(212,175,55,0.12)] focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-gold/70 focus-visible:ring-offset-2 focus-visible:ring-offset-black/40"
+                whileHover={{ scale: 1.01 }}
+                whileTap={{ scale: 0.99 }}
+                transition={{ duration: 0.2 }}
+                aria-label="Unlock portfolio — Explore the Genome"
               >
-                <div className="flex items-center gap-4">
-                  <span className="font-serif text-3xl md:text-5xl italic tracking-wide text-white group-hover:text-accent-gold transition-colors duration-500">
+                <div className="flex items-start justify-between gap-3">
+                  <span className="font-serif text-2xl md:text-4xl italic tracking-wide text-white transition-colors duration-300 group-hover:text-accent-gold leading-tight">
                     Explore the Genome
                   </span>
-                  <span className="opacity-0 group-hover:opacity-100 transition-opacity duration-500 text-accent-gold text-2xl">→</span>
+                  <span className="mt-1 shrink-0 text-accent-gold/80 text-xl md:text-2xl transition-transform duration-300 group-hover:translate-x-0.5">
+                    →
+                  </span>
                 </div>
-                <span className="text-[10px] md:text-xs font-mono uppercase tracking-[0.2em] text-white/50 group-hover:text-accent-gold/80 transition-colors">Portfolio Unlocked</span>
-                <div className="h-px w-12 bg-white/30 group-hover:w-full group-hover:bg-accent-gold transition-all duration-700 ease-in-out mt-1" />
+                <span className="mt-3 block text-[11px] md:text-xs font-mono uppercase tracking-[0.18em] text-white/65 group-hover:text-accent-gold/90 transition-colors">
+                  Click here to unlock the portfolio
+                </span>
+                <div className="mt-3 h-px w-full max-w-[10rem] bg-gradient-to-r from-accent-gold/60 to-transparent opacity-80 group-hover:max-w-full transition-all duration-500" />
               </motion.button>
 
               <div className="mt-6 flex flex-col items-start gap-2 pointer-events-auto">
@@ -109,9 +116,24 @@ export function HomePage({ onEnter }: HomePageProps) {
               transition={{ duration: 1, delay: 0.8 }}
               className="flex flex-col items-start md:items-end gap-8 font-mono text-[11px] tracking-[0.2em] uppercase z-30 pointer-events-auto"
             >
-              <div className="flex gap-8">
-                <a href="https://linkedin.com/in/hari-a-parthasarathy" target="_blank" className="text-white/60 hover:text-accent-gold transition-colors hover:scale-110 p-2">
+              <div className="flex flex-wrap items-center gap-6 md:gap-8">
+                <a
+                  href="https://linkedin.com/in/hari-a-parthasarathy"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="LinkedIn"
+                  className="text-white/60 hover:text-accent-gold transition-colors hover:scale-110 p-2"
+                >
                   <Icons.LinkedIn className="w-5 h-5" />
+                </a>
+                <a
+                  href="/hari-parthasarathy-resume-spring-2026.pdf"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Resume (PDF)"
+                  className="text-white/60 hover:text-accent-gold transition-colors hover:scale-110 p-2"
+                >
+                  <Icons.Resume className="w-5 h-5" />
                 </a>
                 <a href="tel:+14084427278" className="text-white/60 hover:text-accent-gold transition-colors hover:scale-110 p-2">
                   <Icons.Phone className="w-5 h-5" />
