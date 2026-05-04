@@ -39,13 +39,6 @@ const allPosts: BrainfoodPost[] = [
     publishAt: APRIL_ADMISSIONS_PUBLISH_AT,
   },
   {
-    title: 'Admissions Insights coming soon',
-    summary: 'More admissions-season writing in the same lane — in progress for a Summer 2026 drop.',
-    tag: 'Brainfood',
-    date: 'Summer 2026',
-    comingSoon: true,
-  },
-  {
     title: 'Brainfood Chapter 2 | AI in its Cambrian Evolution Era coming soon',
     summary: 'How the AI wave maps onto biological metaphors — form, selection pressure, and what survives. In the works.',
     tag: 'Brainfood',
