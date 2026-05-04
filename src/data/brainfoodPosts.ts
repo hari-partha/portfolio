@@ -34,7 +34,7 @@ const allPosts: BrainfoodPost[] = [
     summary:
       'April admissions notes from a graduating MET senior — say no with conviction, admit weekends, comb-shaped depth, finesse, and community. Updated over time.',
     href: '/brainfood/posts/april-admissions',
-    tag: 'Brainfood',
+    tag: 'College Advice',
     date: 'Apr 2026',
     publishAt: APRIL_ADMISSIONS_PUBLISH_AT,
   },
