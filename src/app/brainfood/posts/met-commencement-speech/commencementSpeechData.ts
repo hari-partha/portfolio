@@ -1,5 +1,6 @@
 export type CommencementAct = {
   act: string;
+  roman: string;
   theme: string;
   paragraphs: string[];
 };
@@ -7,6 +8,7 @@ export type CommencementAct = {
 export const COMMENCEMENT_ACTS: CommencementAct[] = [
   {
     act: 'Act I',
+    roman: 'I',
     theme: 'Speed',
     paragraphs: [
       'Hi everyone. To the Class of 2026, and to my peers: congrats — we made it! To the friends, families, parents, faculty, board members, and guests who showed up today — thank you. These past four years have been filled with fond memories, and the support you have given our lives has truly been valuable. None of us made it to graduation alone — it truly takes a village!',
@@ -18,6 +20,7 @@ export const COMMENCEMENT_ACTS: CommencementAct[] = [
   },
   {
     act: 'Act II',
+    roman: 'II',
     theme: 'Serendipity',
     paragraphs: [
       'But here’s what I keep coming back to. In a program that moves this fast, in a city built on speed and movement — the moments I’ll actually carry with me weren’t the fast ones. They were the moments of connection — and connection only happens when we slow down enough to hear what others are saying.',
@@ -32,6 +35,7 @@ export const COMMENCEMENT_ACTS: CommencementAct[] = [
   },
   {
     act: 'Act III',
+    roman: 'III',
     theme: 'What to Carry',
     paragraphs: [
       'There is one critical takeaway I keep coming back to with the Mouse Merchant: a phrase a mentor told me, or rather a word — GOOD. It may seem innocuous at first, but this paints a clear picture of what this cohort has accomplished over the past four years.',

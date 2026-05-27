@@ -48,7 +48,7 @@ export function EditorialTemplate({
       <section className="editorial-cover">
         {backToMusings && (
           <div className="editorial-post-nav editorial-post-nav--cover">
-            <Link href="/brainfood#musings" className="editorial-back-musings editorial-back-musings--cover">
+            <Link href="/musings" className="editorial-back-musings editorial-back-musings--cover">
               ← Back to Musings
             </Link>
           </div>
@@ -89,17 +89,26 @@ export function EditorialTemplate({
 
 type EditorialSectionProps = {
   badge?: string;
+  /** Roman numeral for multi-act essays (renders a stacked Act badge). */
+  actRoman?: string;
   title: string;
   subTag?: string;
   subtitle?: string;
   children: ReactNode;
 };
 
-export function EditorialSection({ badge, title, subTag, subtitle, children }: EditorialSectionProps) {
+export function EditorialSection({ badge, actRoman, title, subTag, subtitle, children }: EditorialSectionProps) {
   return (
     <section className="editorial-section">
       <div className="editorial-section-header">
-        {badge && <div className="editorial-badge">{badge}</div>}
+        {actRoman ? (
+          <div className="editorial-act-badge" aria-label={`Act ${actRoman}`}>
+            <span className="editorial-act-badge-label">Act</span>
+            <span className="editorial-act-badge-num">{actRoman}</span>
+          </div>
+        ) : (
+          badge && <div className="editorial-badge">{badge}</div>
+        )}
         <div>
           <h2 className="editorial-section-title">
             {title}

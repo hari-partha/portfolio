@@ -12,7 +12,7 @@ export default function FiveTsFrameworkPostPage() {
   return (
     <EditorialTemplate
       backToMusings
-      coverLabel="Brainfood · Bite-size"
+      coverLabel="Brainfood · Bitsize"
       title={
         <>
           The <span style={{ color: 'var(--ed-highlight, #93c5fd)' }}>5Ts</span>: A Framework for Evaluating Early-Stage Companies

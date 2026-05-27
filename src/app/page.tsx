@@ -223,8 +223,7 @@ export default function MainPage() {
 
                 {/* Functional Links */}
                 <div className="flex gap-8 text-white/40 mt-4">
-                  <a href="/brainfood#archives" className="hover:text-white transition-colors">Archive</a>
-                  <a href="/brainfood#musings" className="hover:text-white transition-colors">Musings</a>
+                  <a href="/musings" className="hover:text-white transition-colors">Musings</a>
                   <button
                     type="button"
                     onClick={() => {

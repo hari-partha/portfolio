@@ -19,6 +19,9 @@ const nextConfig: NextConfig = {
       },
     ];
   },
+  async redirects() {
+    return [{ source: '/brainfood', destination: '/musings', permanent: true }];
+  },
 };
 
 export default nextConfig;

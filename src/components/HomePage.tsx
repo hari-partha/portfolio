@@ -12,7 +12,7 @@ export function HomePage({ onEnter }: HomePageProps) {
   const [isTransitioning, setIsTransitioning] = useState(false);
 
   const openMusings = () => {
-    window.location.href = '/brainfood#musings';
+    window.location.href = '/musings';
   };
 
   const handleExplore = () => {
@@ -100,7 +100,7 @@ export function HomePage({ onEnter }: HomePageProps) {
 
               <div className="mt-6 flex flex-col items-start gap-2 pointer-events-auto">
                 <Link
-                  href="/brainfood#musings"
+                  href="/musings"
                   className="inline-flex items-center rounded-full border border-accent-gold/45 bg-black/30 px-5 py-2.5 text-[11px] md:text-xs font-mono uppercase tracking-[0.2em] text-white/95 backdrop-blur-sm transition-colors hover:border-accent-gold hover:bg-accent-gold/10 hover:text-accent-gold"
                 >
                   Musings

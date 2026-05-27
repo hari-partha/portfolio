@@ -6,7 +6,7 @@ export default function CavesOfSteelPostPage() {
   return (
     <EditorialTemplate
       backToMusings
-      coverLabel="Brainfood · Bite-size"
+      coverLabel="Brainfood · Bitsize"
       title={
         <>
           Venturing into the <span style={{ color: 'var(--ed-highlight, #93c5fd)' }}>Caves of Steel</span>

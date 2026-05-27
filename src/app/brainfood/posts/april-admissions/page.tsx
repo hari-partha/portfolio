@@ -13,7 +13,7 @@ export default function AprilAdmissionsPostPage() {
     <EditorialTemplate
       brand="soulfood"
       backToMusings
-      coverLabel="Soulfood · Bite-size"
+      coverLabel="Soulfood · Bitsize"
       title={<>Admissions Insights from a Graduating Senior</>}
       subtitle="April is admissions season — short notes for admitted students, families, and friends. A living post; more days land here as I write them."
       authorName="Hari Parthasarathy"

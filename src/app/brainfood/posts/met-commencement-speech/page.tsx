@@ -19,7 +19,7 @@ export default function MetCommencementSpeechPage() {
     <EditorialTemplate
       brand="soulfood"
       backToMusings
-      coverLabel="Soulfood · Bite-size"
+      coverLabel="Soulfood · Bitsize"
       title={
         <>
           MET Commencement Speech{' '}
@@ -36,7 +36,7 @@ export default function MetCommencementSpeechPage() {
     >
       <section className="editorial-essay-flow">
         {COMMENCEMENT_ACTS.map((act) => (
-          <EditorialSection key={act.act} badge={act.act} title={act.theme}>
+          <EditorialSection key={act.act} actRoman={act.roman} title={act.theme}>
             {act.paragraphs.map((paragraph) => (
               <p key={paragraph.slice(0, 48)} className="editorial-p">
                 {paragraph}
