@@ -791,41 +791,35 @@ body::after {
 }
 
 /* Musings hub */
-.musings-hero {
+.musings-cover {
+  padding-bottom: 56px;
+}
+
+.musings-back-arrow-cover {
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  justify-content: center;
+  border-radius: 50%;
+  font-size: 1.2rem;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.musings-bio {
+  background: var(--ed-paper);
+  border-bottom: 1px solid var(--ed-rule);
+}
+
+.musings-bio-inner {
   max-width: 780px;
   margin: 0 auto;
-  padding: 28px 48px 20px;
+  padding: 40px 48px 44px;
 }
 
-.musings-back-arrow {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 38px;
-  height: 38px;
-  margin-bottom: 20px;
-  border-radius: 50%;
-  border: 1px solid var(--ed-rule);
-  background: #fff;
-  color: var(--ed-ink-mid);
-  font-size: 1.25rem;
-  line-height: 1;
-  text-decoration: none;
-  transition:
-    border-color 0.15s ease,
-    color 0.15s ease,
-    background 0.15s ease;
-}
-
-.musings-back-arrow:hover {
-  border-color: var(--ed-accent);
-  color: var(--ed-accent-dark);
-  background: var(--ed-accent-light);
-}
-
-.musings-hero-title {
+.musings-bio-title {
   font-family: var(--font-cormorant), "Cormorant Garamond", serif;
-  font-size: clamp(32px, 5vw, 42px);
+  font-size: clamp(28px, 4vw, 36px);
   font-weight: 700;
   line-height: 1.15;
   color: var(--ed-ink);
@@ -836,37 +830,50 @@ body::after {
   margin-bottom: 1rem;
 }
 
-.musings-about-last {
-  margin-bottom: 0 !important;
+.musings-about .editorial-p:last-child {
+  margin-bottom: 0;
 }
 
-.musings-brand-panel .musings-brand-band {
-  padding: 24px 48px 20px;
+.musings-feed-section {
+  background: var(--ed-accent-light);
+  border-top: 3px solid var(--ed-accent);
+}
+
+.musings-feed-layout {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 32px 48px 44px;
+  display: grid;
+  grid-template-columns: minmax(0, 300px) minmax(0, 1fr);
+  gap: 28px 36px;
+  align-items: start;
+}
+
+.musings-feed-aside {
+  position: sticky;
+  top: 24px;
 }
 
 .musings-brand-welcome {
   font-family: var(--font-cormorant), "Cormorant Garamond", serif;
-  font-size: clamp(24px, 3.5vw, 30px);
+  font-size: clamp(22px, 2.8vw, 28px);
   font-weight: 700;
   line-height: 1.2;
   color: var(--ed-ink);
-  margin: 0 0 10px;
+  margin: 0 0 12px;
 }
 
 .musings-brand-intro {
-  max-width: 40rem;
-  margin-bottom: 0 !important;
-}
-
-.musings-posts-wrap {
-  max-width: 960px;
-  margin: 0 auto;
-  padding: 4px 48px 40px;
+  font-family: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--ed-ink-mid);
+  margin: 0;
 }
 
 .musings-posts-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 14px;
 }
 
@@ -988,17 +995,21 @@ body::after {
   font-family: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
 }
 
+@media (max-width: 900px) {
+  .musings-feed-layout {
+    grid-template-columns: 1fr;
+    padding: 28px 24px 36px;
+    gap: 24px;
+  }
+
+  .musings-feed-aside {
+    position: static;
+  }
+}
+
 @media (max-width: 700px) {
-  .musings-hero {
-    padding: 24px 24px 16px;
-  }
-
-  .musings-brand-panel .musings-brand-band {
-    padding: 20px 24px 16px;
-  }
-
-  .musings-posts-wrap {
-    padding: 4px 24px 32px;
+  .musings-bio-inner {
+    padding: 28px 24px 32px;
   }
 
   .musings-posts-grid {
