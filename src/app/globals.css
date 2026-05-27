@@ -142,8 +142,36 @@ body::after {
   --ed-accent-light: #dbeafe;
   --ed-accent-dark: #1e3a8a;
   --ed-rule: #cbd5e1;
+  --ed-cover-glow: rgba(219, 234, 254, 0.82);
+  --ed-highlight: #93c5fd;
   background: var(--ed-paper);
   color: var(--ed-ink);
+}
+
+.editorial-theme--soulfood {
+  --ed-paper-warm: #fffbeb;
+  --ed-accent: #b45309;
+  --ed-accent-light: #fef3c7;
+  --ed-accent-dark: #78350f;
+  --ed-cover-glow: rgba(254, 243, 199, 0.88);
+  --ed-highlight: #ecb365;
+}
+
+.editorial-theme--soulfood .editorial-cover {
+  background: #1c1917;
+}
+
+.editorial-theme--soulfood .editorial-cover::before,
+.editorial-theme--soulfood .editorial-cover::after {
+  border-color: rgba(236, 179, 101, 0.14);
+}
+
+.editorial-theme--soulfood .editorial-cover-label {
+  color: var(--ed-cover-glow);
+}
+
+.editorial-theme--soulfood .editorial-kicker {
+  color: var(--ed-accent-dark);
 }
 
 .editorial-cover {
@@ -182,7 +210,7 @@ body::after {
   font-weight: 500;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: rgba(219, 234, 254, 0.82);
+  color: var(--ed-cover-glow, rgba(219, 234, 254, 0.82));
   margin-bottom: 28px;
 }
 
@@ -726,6 +754,120 @@ body::after {
   text-align: center;
   font-size: 13px;
   color: var(--ed-ink-soft);
+}
+
+.archive-section-header {
+  border-bottom: 2px solid var(--ed-rule);
+  padding-bottom: 12px;
+}
+
+.archive-section--brainfood .archive-section-header {
+  border-bottom-color: rgba(29, 78, 216, 0.25);
+}
+
+.archive-section--soulfood .archive-section-header {
+  border-bottom-color: rgba(180, 83, 9, 0.35);
+}
+
+.archive-section-title {
+  font-family: var(--font-cormorant), "Cormorant Garamond", serif;
+  font-size: clamp(26px, 4vw, 34px);
+  font-weight: 700;
+  color: var(--ed-ink);
+  line-height: 1.15;
+}
+
+.archive-section-subtitle {
+  margin-top: 6px;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--ed-ink-soft);
+}
+
+.archive-card {
+  border-radius: 8px;
+  padding: 24px;
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+.archive-card--brainfood.archive-card--live {
+  border: 1px solid #cbd5e1;
+  background: #fff;
+}
+
+.archive-card--brainfood.archive-card--live:hover {
+  border-color: rgba(29, 78, 216, 0.4);
+}
+
+.archive-card--brainfood.archive-card--live h4 {
+  color: #0f172a;
+}
+
+.archive-card--brainfood.archive-card--live:hover h4 {
+  color: #1e3a8a;
+}
+
+.archive-card--brainfood .archive-card-tag {
+  color: #1d4ed8;
+}
+
+.archive-card--brainfood .archive-card-date {
+  color: #64748b;
+}
+
+.archive-card--brainfood.archive-card--soon {
+  border: 1px dashed #94a3b8;
+  background: #f8fafc;
+  color: #64748b;
+}
+
+.archive-card--soulfood.archive-card--live {
+  border: 1px solid rgba(180, 83, 9, 0.28);
+  background: #fffbeb;
+}
+
+.archive-card--soulfood.archive-card--live:hover {
+  border-color: rgba(180, 83, 9, 0.55);
+  box-shadow: 0 4px 16px rgba(180, 83, 9, 0.08);
+}
+
+.archive-card--soulfood.archive-card--live h4 {
+  color: #1c1917;
+}
+
+.archive-card--soulfood.archive-card--live:hover h4 {
+  color: #92400e;
+}
+
+.archive-card--soulfood .archive-card-tag {
+  color: #b45309;
+}
+
+.archive-card--soulfood .archive-card-date {
+  color: #78716c;
+}
+
+.archive-card--soulfood.archive-card--soon {
+  border: 1px dashed rgba(180, 83, 9, 0.45);
+  background: #fffbeb;
+  color: #78716c;
+}
+
+.archive-card-badge {
+  border-radius: 999px;
+  background: #e2e8f0;
+  padding: 4px 12px;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  color: #334155;
+}
+
+.archive-card--soulfood .archive-card-badge {
+  background: #fef3c7;
+  color: #78350f;
 }
 
 @media (max-width: 700px) {

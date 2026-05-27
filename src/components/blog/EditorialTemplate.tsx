@@ -1,6 +1,8 @@
 import Link from 'next/link';
 import { ReactNode } from 'react';
 
+export type EditorialBrand = 'brainfood' | 'soulfood';
+
 export type TocItem = {
   number: string;
   label: string;
@@ -18,6 +20,8 @@ type EditorialTemplateProps = {
   tocItems?: TocItem[];
   children: ReactNode;
   footer?: string;
+  /** Brainfood (blue) or Soulfood (gold) editorial palette. */
+  brand?: EditorialBrand;
   /** Shows a compact control to return to the Brainfood musings landing page. */
   backToMusings?: boolean;
 };
@@ -33,10 +37,14 @@ export function EditorialTemplate({
   tocItems = [],
   children,
   footer,
+  brand = 'brainfood',
   backToMusings = false,
 }: EditorialTemplateProps) {
+  const themeClass =
+    brand === 'soulfood' ? 'editorial-theme editorial-theme--soulfood min-h-screen' : 'editorial-theme min-h-screen';
+
   return (
-    <main className="editorial-theme min-h-screen">
+    <main className={themeClass}>
       <section className="editorial-cover">
         {backToMusings && (
           <div className="editorial-post-nav editorial-post-nav--cover">

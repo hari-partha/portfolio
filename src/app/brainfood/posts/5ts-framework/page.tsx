@@ -12,10 +12,10 @@ export default function FiveTsFrameworkPostPage() {
   return (
     <EditorialTemplate
       backToMusings
-      coverLabel="A Scout's Playbook"
+      coverLabel="Brainfood · Bite-size"
       title={
         <>
-          The <span style={{ color: '#93c5fd' }}>5Ts</span>: A Framework for Evaluating Early-Stage Companies
+          The <span style={{ color: 'var(--ed-highlight, #93c5fd)' }}>5Ts</span>: A Framework for Evaluating Early-Stage Companies
         </>
       }
       subtitle="What I learned from a family friend, two years of deal memos, and the questions I almost skipped."

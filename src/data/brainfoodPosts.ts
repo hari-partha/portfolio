@@ -1,66 +1,140 @@
-import { APRIL_ADMISSIONS_PUBLISH_AT } from '@/lib/aprilAdmissionsSchedule';
+export type PostBrand = 'brainfood' | 'soulfood';
+export type PostFormat = 'bite-size' | 'bytesize';
 
-export type BrainfoodPost = {
+export type ArchivePost = {
   title: string;
   summary: string;
+  brand: PostBrand;
+  format: PostFormat;
   /** Omit when `comingSoon` — card is not a link. */
   href?: string;
-  tag: string;
   date: string;
   /** If set, card is hidden until this instant (inclusive). Live posts only. */
   publishAt?: Date;
-  /** Teaser tile; no navigation until the essay ships. */
   comingSoon?: boolean;
 };
 
-const allPosts: BrainfoodPost[] = [
+export const ARCHIVE_SECTIONS: {
+  brand: PostBrand;
+  format: PostFormat;
+  title: string;
+  subtitle: string;
+}[] = [
   {
+    brand: 'brainfood',
+    format: 'bite-size',
+    title: 'Brainfood Bite-size',
+    subtitle: 'Small-scale technical musings',
+  },
+  {
+    brand: 'brainfood',
+    format: 'bytesize',
+    title: 'Brainfood Bytesize',
+    subtitle: 'The six-part series on AI in its Cambrian evolution, the Life Equation, AI infra × bio, and more',
+  },
+  {
+    brand: 'soulfood',
+    format: 'bite-size',
+    title: 'Soulfood Bite-size',
+    subtitle: 'Personal musings',
+  },
+  {
+    brand: 'soulfood',
+    format: 'bytesize',
+    title: 'Soulfood Bytesize',
+    subtitle: 'Longer personal essays — coming when the right story lands',
+  },
+];
+
+const allPosts: ArchivePost[] = [
+  {
+    brand: 'brainfood',
+    format: 'bite-size',
     title: 'The 5Ts: A Scout Framework for Startups',
     summary:
       'A long-form framework for evaluating early-stage startups through TAM, team, technology, traction, and term-sheet design.',
     href: '/brainfood/posts/5ts-framework',
-    tag: 'Venture',
     date: 'Apr 2026',
   },
   {
-    title: 'Brainfood Chapter 1 | Venturing into the Caves of Steel',
+    brand: 'brainfood',
+    format: 'bite-size',
+    title: 'Venturing into the Caves of Steel',
     summary: 'What Asimov can still teach us about AI, biology, and the essence of being human.',
     href: '/brainfood/posts/caves-of-steel',
-    tag: 'Brainfood',
     date: 'Nov 2025',
   },
   {
+    brand: 'soulfood',
+    format: 'bite-size',
     title: 'Admissions Insights from a Graduating Senior',
     summary:
       'April admissions notes from a graduating MET senior — say no with conviction, admit weekends, comb-shaped depth, finesse, and community. Updated over time.',
     href: '/brainfood/posts/april-admissions',
-    tag: 'College Advice',
     date: 'Apr 2026',
-    publishAt: APRIL_ADMISSIONS_PUBLISH_AT,
   },
   {
-    title: 'Brainfood Chapter 2 | AI in its Cambrian Evolution Era coming soon',
+    brand: 'soulfood',
+    format: 'bite-size',
+    title: 'MET Commencement Speech',
+    summary:
+      'Act I: Speed. Act II: Serendipity. Act III: What to carry — a farewell to the MET Class of 2026.',
+    href: '/brainfood/posts/met-commencement-speech',
+    date: 'May 2026',
+  },
+  {
+    brand: 'brainfood',
+    format: 'bytesize',
+    title: 'AI in its Cambrian Evolution Era',
     summary: 'How the AI wave maps onto biological metaphors — form, selection pressure, and what survives. In the works.',
-    tag: 'Brainfood',
     date: 'Summer 2026',
     comingSoon: true,
   },
   {
-    title: 'The Life Matrix | Systems Biology meets Productivity, Motivation & Growth coming soon',
-    summary: 'A systems-biology lens on how we work, rest, and compound — productivity and motivation without the hustle clichés.',
-    tag: 'Brainfood',
+    brand: 'brainfood',
+    format: 'bytesize',
+    title: 'The Life Matrix',
+    summary:
+      'Systems biology meets productivity, motivation, and growth — without the hustle clichés. In the works.',
+    date: 'Summer 2026',
+    comingSoon: true,
+  },
+  {
+    brand: 'soulfood',
+    format: 'bite-size',
+    title: 'Fight or Flight. Freeze & Frame',
+    summary: 'A personal essay on pressure, presence, and how we narrate hard moments. In the works.',
+    date: 'Summer 2026',
+    comingSoon: true,
+  },
+  {
+    brand: 'soulfood',
+    format: 'bite-size',
+    title: 'Cooking up a Theory',
+    summary: 'On intuition, experimentation, and the stories we tell while something is still simmering. In the works.',
     date: 'Summer 2026',
     comingSoon: true,
   },
 ];
 
-export function getVisibleBrainfoodPosts(now: Date = new Date()): BrainfoodPost[] {
-  if (process.env.NEXT_PUBLIC_UNLOCK_APRIL_ADMISSIONS === '1') {
-    return allPosts;
-  }
+export function getVisibleArchivePosts(now: Date = new Date()): ArchivePost[] {
   return allPosts.filter((post) => {
     if (post.comingSoon) return true;
     if (!post.publishAt) return true;
     return now.getTime() >= post.publishAt.getTime();
   });
+}
+
+export function seriesTag(brand: PostBrand, format: PostFormat): string {
+  const line = brand === 'brainfood' ? 'Brainfood' : 'Soulfood';
+  const size = format === 'bite-size' ? 'Bite-size' : 'Bytesize';
+  return `${line} ${size}`;
+}
+
+export function getArchiveSectionsWithPosts(now: Date = new Date()) {
+  const visible = getVisibleArchivePosts(now);
+  return ARCHIVE_SECTIONS.map((section) => ({
+    ...section,
+    posts: visible.filter((p) => p.brand === section.brand && p.format === section.format),
+  })).filter((section) => section.posts.length > 0);
 }

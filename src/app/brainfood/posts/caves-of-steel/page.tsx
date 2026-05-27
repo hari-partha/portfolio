@@ -6,11 +6,10 @@ export default function CavesOfSteelPostPage() {
   return (
     <EditorialTemplate
       backToMusings
-      coverLabel="Brainfood · Chapter 1"
+      coverLabel="Brainfood · Bite-size"
       title={
         <>
-          Brainfood Chapter 1 |{' '}
-          <span style={{ color: '#93c5fd' }}>Venturing into the Caves of Steel</span>
+          Venturing into the <span style={{ color: 'var(--ed-highlight, #93c5fd)' }}>Caves of Steel</span>
         </>
       }
       subtitle="What Asimov’s robots can still teach us about AI, biology, and the essence of being human."
