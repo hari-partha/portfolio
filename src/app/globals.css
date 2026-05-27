@@ -791,13 +791,104 @@ body::after {
 }
 
 /* Musings hub */
+.musings-hero {
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 28px 48px 20px;
+}
+
+.musings-back-arrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  margin-bottom: 20px;
+  border-radius: 50%;
+  border: 1px solid var(--ed-rule);
+  background: #fff;
+  color: var(--ed-ink-mid);
+  font-size: 1.25rem;
+  line-height: 1;
+  text-decoration: none;
+  transition:
+    border-color 0.15s ease,
+    color 0.15s ease,
+    background 0.15s ease;
+}
+
+.musings-back-arrow:hover {
+  border-color: var(--ed-accent);
+  color: var(--ed-accent-dark);
+  background: var(--ed-accent-light);
+}
+
+.musings-hero-title {
+  font-family: var(--font-cormorant), "Cormorant Garamond", serif;
+  font-size: clamp(32px, 5vw, 42px);
+  font-weight: 700;
+  line-height: 1.15;
+  color: var(--ed-ink);
+  margin: 0 0 20px;
+}
+
+.musings-about .editorial-p {
+  margin-bottom: 1rem;
+}
+
+.musings-about-last {
+  margin-bottom: 0 !important;
+}
+
+.musings-brand-panel .musings-brand-band {
+  padding: 24px 48px 20px;
+}
+
+.musings-brand-welcome {
+  font-family: var(--font-cormorant), "Cormorant Garamond", serif;
+  font-size: clamp(24px, 3.5vw, 30px);
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--ed-ink);
+  margin: 0 0 10px;
+}
+
+.musings-brand-intro {
+  max-width: 40rem;
+  margin-bottom: 0 !important;
+}
+
+.musings-posts-wrap {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 4px 48px 40px;
+}
+
+.musings-posts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 14px;
+}
+
+.musings-hub .archive-card-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 12px;
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
 .musings-toggle {
   display: inline-flex;
   padding: 4px;
   border-radius: 999px;
   background: rgba(255, 255, 255, 0.65);
   border: 1px solid var(--ed-rule);
-  margin-bottom: 28px;
+  margin-bottom: 20px;
 }
 
 .musings-toggle-btn {
@@ -824,51 +915,10 @@ body::after {
   box-shadow: 0 2px 8px rgba(15, 23, 42, 0.12);
 }
 
-.musings-intro-kicker {
-  margin-top: 0;
-}
-
-.musings-intro-text {
-  max-width: 42rem;
-  margin-bottom: 0;
-}
-
-.musings-nav {
-  margin-top: 28px;
-}
-
-.musings-nav-link {
-  display: inline-flex;
-  align-items: center;
-  border-radius: 999px;
-  border: 1px solid var(--ed-rule);
-  background: #fff;
-  padding: 10px 20px;
-  font-family: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
-  font-size: 11px;
-  font-weight: 500;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  text-decoration: none;
-  color: var(--ed-ink-mid);
-  transition:
-    border-color 0.15s ease,
-    color 0.15s ease;
-}
-
-.musings-nav-link:hover {
-  border-color: var(--ed-accent);
-  color: var(--ed-accent-dark);
-}
-
-.musings-posts-section {
-  margin-top: 0;
-  padding-top: 8px;
-}
-
 .musings-hub .archive-card {
   border-radius: 8px;
-  padding: 24px;
+  padding: 18px 20px;
+  height: 100%;
   transition:
     border-color 0.15s ease,
     box-shadow 0.15s ease;
@@ -889,8 +939,8 @@ body::after {
 
 .musings-hub .archive-card-title {
   font-family: var(--font-cormorant), "Cormorant Garamond", serif;
-  font-size: 1.5rem;
-  line-height: 1.2;
+  font-size: 1.35rem;
+  line-height: 1.22;
   color: var(--ed-ink);
   transition: color 0.15s ease;
 }
@@ -900,10 +950,10 @@ body::after {
 }
 
 .musings-hub .archive-card-summary {
-  margin-top: 12px;
+  margin-top: 8px;
   font-family: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
-  font-size: 14px;
-  line-height: 1.55;
+  font-size: 13px;
+  line-height: 1.5;
   color: var(--ed-ink-mid);
 }
 
@@ -939,6 +989,22 @@ body::after {
 }
 
 @media (max-width: 700px) {
+  .musings-hero {
+    padding: 24px 24px 16px;
+  }
+
+  .musings-brand-panel .musings-brand-band {
+    padding: 20px 24px 16px;
+  }
+
+  .musings-posts-wrap {
+    padding: 4px 24px 32px;
+  }
+
+  .musings-posts-grid {
+    grid-template-columns: 1fr;
+  }
+
   .editorial-cover {
     padding: 48px 24px 40px;
   }
