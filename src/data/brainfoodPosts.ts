@@ -38,7 +38,7 @@ const allPosts: ArchivePost[] = [
     title: 'Admissions Insights from a Graduating Senior',
     summary:
       'April admissions notes from a graduating MET senior — say no with conviction, admit weekends, comb-shaped depth, finesse, and community. Updated over time.',
-    href: '/brainfood/posts/april-admissions',
+    href: '/soulfood/posts/april-admissions',
     date: 'Apr 2026',
   },
   {
@@ -47,7 +47,7 @@ const allPosts: ArchivePost[] = [
     title: 'MET Commencement Speech',
     summary:
       'Act I: Speed. Act II: Serendipity. Act III: What to carry — a farewell to the MET Class of 2026.',
-    href: '/brainfood/posts/met-commencement-speech',
+    href: '/soulfood/posts/met-commencement-speech',
     date: 'May 2026',
   },
   {

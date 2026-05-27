@@ -1,14 +1,15 @@
-# Brainfood Editorial Post Template
+# Editorial Post Template
 
 Use this for every new post page:
 
-1. Create `src/app/brainfood/posts/<slug>/page.tsx`
-2. Import:
+1. Create `src/app/brainfood/posts/<slug>/page.tsx` for **Brainfood** posts, or `src/app/soulfood/posts/<slug>/page.tsx` for **Soulfood** posts.
+2. Add the post to `src/data/brainfoodPosts.ts` with the matching `brand` and `href` (`/brainfood/posts/...` or `/soulfood/posts/...`).
+3. Import:
    - `EditorialTemplate`
    - `EditorialSection`
    - `EditorialCaseStudy` (optional)
-3. Fill `EditorialTemplate` props using your post metadata.
-4. Compose sections with:
+4. Fill `EditorialTemplate` props using your post metadata (`brand="brainfood"` or `brand="soulfood"`).
+5. Compose sections with:
    - intro section (`editorial-intro-section`)
    - 2-6 `EditorialSection` blocks
    - optional pull quote: `editorial-pull-quote`
@@ -23,7 +24,8 @@ import { EditorialSection, EditorialTemplate } from '@/components/blog/Editorial
 export default function NewPostPage() {
   return (
     <EditorialTemplate
-      coverLabel="Brainfood · Month Year"
+      brand="brainfood"
+      coverLabel="Brainfood · Bitsize"
       title={<>Your Post Title</>}
       subtitle="One-line description."
       authorName="Hari Parthasarathy"
