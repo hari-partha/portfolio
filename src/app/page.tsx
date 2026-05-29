@@ -1,7 +1,6 @@
 'use client';
 import { useState, useEffect, useMemo } from 'react';
 import { HelixScene } from '@/components/HelixScene';
-import { LoadingScreen } from '@/components/LoadingScreen';
 import { HomePage } from '@/components/HomePage';
 import { HoverCard } from '@/components/HoverCard';
 import { HoverTooltip } from '@/components/HoverTooltip';
@@ -104,7 +103,7 @@ function ScrollSpacers() {
 }
 
 export default function MainPage() {
-  const { isExploring, setExploring, setProgress, isLoading, setLoading, setIsMobile } = useScrollStore();
+  const { isExploring, setExploring, setProgress, setIsMobile } = useScrollStore();
   const reduced = useReducedMotion();
 
   // Mobile Detection
@@ -135,7 +134,7 @@ export default function MainPage() {
       className="bg-bg-dark-teal selection:bg-accent-gold selection:text-bg-dark-teal min-h-screen relative w-full"
     >
       {/* 1. Background Layer (Text) */}
-      {!isLoading && !isExploring && (
+      {!isExploring && (
         <div className="fixed inset-0 flex items-center justify-center z-0 overflow-hidden pointer-events-none">
           <motion.h1
             initial={{ opacity: 0, scale: 0.95 }}
@@ -172,9 +171,7 @@ export default function MainPage() {
       )}
 
       {/* 4. Foreground UI (Nav, etc) */}
-      {isLoading && <LoadingScreen onComplete={() => setLoading(false)} />}
-
-      {!isLoading && !isExploring && (
+      {!isExploring && (
         <HomePage onEnter={() => {
           setExploring(true);
           window.scrollTo({ top: 0, behavior: 'auto' });

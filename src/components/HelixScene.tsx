@@ -186,16 +186,13 @@ function DNAModel() {
 }
 
 function SceneContent() {
-  const { progress, isExploring, isLoading, isMobile } = useScrollStore();
+  const { isExploring, isMobile } = useScrollStore();
   const cameraRef = useRef<THREE.PerspectiveCamera>(null);
 
   useFrame(() => {
     if (!cameraRef.current) return;
 
-    if (isLoading) {
-      cameraRef.current.position.lerp(new THREE.Vector3(0, 0, isMobile ? 15 : 10), 0.05);
-      cameraRef.current.lookAt(0, 0, 0);
-    } else if (!isExploring) {
+    if (!isExploring) {
       // Landing: Wide view - Push back to 30 on mobile to clear text
       cameraRef.current.position.lerp(new THREE.Vector3(0, 0, isMobile ? 30 : 15), 0.05);
       cameraRef.current.lookAt(0, 0, 0);
@@ -237,11 +234,7 @@ function SceneContent() {
       <pointLight position={[0, -15, 0]} intensity={0.8} color="#99f6e4" />
 
       <Suspense fallback={null}>
-        {isLoading ? (
-          <MiniHelix />
-        ) : (
-          <MolecularHelix />
-        )}
+        <MolecularHelix />
         <Environment preset="studio" />
 
         <EffectComposer enableNormalPass={false}>

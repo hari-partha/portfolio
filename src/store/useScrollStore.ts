@@ -9,8 +9,6 @@ interface ScrollState {
   setActiveTileIndex: (index: number) => void;
   isExploring: boolean;
   setExploring: (e: boolean) => void;
-  isLoading: boolean;
-  setLoading: (loading: boolean) => void;
 
   // Tracker for the Atomic Scanner HUD
   atomPosition: { x: number; y: number } | null;
@@ -38,8 +36,6 @@ export const useScrollStore = create<ScrollState>((set) => ({
   setActiveTileIndex: (index) => set({ activeTileIndex: index }),
   isExploring: false,
   setExploring: (isExploring) => set({ isExploring }),
-  isLoading: true,
-  setLoading: (isLoading) => set({ isLoading }),
   atomPosition: null,
   setAtomPosition: (atomPosition) => set({ atomPosition }),
 

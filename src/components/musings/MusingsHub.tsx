@@ -70,19 +70,21 @@ export function MusingsHub({ brainfoodPosts, soulfoodPosts }: MusingsHubProps) {
   return (
     <main className="musings-hub editorial-theme min-h-screen">
       <section className="editorial-cover musings-cover">
-        <Link href="/" className="editorial-back-musings editorial-back-musings--cover musings-back-arrow-cover" aria-label="Back to portfolio">
-          ←
-        </Link>
-        <div className="editorial-cover-label">Essays & Field Notes</div>
-        <h1 className="editorial-cover-title">Welcome to Musings</h1>
-        <p className="editorial-cover-sub">
-          Technical Brainfood and personal Soulfood — frameworks, predictions, and stories from the road.
-        </p>
-        <div className="editorial-cover-byline">
-          <div className="editorial-avatar">H</div>
-          <div>
-            <div className="editorial-byline-name">Hari Parthasarathy</div>
-            <div className="editorial-byline-meta">Researcher · Builder · Strategist</div>
+        <div className="musings-cover-inner">
+          <Link href="/" className="editorial-back-musings editorial-back-musings--cover musings-back-arrow-cover" aria-label="Back to portfolio">
+            ←
+          </Link>
+          <div className="editorial-cover-label">Essays & Field Notes</div>
+          <h1 className="editorial-cover-title">Welcome to Musings</h1>
+          <p className="editorial-cover-sub">
+            Technical Brainfood and personal Soulfood — frameworks, predictions, and stories from the road.
+          </p>
+          <div className="editorial-cover-byline">
+            <div className="editorial-avatar">H</div>
+            <div>
+              <div className="editorial-byline-name">Hari Parthasarathy</div>
+              <div className="editorial-byline-meta">Researcher · Builder · Strategist</div>
+            </div>
           </div>
         </div>
       </section>

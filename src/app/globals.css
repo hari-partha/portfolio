@@ -792,7 +792,20 @@ body::after {
 
 /* Musings hub */
 .musings-cover {
-  padding-bottom: 56px;
+  padding: 64px 0 56px;
+}
+
+.musings-cover-inner {
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 0 48px;
+  position: relative;
+  z-index: 1;
+}
+
+.musings-cover .editorial-cover-title,
+.musings-cover .editorial-cover-sub {
+  max-width: none;
 }
 
 .musings-back-arrow-cover {
@@ -1008,6 +1021,10 @@ body::after {
 }
 
 @media (max-width: 700px) {
+  .musings-cover-inner {
+    padding: 0 24px;
+  }
+
   .musings-bio-inner {
     padding: 28px 24px 32px;
   }
