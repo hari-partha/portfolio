@@ -29,8 +29,8 @@ export default function MetCommencementSpeechPage() {
       subtitle="Speed, serendipity, and what to carry — a three-act farewell to the cohort that built with me."
       authorName="Hari Parthasarathy"
       authorMeta="M.E.T. '26 · UC Berkeley"
-      introKicker="Draft 1"
-      introBandText="Delivered in spirit to the M.E.T. Class of 2026 — friends, families, faculty, and the village that got us here."
+      introKicker="Final draft"
+      introBandText="Delivered to the entire M.E.T. Class of 2026 cohort at our Commencement Reception — friends, families, faculty, and the village that got us here."
       tocItems={tocItems}
       footer={"Hari Parthasarathy · M.E.T. '26, UC Berkeley"}
     >
