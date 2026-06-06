@@ -1,0 +1,66 @@
+---
+meta
+brand: brainfood
+format: bytesize
+title: Speciation at Hyperscale
+subtitle: How fast are new AI forms appearing? And what does it mean that record creation and record extinction are happening at the exact same time?
+seriesLabel: Brainfood Bytesize · AI's Cambrian Explosion · Section I
+breadcrumb: Brainfood · Bytesize · Chapter 2 · Section I
+date: Summer 2026 · Part of the AI's Cambrian Explosion series
+authorName: Hari Parthasarathy
+authorMeta: M.E.T. '26 · UC Berkeley · Independent Investor & VC Scout
+footer: Hari Parthasarathy · M.E.T. '26, UC Berkeley · Independent Investor & VC Scout. Preview excerpt from AI's Cambrian Explosion. Full section not yet published.
+---
+
+::frameworkCard title="The Series At A Glance"::
+I | **Speciation at Hyperscale** — How fast are new forms appearing? *You are here.*
+II | The Transformer as Meteor — The Ediacaran–Cambrian boundary
+III | Body Plans & Exoskeletons — Infrastructure as substrate
+IV | Apex Predators — Who runs the food chain?
+V | Carcinization — Why every frontier model looks the same
+VI | Finches and Futures — Survival of the fittest agent
+::end::
+
+::statRow::
+52.5% | of global VC captured by AI in 2025 — first majority year
+$675B+ | hyperscaler capex committed for 2026 alone
+1 / 3 days | average cadence of new frontier AI model releases
+::end::
+
+::paragraph dropCap::
+The Cambrian explosion produced roughly 20 animal phyla in about 20 million years — and no new phyla have appeared in the half-billion years since. That is the biological benchmark for rapid speciation. If you want to understand how absurd the AI analog looks against it, you need to sit with that number for a moment.
+
+::paragraph::
+Now look at what's happened in AI since 2022. Frontier model variants are proliferating at a rate measured in weeks. The AI Flash Report summarizes it as plainly as possible: *on average, a new AI model arrives every three days.*
+
+::section id="section-01" num="01" pillar="Pillar 1 — Capital Markets" title="The sedimentary layer: where the nutrients came from" shortLabel="Capital"::
+::paragraph::
+In the biological Cambrian, the triggering event was oxygenation. In the AI Cambrian, the equivalent is capital. Not metaphorically. Literally: the infrastructure buildout that enabled frontier-scale training required a level of capital deployment that didn't exist for any prior technology cycle.
+
+::paragraph::
+In 2025, AI captured roughly 52.5% of all global venture capital — the first time any technology category has claimed majority of VC in a single year. OpenAI and Anthropic together represented about 14% of all worldwide VC dollars in 2025.
+
+::callout label="Design preview note"::
+This page shows the Bytesize layout with section navigation. Charts, tables, and full pillar content will ship when the Cambrian series is ready.
+::end::
+::end::
+
+::section id="section-02" num="02" pillar="Pillar 2 — Across the Stack" title="From foundation models to the long tail of open weights" shortLabel="Stack"::
+::paragraph::
+Speciation at the model layer is visible in release cadence, open-weight proliferation, and the widening gap between frontier labs and the long tail of fine-tunes.
+::end::
+
+::section id="section-03" num="03" pillar="Pillar 3 — Infrastructure" title="The exoskeleton: compute, memory, and the cost of scale" shortLabel="Infra"::
+::paragraph::
+Hyperscaler capex commitments for 2026 exceed $675B. That buildout is the exoskeleton — without it, no body plan scales.
+::end::
+
+::section id="section-04" num="04" pillar="Pillar 4 — The Application Layer" title="Where the speciation becomes visible to enterprises" shortLabel="Apps"::
+::paragraph::
+Enterprise AI spend tripled in a single year. Startups captured 63% of total app-layer spend — the application layer is where speciation becomes legible to buyers.
+::end::
+
+::section id="section-05" num="✦" pillar="What this section proves" title="The question isn't how fast? — it's which of these forms survive?" shortLabel="Close"::
+::paragraph::
+The speciation rate question is answered. The question every investor and founder is implicitly answering is: which body plan survives the transition to the Ordovician?
+::end::
