@@ -33,6 +33,15 @@ const allPosts: ArchivePost[] = [
     date: 'Nov 2025',
   },
   {
+    brand: 'brainfood',
+    format: 'bitsize',
+    title: 'Genetic Alphabets meet Cognitive Benchmarks',
+    summary:
+      'Have LLMs officially entered the biotech AI landscape? On AlphaFold 3, BioMysteryBench, clinical proof-of-concept, and the $0.22 opportunity in AI for health.',
+    href: '/brainfood/posts/genetic-alphabets-cognitive-benchmarks',
+    date: 'May 2026',
+  },
+  {
     brand: 'soulfood',
     format: 'bitsize',
     title: 'Admissions Insights from a Graduating Senior',
@@ -70,18 +79,20 @@ const allPosts: ArchivePost[] = [
   {
     brand: 'soulfood',
     format: 'bitsize',
-    title: 'Fight or Flight. Freeze & Frame',
-    summary: 'A personal essay on pressure, presence, and how we narrate hard moments. In the works.',
-    date: 'Summer 2026',
-    comingSoon: true,
+    title: 'Fight or Flight. Freeze and Frame',
+    summary:
+      'A byte-sized observation about arguments, relationships, and what we only understand later on — friction, memory, and relishing the discomfort.',
+    href: '/soulfood/posts/fight-or-flight-freeze-and-frame',
+    date: 'May 2026',
   },
   {
     brand: 'soulfood',
     format: 'bitsize',
     title: 'Cooking up a Theory',
-    summary: 'On intuition, experimentation, and the stories we tell while something is still simmering. In the works.',
-    date: 'Summer 2026',
-    comingSoon: true,
+    summary:
+      'A theory about kitchens, parents, and what your recipe style says about the way you move through the world.',
+    href: '/soulfood/posts/cooking-up-a-theory',
+    date: 'May 2026',
   },
 ];
 
