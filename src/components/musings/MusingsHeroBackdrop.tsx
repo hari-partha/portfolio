@@ -61,7 +61,7 @@ export function MusingsHeroBackdrop({ color }: MusingsHeroBackdropProps) {
     const MIN_INTERVAL = 8000; // ms — a generation roughly every ~10s, organically paced
     const MAX_INTERVAL = 13000;
     const FADE_MS = 600; // short, discrete transition between generations (true Conway feel)
-    const CELL_ALPHA = 0.2; // square fill opacity (low → stays background)
+    const CELL_ALPHA = 0.14; // square fill opacity (low → stays well behind the text)
     const GRID_ALPHA = 0.05;
     const SOUP = 0.12;
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
