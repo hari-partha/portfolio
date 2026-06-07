@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import type { ReactNode } from 'react';
+import { ReaderArticleHero } from './ReaderArticleHero';
 import type { ReaderBrand } from './types';
 
 type BitsizeReaderLayoutProps = {
@@ -10,6 +11,7 @@ type BitsizeReaderLayoutProps = {
   authorName: string;
   authorMeta: string;
   date?: string;
+  readingTime?: string;
   introText?: string;
   footer?: string;
   children: ReactNode;
@@ -23,12 +25,15 @@ export function BitsizeReaderLayout({
   authorName,
   authorMeta,
   date,
+  readingTime,
   introText,
   footer,
   children,
 }: BitsizeReaderLayoutProps) {
   const themeClass =
-    brand === 'soulfood' ? 'reader-theme reader-theme--soulfood' : 'reader-theme reader-theme--brainfood';
+    brand === 'soulfood'
+      ? 'reader-theme reader-theme--soulfood reader-theme--bitsize'
+      : 'reader-theme reader-theme--brainfood reader-theme--bitsize';
 
   return (
     <main className={themeClass}>
@@ -39,20 +44,21 @@ export function BitsizeReaderLayout({
         <span className="reader-breadcrumb">{seriesLabel}</span>
       </header>
 
-      <div className="reader-wrapper">
-        <p className="reader-series-label">{seriesLabel}</p>
-        <h1 className="reader-title">{title}</h1>
-        <p className="reader-subtitle">{subtitle}</p>
-        <hr className="reader-divider" />
-        <div className="reader-byline">
-          <strong>{authorName}</strong>
-          <span className="reader-byline-sep">·</span>
-          {authorMeta}
+      <div className="reader-hero-band">
+        <div className="reader-hero-band-inner">
+          <ReaderArticleHero
+            title={title}
+            subtitle={subtitle}
+            authorName={authorName}
+            authorMeta={authorMeta}
+            date={date}
+            readingTime={readingTime}
+            lede={introText}
+          />
         </div>
-        {date && <p className="reader-date">{date}</p>}
+      </div>
 
-        {introText && <p className="reader-lede">{introText}</p>}
-
+      <div className="reader-wrapper">
         <article className="reader-article">{children}</article>
 
         {footer && (

@@ -81,7 +81,7 @@ function renderBlock(block: ContentBlock, format: PostFormat, brand: PostBrand, 
       );
 
     case 'statRow':
-      return <ReaderStatRow key={key} stats={block.stats} />;
+      return <ReaderStatRow key={key} stats={block.stats} title={block.title} />;
 
     case 'callout':
       return (

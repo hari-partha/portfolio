@@ -59,6 +59,7 @@ export type PullQuoteBlock = {
 
 export type StatRowBlock = {
   type: 'statRow';
+  title?: string;
   stats: StatMeta[];
 };
 

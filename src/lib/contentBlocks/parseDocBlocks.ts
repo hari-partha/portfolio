@@ -346,7 +346,7 @@ function parseRegion(region: ParsedRegion, format: PostFormat): ContentBlock {
   }
 
   if (type === 'statRow') {
-    return { type: 'statRow', stats: parseStatRow(body, line) };
+    return { type: 'statRow', title: attrs.title, stats: parseStatRow(body, line) };
   }
 
   if (type === 'callout') {

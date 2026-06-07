@@ -1,4 +1,10 @@
-import { EditorialSection, EditorialTemplate } from '@/components/blog/EditorialTemplate';
+import { BitsizeReaderLayout } from '@/components/blog/reader/BitsizeReaderLayout';
+import {
+  ReaderParagraph,
+  ReaderPullQuote,
+  ReaderStatRow,
+  ReaderSubsection,
+} from '@/components/blog/reader/ReaderBlocks';
 import { GENETIC_ALPHABETS } from './geneticAlphabetsData';
 import type { Metadata } from 'next';
 
@@ -8,74 +14,45 @@ export const metadata: Metadata = {
     'Have LLMs officially entered the biotech AI landscape? On AlphaFold 3, BioMysteryBench, and the $0.22 opportunity in AI for health.',
 };
 
-const tocItems = GENETIC_ALPHABETS.sections.map((section, index) => ({
-  number: String(index + 1),
-  label: section.title,
-  sub: `Section ${index + 1}`,
-}));
-
 export default function GeneticAlphabetsPostPage() {
   const { pullQuote, introParagraphs, stats, sections } = GENETIC_ALPHABETS;
 
   return (
-    <EditorialTemplate
-      backToMusings
-      coverLabel="Brainfood · Bitsize"
+    <BitsizeReaderLayout
+      brand="brainfood"
+      seriesLabel="Brainfood · Bitsize"
       title={
         <>
           Genetic Alphabets meet{' '}
-          <span style={{ color: 'var(--ed-highlight, #93c5fd)' }}>Cognitive Benchmarks</span>
+          <span style={{ color: 'var(--reader-accent)' }}>Cognitive Benchmarks</span>
         </>
       }
       subtitle="Have LLMs officially entered the Biotech AI Landscape?"
       authorName="Hari Parthasarathy"
-      authorMeta={"M.E.T. '26 · UC Berkeley"}
-      introKicker="Field note"
-      introBandText="AI is changing the world — but only $0.22 of every venture dollar reaches healthcare. That gap might be the story."
-      tocItems={tocItems}
-      footer={"Hari Parthasarathy · M.E.T. '26, UC Berkeley"}
+      authorMeta="M.E.T. '26 · UC Berkeley"
+      date="May 2026"
+      readingTime="7 min read"
+      introText="AI is changing the world — but only $0.22 of every venture dollar reaches healthcare. That gap might be the story."
+      footer="Hari Parthasarathy · M.E.T. '26, UC Berkeley"
     >
-      <section className="editorial-essay-flow">
-        {introParagraphs.map((paragraph) => (
-          <p key={paragraph.slice(0, 48)} className="editorial-p">
-            {paragraph}
-          </p>
-        ))}
+      {introParagraphs.map((paragraph, index) => (
+        <ReaderParagraph key={paragraph.slice(0, 48)} dropCap={index === 0}>
+          {paragraph}
+        </ReaderParagraph>
+      ))}
 
-        <div className="editorial-recap">
-          <div className="editorial-recap-row editorial-recap-row--two">
-            {stats.slice(0, 2).map((stat) => (
-              <div key={stat.value} className="editorial-recap-pill">
-                <strong>{stat.value}</strong> {stat.label}
-              </div>
-            ))}
-          </div>
-          <div className="editorial-recap-row editorial-recap-row--two">
-            {stats.slice(2).map((stat) => (
-              <div key={stat.value} className="editorial-recap-pill">
-                <strong>{stat.value}</strong> {stat.label}
-              </div>
-            ))}
-          </div>
-        </div>
+      <ReaderStatRow stats={stats.map((stat) => ({ value: stat.value, label: stat.label }))} />
 
-        {sections.map((section, sectionIndex) => (
-          <EditorialSection key={section.title} badge={String(sectionIndex + 1)} title={section.title}>
-            {section.paragraphs.map((paragraph) => (
-              <p key={paragraph.slice(0, 48)} className="editorial-p">
-                {paragraph}
-              </p>
-            ))}
-            {sectionIndex === 0 && (
-              <blockquote className="editorial-pull-quote">
-                <p>{pullQuote}</p>
-              </blockquote>
-            )}
-          </EditorialSection>
-        ))}
+      {sections.map((section, sectionIndex) => (
+        <ReaderSubsection key={section.title} title={section.title}>
+          {section.paragraphs.map((paragraph) => (
+            <ReaderParagraph key={paragraph.slice(0, 48)}>{paragraph}</ReaderParagraph>
+          ))}
+          {sectionIndex === 0 && <ReaderPullQuote>{pullQuote}</ReaderPullQuote>}
+        </ReaderSubsection>
+      ))}
 
-        <p className="editorial-signoff editorial-p">A food for thought, — Hari</p>
-      </section>
-    </EditorialTemplate>
+      <p className="reader-signoff">A food for thought, — Hari</p>
+    </BitsizeReaderLayout>
   );
 }

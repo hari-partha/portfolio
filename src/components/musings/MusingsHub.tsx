@@ -2,8 +2,17 @@
 
 import Link from 'next/link';
 import { useCallback, useState } from 'react';
+import { ProfileAvatar } from '@/components/blog/reader/ProfileAvatar';
+import { MusingsHeroBackdrop } from './MusingsHeroBackdrop';
 import type { ArchivePost, PostBrand } from '@/data/brainfoodPosts';
 import { formatTileLabel } from '@/data/brainfoodPosts';
+
+const HERO_TAGS = ['AI', 'Biotech', 'Venture', 'Storytelling'];
+
+const BRAND_ACCENT_DARK: Record<PostBrand, string> = {
+  brainfood: '#345583',
+  soulfood: '#785416',
+};
 
 const BRAND_COPY: Record<PostBrand, { welcome: string; intro: string }> = {
   brainfood: {
@@ -18,6 +27,13 @@ const BRAND_COPY: Record<PostBrand, { welcome: string; intro: string }> = {
   },
 };
 
+const BIO_PARAGRAPHS = [
+  'I\'m a researcher, tinkerer, and product-minded strategist with a strong biotech focus. I believe synthesizing new frontiers like space, agentic AI, and wearables with traditional biosciences can augment drug discovery and development, and create better healthcare outcomes. I\'m working to build and back moonshots in these spaces.',
+  'Growing up in the Bay Area, I\'ve been inspired by the region\'s role in modern genetics and Silicon Valley. Over time, that inspiration became a call to action: understanding how biosciences can learn from tech-forward deployment and how technology often mirrors biological patterns, including how the AI boom can resemble a Cambrian-style explosion of forms and capabilities.',
+  'At Cal, I\'ve focused on making science faster, smarter, and more human-centered: from building drug discovery infrastructure for rare genetic diseases to designing computational tools that quantify spaceflight effects on inflammation and skin biology. As a strategist, I\'ve also helped scale startups, supported product and design teams through customer validation loops, and studied investor conviction in AI and deeptech.',
+  'Outside work, I explore new frontiers through travel, cinema and television, and niche hobbies like tessellation origami, Indian EDM fusion, and historical trivia. Most of all, I love learning from and building alongside extraordinary people. Reach out any time at hari [dot] parthasararthy [at] berkeley [dot] edu.',
+];
+
 type MusingsHubProps = {
   brainfoodPosts: ArchivePost[];
   soulfoodPosts: ArchivePost[];
@@ -29,27 +45,27 @@ function PostTile({ post }: { post: ArchivePost }) {
   if (post.comingSoon || !post.href) {
     return (
       <div
-        className="archive-card archive-card--soon"
+        className="musings-r-card musings-r-card--soon"
         aria-label={`${post.title} — coming ${post.date}`}
       >
-        <div className="archive-card-meta">
-          <span className="archive-card-tag">{tag}</span>
-          <span className="archive-card-badge">Coming {post.date}</span>
+        <div className="musings-r-card-meta">
+          <span className="musings-r-card-tag">{tag}</span>
+          <span className="musings-r-card-badge">Coming {post.date}</span>
         </div>
-        <h3 className="archive-card-title">{post.title}</h3>
-        <p className="archive-card-summary">{post.summary}</p>
+        <h3 className="musings-r-card-title">{post.title}</h3>
+        <p className="musings-r-card-summary">{post.summary}</p>
       </div>
     );
   }
 
   return (
-    <Link href={post.href} className="archive-card archive-card--live group">
-      <div className="archive-card-meta">
-        <span className="archive-card-tag">{tag}</span>
-        <span className="archive-card-date">{post.date}</span>
+    <Link href={post.href} className="musings-r-card group">
+      <div className="musings-r-card-meta">
+        <span className="musings-r-card-tag">{tag}</span>
+        <span className="musings-r-card-date">{post.date}</span>
       </div>
-      <h3 className="archive-card-title">{post.title}</h3>
-      <p className="archive-card-summary">{post.summary}</p>
+      <h3 className="musings-r-card-title">{post.title}</h3>
+      <p className="musings-r-card-summary">{post.summary}</p>
     </Link>
   );
 }
@@ -59,105 +75,105 @@ export function MusingsHub({ brainfoodPosts, soulfoodPosts }: MusingsHubProps) {
   const copy = BRAND_COPY[brand];
   const posts = brand === 'brainfood' ? brainfoodPosts : soulfoodPosts;
 
-  const brandPanelClass =
+  const themeClass =
     brand === 'soulfood'
-      ? 'musings-brand-panel editorial-theme editorial-theme--soulfood'
-      : 'musings-brand-panel editorial-theme';
+      ? 'musings-reader reader-theme reader-theme--soulfood'
+      : 'musings-reader reader-theme reader-theme--brainfood';
 
   const setBrainfood = useCallback(() => setBrand('brainfood'), []);
   const setSoulfood = useCallback(() => setBrand('soulfood'), []);
 
   return (
-    <main className="musings-hub editorial-theme min-h-screen">
-      <section className="editorial-cover musings-cover">
-        <div className="musings-cover-inner">
-          <Link href="/" className="editorial-back-musings editorial-back-musings--cover musings-back-arrow-cover" aria-label="Back to portfolio">
-            ←
-          </Link>
-          <div className="editorial-cover-label">Essays & Field Notes</div>
-          <h1 className="editorial-cover-title">Welcome to Musings</h1>
-          <p className="editorial-cover-sub">
-            Technical Brainfood and personal Soulfood — frameworks, predictions, and stories from the road.
+    <main className={themeClass}>
+      <header className="reader-top-bar">
+        <Link href="/" className="reader-back-link">
+          ← Back to portfolio
+        </Link>
+        <span className="reader-breadcrumb">Musings</span>
+      </header>
+
+      <section className="musings-r-hero">
+        <MusingsHeroBackdrop color={BRAND_ACCENT_DARK[brand]} />
+        <div className="musings-r-hero-scrim" aria-hidden="true" />
+        <div className="musings-r-hero-inner">
+          <p className="reader-eyebrow">Essays &amp; Field Notes</p>
+          <h1 className="musings-r-title">Musings</h1>
+          <p className="musings-r-dek">
+            Technical Brainfood and personal Soulfood — frameworks, predictions, and stories from the road. A working
+            notebook on where AI, biology, and the capital that funds them are headed, alongside the human stories I
+            collect along the way.
           </p>
-          <div className="editorial-cover-byline">
-            <div className="editorial-avatar">H</div>
-            <div>
-              <div className="editorial-byline-name">Hari Parthasarathy</div>
-              <div className="editorial-byline-meta">Researcher · Builder · Strategist</div>
+          <div className="musings-r-tags">
+            {HERO_TAGS.map((tag) => (
+              <span key={tag} className="musings-r-tag">
+                {tag}
+              </span>
+            ))}
+          </div>
+          <div className="musings-r-byline">
+            <ProfileAvatar size={50} />
+            <div className="musings-r-byline-text">
+              <div className="musings-r-byline-name">Hari Parthasarathy</div>
+              <div className="musings-r-byline-meta">Researcher · Builder · Strategist</div>
             </div>
           </div>
         </div>
+        <a
+          className="musings-r-hero-credit"
+          href="https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Conway&apos;s Game of Life ↗
+        </a>
       </section>
 
-      <section className="musings-bio">
-        <div className="musings-bio-inner">
-          <h2 className="musings-bio-title">Hi, I&apos;m Hari.</h2>
-          <div className="musings-about">
-            <p className="editorial-p">
-              I&apos;m a researcher, tinkerer, and product-minded strategist with a strong biotech focus. I believe
-              synthesizing new frontiers like space, agentic AI, and wearables with traditional biosciences can augment drug
-              discovery and development, and create better healthcare outcomes. I&apos;m working to build and back moonshots in
-              these spaces.
-            </p>
-            <p className="editorial-p">
-              Growing up in the Bay Area, I&apos;ve been inspired by the region&apos;s role in modern genetics and Silicon Valley.
-              Over time, that inspiration became a call to action: understanding how biosciences can learn from tech-forward
-              deployment and how technology often mirrors biological patterns, including how the AI boom can resemble a
-              Cambrian-style explosion of forms and capabilities.
-            </p>
-            <p className="editorial-p">
-              At Cal, I&apos;ve focused on making science faster, smarter, and more human-centered: from building drug discovery
-              infrastructure for rare genetic diseases to designing computational tools that quantify spaceflight effects on
-              inflammation and skin biology. As a strategist, I&apos;ve also helped scale startups, supported product and design
-              teams through customer validation loops, and studied investor conviction in AI and deeptech.
-            </p>
-            <p className="editorial-p">
-              Outside work, I explore new frontiers through travel, cinema and television, and niche hobbies like tessellation
-              origami, Indian EDM fusion, and historical trivia. Most of all, I love learning from and building alongside
-              extraordinary people. Reach out any time at hari [dot] parthasararthy [at] berkeley [dot] edu.
-            </p>
-          </div>
+      <section className="musings-r-bio">
+        <h2 className="musings-r-bio-title">Hi, I&apos;m Hari.</h2>
+        <div className="musings-r-bio-body">
+          {BIO_PARAGRAPHS.map((paragraph) => (
+            <p key={paragraph.slice(0, 32)}>{paragraph}</p>
+          ))}
         </div>
       </section>
 
-      <div className={brandPanelClass}>
-        <section className="musings-feed-section">
-          <div className="musings-feed-layout">
-            <aside className="musings-feed-aside">
-              <div className="musings-toggle" role="tablist" aria-label="Feed">
-                <button
-                  type="button"
-                  role="tab"
-                  aria-selected={brand === 'brainfood'}
-                  className={`musings-toggle-btn ${brand === 'brainfood' ? 'musings-toggle-btn--active' : ''}`}
-                  onClick={setBrainfood}
-                >
-                  Brainfood
-                </button>
-                <button
-                  type="button"
-                  role="tab"
-                  aria-selected={brand === 'soulfood'}
-                  className={`musings-toggle-btn ${brand === 'soulfood' ? 'musings-toggle-btn--active' : ''}`}
-                  onClick={setSoulfood}
-                >
-                  Soulfood
-                </button>
-              </div>
-              <h3 className="musings-brand-welcome">{copy.welcome}</h3>
-              <p className="musings-brand-intro">{copy.intro}</p>
-            </aside>
-
-            <div className="musings-feed-posts">
-              <div className="musings-posts-grid">
-                {posts.map((post) => (
-                  <PostTile key={post.title} post={post} />
-                ))}
-              </div>
+      <section className="musings-r-feed">
+        <div className="musings-r-feed-inner">
+          <div className="musings-r-toggle" role="tablist" aria-label="Feed">
+            <div className="musings-r-toggle-track">
+              <button
+                type="button"
+                role="tab"
+                aria-selected={brand === 'brainfood'}
+                className={`musings-r-toggle-btn ${brand === 'brainfood' ? 'musings-r-toggle-btn--active' : ''}`}
+                onClick={setBrainfood}
+              >
+                Brainfood
+              </button>
+              <button
+                type="button"
+                role="tab"
+                aria-selected={brand === 'soulfood'}
+                className={`musings-r-toggle-btn ${brand === 'soulfood' ? 'musings-r-toggle-btn--active' : ''}`}
+                onClick={setSoulfood}
+              >
+                Soulfood
+              </button>
             </div>
           </div>
-        </section>
-      </div>
+
+          <div className="musings-r-feed-head">
+            <h3 className="musings-r-welcome">{copy.welcome}</h3>
+            <p className="musings-r-intro">{copy.intro}</p>
+          </div>
+
+          <div className="musings-r-grid">
+            {posts.map((post) => (
+              <PostTile key={post.title} post={post} />
+            ))}
+          </div>
+        </div>
+      </section>
     </main>
   );
 }

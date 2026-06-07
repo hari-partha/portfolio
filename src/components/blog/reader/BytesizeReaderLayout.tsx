@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import type { ReactNode } from 'react';
+import { ReaderArticleHero } from './ReaderArticleHero';
 import { SectionNavBar } from './SectionNavBar';
 import type { ReaderBrand, ReaderSectionNavItem, ReaderStat } from './types';
 import { ReaderFrameworkCard, ReaderStatRow } from './ReaderBlocks';
@@ -52,16 +53,14 @@ export function BytesizeReaderLayout({
       </header>
 
       <div className="reader-wrapper reader-wrapper--bytesize">
-        <p className="reader-series-label">{seriesLabel}</p>
-        <h1 className="reader-title">{title}</h1>
-        <p className="reader-subtitle">{subtitle}</p>
-        <hr className="reader-divider" />
-        <div className="reader-byline">
-          <strong>{authorName}</strong>
-          <span className="reader-byline-sep">·</span>
-          {authorMeta}
-        </div>
-        {date && <p className="reader-date">{date}</p>}
+        <ReaderArticleHero
+          eyebrow={seriesLabel}
+          title={title}
+          subtitle={subtitle}
+          authorName={authorName}
+          authorMeta={authorMeta}
+          date={date}
+        />
 
         {frameworkCard && <ReaderFrameworkCard title={frameworkCard.title} rows={frameworkCard.rows} />}
         {stats && stats.length > 0 && <ReaderStatRow stats={stats} />}
