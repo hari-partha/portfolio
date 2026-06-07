@@ -39,3 +39,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+public/images/hari-original.jpg
+.tmp-blogs-raw.txt
+.tmp-blogs.json
