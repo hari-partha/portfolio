@@ -1063,6 +1063,7 @@ body::after {
   --reader-rule: #d9c9b0;
   --reader-band: #ece7dd;
   --reader-band-rule: #d9c9b0;
+  --reader-band-edge: #ddd5c4;
   --reader-olive: #e2e4d1;
   --reader-olive-rule: #ccd0b9;
   --reader-col: 680px;
@@ -1084,6 +1085,7 @@ body::after {
   --reader-card-bg: #e7eef7;
   --reader-band: #e6ecf4;
   --reader-band-rule: #ccd9ea;
+  --reader-band-edge: #b9cce6;
 }
 
 .reader-theme--soulfood {
@@ -1094,6 +1096,7 @@ body::after {
   --reader-card-bg: #f0e6cc;
   --reader-band: #ecdfbe;
   --reader-band-rule: #dac999;
+  --reader-band-edge: #d8c28e;
 }
 
 .reader-top-bar {
@@ -2177,9 +2180,15 @@ body::after {
 .musings-r-hero {
   position: relative;
   overflow: hidden;
-  background: var(--reader-band);
+  /* Band color in the center (behind the text), darkening toward the edges so
+     the centered title/byline pop against a subtle vignette. */
+  background: radial-gradient(
+    ellipse 92% 125% at 50% 44%,
+    var(--reader-band) 34%,
+    var(--reader-band-edge) 100%
+  );
   border-bottom: 1px solid var(--reader-band-rule);
-  transition: background 0.4s ease, border-color 0.4s ease;
+  transition: border-color 0.4s ease;
 }
 
 .musings-r-hero-backdrop {
