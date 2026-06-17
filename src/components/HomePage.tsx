@@ -127,7 +127,7 @@ export function HomePage({ onEnter }: HomePageProps) {
                   <Icons.LinkedIn className="w-5 h-5" />
                 </a>
                 <a
-                  href="/hari-parthasarathy-resume-spring-2026.pdf"
+                  href="/resume"
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="Resume (PDF)"

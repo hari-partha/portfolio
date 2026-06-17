@@ -19,8 +19,17 @@ const nextConfig: NextConfig = {
       },
     ];
   },
+  /** Serve the résumé PDF at the clean URL /resume (the public/resume.pdf file). */
+  async rewrites() {
+    return [{ source: '/resume', destination: '/resume.pdf' }];
+  },
   async redirects() {
-    return [{ source: '/brainfood', destination: '/musings', permanent: true }];
+    return [
+      { source: '/brainfood', destination: '/musings', permanent: true },
+      // Past résumé URLs → the canonical /resume.
+      { source: '/hari-parthasarathy-resume-spring-2026.pdf', destination: '/resume', permanent: true },
+      { source: '/resume.pdf', destination: '/resume', permanent: true },
+    ];
   },
 };
 
