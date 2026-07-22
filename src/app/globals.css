@@ -34,20 +34,27 @@
   --tap: 44px;
 }
 
-html,
-body,
-#__next {
-  height: 100%;
+/* Let the DOCUMENT scroll.
+   Previously `html, body { height:100%; overflow-x:hidden }` plus
+   `body { overflow-y:auto }` made BODY the scroll container: because html's
+   overflow-x is not `visible`, the ROOT's overflow propagates to the viewport
+   and body's does not, so body kept its own scrollport. The result was
+   window.scrollY permanently 0 — GSAP ScrollTrigger reads the window, so it
+   never saw the scroll (the helix never transcribed from scroll position) and
+   every window.scrollTo() was a no-op.
+   (`#__next` was a Pages-Router artifact; this app is App Router.) */
+html {
   overflow-x: hidden;
   background-color: var(--bg-dark-teal);
 }
 
 body {
+  min-height: 100svh;
+  background-color: var(--bg-dark-teal);
   color: var(--text-primary);
   font-family: var(--font-inter), 'Inter', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  overflow-y: auto;
 }
 
 h1,

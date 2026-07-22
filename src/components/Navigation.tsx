@@ -5,17 +5,22 @@ import { useScrollStore } from '@/store/useScrollStore';
 import { motion } from 'framer-motion';
 
 export function Navigation() {
-    const { isExploring } = useScrollStore();
+    const isExploring = useScrollStore((s) => s.isExploring);
 
     const handleScrollTo = (marker: number, index: number) => {
-        // Calculate target scroll position
         const scrollableHeight = document.documentElement.scrollHeight - window.innerHeight;
 
-        // Target Y:
-        // If it's the last section (Projects, index === sections.length - 1), 
-        // we scroll all the way to the bottom to ensure full rotation and visibility.
-        let targetY = marker * scrollableHeight;
+        // ScrollTrigger normalises progress over the footer's offsetTop (its
+        // endTrigger) — NOT the full scrollable height. Using the latter landed
+        // every pill at ~marker × 0.93, i.e. just BELOW the band it should open,
+        // so 4 of 6 pills opened the previous sector.
+        const footer = document.getElementById('footer');
+        const span = footer?.offsetTop ?? scrollableHeight;
 
+        // +4px so we settle just past the marker rather than exactly on it.
+        let targetY = marker * span + 4;
+
+        // Last section: scroll to the very bottom for the full rotation.
         if (index === sections.length - 1) {
             targetY = scrollableHeight;
         }

@@ -4,7 +4,8 @@ import { useScrollStore } from '@/store/useScrollStore';
 import { useEffect, useState } from 'react';
 
 export function InteractionHint() {
-    const { isExploring, isMobile } = useScrollStore();
+    const isExploring = useScrollStore((s) => s.isExploring);
+    const isMobile = useScrollStore((s) => s.isMobile);
     const [visible, setVisible] = useState(false);
 
     useEffect(() => {

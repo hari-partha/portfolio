@@ -187,7 +187,12 @@ function StaticSections() {
 }
 
 export default function MainPage() {
-  const { isExploring, setExploring, setProgress, setIsMobile } = useScrollStore();
+  // Field selectors, not a bare useScrollStore(): a whole-store subscription
+  // re-renders this page (and the entire tree below it) on every progress tick.
+  const isExploring = useScrollStore((s) => s.isExploring);
+  const setExploring = useScrollStore((s) => s.setExploring);
+  const setProgress = useScrollStore((s) => s.setProgress);
+  const setIsMobile = useScrollStore((s) => s.setIsMobile);
   const reduced = useReducedMotion();
 
   // Mobile Detection
@@ -202,15 +207,6 @@ export default function MainPage() {
 
   // Ref for the main container to act as the event source for 3D interaction
   const containerRef = useState<HTMLDivElement | null>(null);
-
-  const tileMarkers = useMemo(() => {
-    const markers: number[] = [];
-    sections.forEach((sec) => {
-      if (sec.summary) markers.push(sec.marker);
-      sec.items?.forEach((it, i) => markers.push(sec.marker + (i + 1) * 0.05));
-    });
-    return markers.sort((a, b) => a - b);
-  }, []);
 
   return (
     <div
@@ -237,7 +233,7 @@ export default function MainPage() {
       {/* Pass the container ref as the event source */}
       {!reduced && (
         <div className="fixed inset-0 z-0">
-          <HelixScene tileMarkers={tileMarkers} eventSource={containerRef[0]} />
+          <HelixScene eventSource={containerRef[0]} />
         </div>
       )}
 
@@ -273,8 +269,10 @@ export default function MainPage() {
           ) : (
             <>
               <Navigation />
-              {/* Main scroll container — native scroll drives the helix transcription */}
-              <main className="relative z-10 w-full overflow-x-hidden">
+              {/* Main scroll container — native scroll drives the helix transcription.
+                  No overflow-x here: html/body already clip X globally, and an
+                  overflow value would make <main> its own scroll container. */}
+              <main className="relative z-10 w-full">
                 <ScrollHint />
                 <ScrollHandler />
                 <ScrollSpacers />
