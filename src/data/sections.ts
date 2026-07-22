@@ -18,7 +18,7 @@ export const sections: Section[] = [
   {
     id: 'research',
     title: 'Research Areas',
-    marker: 0.1,
+    marker: 0.0,
     color: '#ECB365', // Gold
     summary: 'Innovating at the intersection of AI/ML and Space Biosciences.',
     items: [
@@ -48,7 +48,7 @@ export const sections: Section[] = [
   {
     id: 'startups',
     title: 'Startups & Experiences',
-    marker: 0.3,
+    marker: 0.17,
     color: '#06b6d4', // Cyan
     summary: 'Building and scaling high-impact biotech ventures.',
     items: [
@@ -78,7 +78,7 @@ export const sections: Section[] = [
   {
     id: 'vc',
     title: 'Venture Capital',
-    marker: 0.5,
+    marker: 0.34,
     color: '#8b5cf6', // Violet
     summary: 'Sourcing and supporting the next generation of founders.',
     items: [
@@ -121,7 +121,7 @@ export const sections: Section[] = [
   {
     id: 'hobbies',
     title: 'Hobbies',
-    marker: 0.7,
+    marker: 0.51,
     color: '#10b981', // Emerald
     summary: 'Creative pursuits outside the lab.',
     items: [
@@ -154,7 +154,7 @@ export const sections: Section[] = [
   {
     id: 'projects',
     title: 'Personal Projects',
-    marker: 0.9,
+    marker: 0.68,
     color: '#f43f5e', // Rose
     summary: 'Hacking on fun ideas and experiments.',
     items: [
@@ -183,7 +183,7 @@ export const sections: Section[] = [
   {
     id: 'library',
     title: 'The Library',
-    marker: 0.95,
+    marker: 0.85,
     color: '#818cf8', // Indigo
     summary: 'Curated collection of influential narratives and media.',
     items: [

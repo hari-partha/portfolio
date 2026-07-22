@@ -2,7 +2,9 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useScrollStore } from '@/store/useScrollStore';
 
 export function HoverTooltip() {
-    const { hoveredAtomPosition, hoveredSectionIndex, isMobile } = useScrollStore();
+    const hoveredAtomPosition = useScrollStore((s) => s.hoveredAtomPosition);
+    const hoveredSectionIndex = useScrollStore((s) => s.hoveredSectionIndex);
+    const isMobile = useScrollStore((s) => s.isMobile);
 
     // Desktop-only: on touch the bottom sheet is the affordance, and this
     // tooltip would sit under the finger / clip at screen edges.

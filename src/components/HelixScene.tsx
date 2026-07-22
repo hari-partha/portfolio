@@ -7,8 +7,16 @@ import { EffectComposer, Bloom, Vignette } from '@react-three/postprocessing';
 import { useScrollStore } from '@/store/useScrollStore';
 import { MolecularHelix } from './MolecularHelix';
 
+// Hoisted so the per-frame camera lerp and the Canvas props allocate nothing.
+const CAM_TARGET = new THREE.Vector3();
+const DPR_MOBILE: [number, number] = [1, 1.5];
+const DPR_DESKTOP: [number, number] = [1, 2];
+
 function SceneContent() {
-  const { isExploring, isMobile } = useScrollStore();
+  // Field selectors only — a bare useScrollStore() would re-render the whole
+  // scene graph on every scroll-progress tick.
+  const isExploring = useScrollStore((s) => s.isExploring);
+  const isMobile = useScrollStore((s) => s.isMobile);
   const cameraRef = useRef<THREE.PerspectiveCamera>(null);
 
   useFrame(() => {
@@ -16,12 +24,11 @@ function SceneContent() {
 
     if (!isExploring) {
       // Landing: wide view — pushed further back on mobile to clear the hero text.
-      cameraRef.current.position.lerp(new THREE.Vector3(0, 0, isMobile ? 30 : 15), 0.05);
+      cameraRef.current.position.lerp(CAM_TARGET.set(0, 0, isMobile ? 30 : 15), 0.05);
       cameraRef.current.lookAt(0, 0, 0);
     } else {
       // Exploration: closer, but kept further back on mobile so tiles don't crowd.
-      const targetPos = new THREE.Vector3(0, 0, isMobile ? 20 : 15);
-      cameraRef.current.position.lerp(targetPos, 0.05);
+      cameraRef.current.position.lerp(CAM_TARGET.set(0, 0, isMobile ? 20 : 15), 0.05);
     }
   });
 
@@ -72,10 +79,14 @@ function SceneContent() {
   );
 }
 
-export function HelixScene({ eventSource }: { tileMarkers: number[]; eventSource?: HTMLElement | null }) {
-  const progress = useScrollStore((s) => s.progress);
+export function HelixScene({ eventSource }: { eventSource?: HTMLElement | null }) {
+  // Derive the boolean INSIDE the selector. Selecting raw `progress` re-renders
+  // this component every tick, and R3F's <Canvas> re-renders its whole scene
+  // graph with it — which silently defeated the render-loop optimisation.
+  // 0.92 (not 0.99) because the scroll runway tops out near 0.93, so the old
+  // threshold was unreachable and this fade never fired at all.
+  const shouldHide = useScrollStore((s) => s.progress >= 0.92);
   const isMobile = useScrollStore((s) => s.isMobile);
-  const shouldHide = progress >= 0.99;
   const [domElement, setDomElement] = useState<HTMLElement | null>(null);
 
   useEffect(() => {
@@ -90,7 +101,7 @@ export function HelixScene({ eventSource }: { tileMarkers: number[]; eventSource
       <Canvas
         // Cap DPR on mobile: pixel work scales with DPR², so an uncapped 3x
         // phone renders ~9x the fragments of DPR 1 and drops frames.
-        dpr={isMobile ? [1, 1.5] : [1, 2]}
+        dpr={isMobile ? DPR_MOBILE : DPR_DESKTOP}
         gl={{ antialias: true, alpha: true }}
         eventSource={eventSource ?? domElement ?? undefined}
         eventPrefix="client"

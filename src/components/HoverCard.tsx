@@ -5,7 +5,11 @@ import { useScrollStore } from '@/store/useScrollStore';
 import { sections } from '@/data/sections';
 
 export function HoverCard() {
-    const { hoveredSectionIndex, isLocked, isMobile } = useScrollStore();
+    // Field selectors: a bare useScrollStore() re-renders this card on every
+    // scroll-progress tick even though none of its content depends on progress.
+    const hoveredSectionIndex = useScrollStore((s) => s.hoveredSectionIndex);
+    const isLocked = useScrollStore((s) => s.isLocked);
+    const isMobile = useScrollStore((s) => s.isMobile);
 
     const activeSection = hoveredSectionIndex !== null ? sections[hoveredSectionIndex] : null;
 

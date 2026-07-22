@@ -14,10 +14,11 @@ export function MolecularHelix() {
     const hitboxMeshRef = useRef<THREE.InstancedMesh>(null);
     const hoverTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
-    const {
-        isExploring, progress, activeSectionIndex, activeTileIndex, setAtomPosition,
-        setHoveredSectionIndex, setHoveredAtomPosition, isMobile
-    } = useScrollStore();
+    // Only subscribe to state the RENDER actually needs. Volatile values
+    // (progress / activeSectionIndex) are read via getState() inside useFrame so
+    // scrolling never triggers a React re-render of the scene graph.
+    const isMobile = useScrollStore((s) => s.isMobile);
+    const isExploring = useScrollStore((s) => s.isExploring);
 
     // Debounce Ref for Mobile
     const lastScrollUpdateRef = useRef<number>(0);
@@ -137,6 +138,8 @@ export function MolecularHelix() {
         }
 
         // SYNC HITBOX POSITIONS (Keep all for raycasting)
+        // Desktop only — the mesh is not rendered on touch, so this is a no-op there.
+        // `isMobile` is a dep so the matrices are refilled if the mesh remounts.
         if (hitboxMeshRef.current) {
             atomTransforms.forEach((matrix, i) => {
                 hitboxMeshRef.current!.setMatrixAt(i, matrix);
@@ -148,7 +151,7 @@ export function MolecularHelix() {
             bondTransforms.forEach((matrix, i) => bondsMeshRef.current!.setMatrixAt(i, matrix));
             bondsMeshRef.current.instanceMatrix.needsUpdate = true;
         }
-    }, [atomTransforms, bondTransforms, HOTSPOTS]);
+    }, [atomTransforms, bondTransforms, HOTSPOTS, isMobile]);
 
 
     // --- MATERIALS ---
@@ -173,11 +176,12 @@ export function MolecularHelix() {
     }), []);
 
 
-    // --- TRACKING LOGIC ---
-
-
     useFrame((state) => {
         if (!groupRef.current) return;
+
+        // Read volatile scroll state imperatively — subscribing would re-render
+        // this component (and remount 4 instanced meshes' props) every tick.
+        const st = useScrollStore.getState();
 
         // Color Lerp REMOVED - User requested just Gold
         // const targetColorHex = computedSectionIndex !== -1 ? sections[computedSectionIndex].color : '#ECB365';
@@ -192,11 +196,11 @@ export function MolecularHelix() {
 
         let targetRotZ = 0;
 
-        if (!isExploring) {
+        if (!st.isExploring) {
             targetRotZ = state.clock.getElapsedTime() * 0.1;
         } else {
             // Sync scroll (Reverse direction: Top to Bottom feel)
-            targetRotZ = -(progress * Math.PI * 2 * HELIX_CONFIG.scrollRotationTurns) + (state.clock.getElapsedTime() * 0.05);
+            targetRotZ = -(st.progress * Math.PI * 2 * HELIX_CONFIG.scrollRotationTurns) + (state.clock.getElapsedTime() * 0.05);
         }
 
         // Smooth Rotate
@@ -207,11 +211,11 @@ export function MolecularHelix() {
 
         // Vertical Scroll Translation
         // Centered Geometry: -Height/2 to +Height/2
-        if (isExploring) {
+        if (st.isExploring) {
             const height = HELIX_CONFIG.pairs * HELIX_CONFIG.risePerBasePair;
             const range = (height / 2) * 0.85; // Scroll from Bottom to Top
 
-            const targetY = THREE.MathUtils.lerp(range, -range, progress);
+            const targetY = THREE.MathUtils.lerp(range, -range, st.progress);
 
             groupRef.current.position.y = targetY;
             groupRef.current.position.x = 0;
@@ -221,56 +225,15 @@ export function MolecularHelix() {
             groupRef.current.position.y = THREE.MathUtils.lerp(groupRef.current.position.y, 0, 0.1);
         }
 
-        // --- TRACKING ---
-        if (isExploring) {
-            // Prefer tracking the specific active tile key
-            let basePairIndex = HELIX_CONFIG.targetIndices[activeSectionIndex] || 0;
-
-            if (activeTileIndex >= 0 && HELIX_CONFIG.tileAnchors[activeTileIndex] !== undefined) {
-                basePairIndex = HELIX_CONFIG.tileAnchors[activeTileIndex];
-            }
-
-            // 2 atoms per base pair: Strand1, Strand2
-            const atomIndex = basePairIndex * 2;
-
-            const matrix = new THREE.Matrix4();
-            // We need to get the matrix from the correct instanced mesh (white or gold)
-            // For tracking, we can just use the original atomTransforms as they represent the base positions
-            // Or, if we want to track the *visual* gold atom, we'd need to find its index in goldMatrices.
-            // For simplicity and consistency with hitbox, let's use the original atomTransforms.
-            // If the tracked atom is a gold atom, its position will be slightly scaled up.
-            if (whiteAtomsRef.current && goldAtomsRef.current) {
-                const hotspot = HOTSPOTS.find(h => basePairIndex >= h.startPair && basePairIndex <= h.endPair);
-                if (hotspot) {
-                    hitboxMeshRef.current?.getMatrixAt(atomIndex, matrix);
-                } else {
-                    hitboxMeshRef.current?.getMatrixAt(atomIndex, matrix);
-                }
-            } else {
-                // Fallback if refs aren't ready
-                return;
-            }
-
-            // Project to Screen
-            const vector = new THREE.Vector3();
-            vector.setFromMatrixPosition(matrix);
-            vector.applyMatrix4(groupRef.current.matrixWorld);
-            vector.project(state.camera);
-            const x = (vector.x * .5 + .5) * state.size.width;
-            const y = (vector.y * -.5 + .5) * state.size.height;
-
-            setAtomPosition({ x, y });
-        }
-
         // --- MOBILE AUTO-TRIGGER (scroll-synced bottom sheet) ---
         // Touch has no hover, so the sheet follows the scroll: it surfaces the
         // sector whose marker band the helix is currently transcribing.
-        if (isMobile && isExploring && activeSectionIndex !== -1) {
+        if (isMobile && st.isExploring && st.activeSectionIndex !== -1) {
             // Throttle to ~10fps to avoid render spam / scroll jank.
             const now = Date.now();
             if (now - lastScrollUpdateRef.current > 100) {
                 lastScrollUpdateRef.current = now;
-                const st = useScrollStore.getState();
+                const activeSectionIndex = st.activeSectionIndex;
                 // Scrolling into a new sector clears an earlier dismissal.
                 if (st.mobileSheetDismissedFor !== null && st.mobileSheetDismissedFor !== activeSectionIndex) {
                     useScrollStore.setState({ mobileSheetDismissedFor: null });
@@ -306,7 +269,12 @@ export function MolecularHelix() {
                 <primitive object={goldPulseMaterial} />
             </instancedMesh>
 
-            {/* Hit Box Layer for Interaction (Transparent but captures events) */}
+            {/* Hit Box Layer for Interaction (transparent, captures events).
+                Kept mounted on every device: R3F binds events to document.body,
+                not the canvas, so touch DOES raycast — and gating this off broke
+                iPad, which reports `pointer: coarse` yet gets the desktop hover
+                layout. Instead the clear-branches below are guarded so a stray
+                touch move can't dismiss the scroll-driven mobile sheet. */}
             <instancedMesh
                 ref={hitboxMeshRef} // Attached Ref
                 args={[undefined, undefined, atomTransforms.length]}
@@ -335,9 +303,11 @@ export function MolecularHelix() {
                                 hoveredAtomPosition: { x: e.clientX, y: e.clientY }
                             });
                             document.body.style.cursor = 'pointer';
-                        } else {
-                            // We are on the helix, but NOT a hotspot.
-                            // Only clear if we are NOT currently hovering the card to prevent flickering
+                        } else if (!isMobile) {
+                            // On the helix but NOT a hotspot. Skipped entirely on
+                            // touch: hitboxes overlap ~4 deep, so a stray tap often
+                            // resolves to a non-hotspot and would dismiss the card
+                            // the scroll just opened ("I tapped it and it closed").
                             const { isHoveringCard } = useScrollStore.getState();
                             if (!isHoveringCard) {
                                 useScrollStore.setState({ hoveredSectionIndex: null, hoveredAtomPosition: null });
@@ -348,6 +318,7 @@ export function MolecularHelix() {
                 }}
                 onPointerOut={() => {
                     document.body.style.cursor = 'auto';
+                    if (isMobile) return; // scroll owns the mobile sheet — don't clear it
                     // Add grace period
                     hoverTimeoutRef.current = setTimeout(() => {
                         const { isHoveringCard } = useScrollStore.getState();
