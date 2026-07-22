@@ -15,6 +15,23 @@
   --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
 
   --border-radius: 12px;
+
+  /* ── Responsive foundation ───────────────────────────────────────────── */
+  /* Fluid type scale: interpolates ~360px → ~1024px viewport. rem+vw (never
+     vw-only) keeps text zoomable to 200% without clipping (WCAG 1.4.4). */
+  --step--2: clamp(0.69rem, 0.66rem + 0.14vw, 0.75rem);    /* 11 → 12  micro labels */
+  --step--1: clamp(0.8125rem, 0.77rem + 0.19vw, 0.9375rem); /* 13 → 15  meta / captions */
+  --step-0: clamp(1rem, 0.95rem + 0.24vw, 1.125rem);       /* 16 → 18  body */
+  --step-1: clamp(1.125rem, 1.02rem + 0.5vw, 1.375rem);    /* 18 → 22  lede / dek */
+  --step-2: clamp(1.375rem, 1.14rem + 1.02vw, 1.875rem);   /* 22 → 30  section titles / h3 */
+  --step-3: clamp(1.75rem, 1.35rem + 1.9vw, 2.5rem);       /* 28 → 40  close-mark / small hero */
+  --step-4: clamp(2.25rem, 1.6rem + 2.9vw, 3.5rem);        /* 36 → 56  cover title */
+  /* Fluid spacing */
+  --space-gutter: clamp(1.25rem, 0.6rem + 2.6vw, 3rem);    /* 20 → 48  side padding */
+  --space-section: clamp(2.5rem, 1.6rem + 3.8vw, 4rem);    /* 40 → 64  section rhythm */
+  --reader-pad: clamp(1rem, 0.6rem + 1.6vw, 1.5rem);       /* 16 → 24  reader gutter + full-bleed source of truth */
+  /* Minimum comfortable touch target */
+  --tap: 44px;
 }
 
 html,
@@ -31,7 +48,6 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-y: auto;
-  touch-action: pan-y;
 }
 
 h1,
@@ -85,7 +101,7 @@ body::after {
 }
 
 .container {
-  @apply mx-auto max-w-7xl px-8;
+  @apply mx-auto max-w-7xl px-4 sm:px-6 lg:px-8;
 }
 
 .no-scrollbar {
@@ -335,7 +351,7 @@ body::after {
 
 .editorial-intro-lead {
   font-family: var(--font-cormorant), "Cormorant Garamond", serif;
-  font-size: 36px;
+  font-size: clamp(1.75rem, 1.2rem + 2.6vw, 2.25rem);
   line-height: 1.3;
   color: var(--ed-ink);
   margin-bottom: 18px;
@@ -566,7 +582,7 @@ body::after {
 
 .editorial-section-title {
   font-family: var(--font-cormorant), "Cormorant Garamond", serif;
-  font-size: 30px;
+  font-size: clamp(1.5rem, 1.1rem + 1.8vw, 1.875rem);
   line-height: 1.2;
   color: var(--ed-ink);
 }
@@ -599,14 +615,14 @@ body::after {
 
 .editorial-pull-quote p {
   font-family: var(--font-cormorant), "Cormorant Garamond", serif;
-  font-size: 26px;
+  font-size: clamp(1.35rem, 1.1rem + 1.2vw, 1.625rem);
   font-style: italic;
   color: var(--ed-ink);
 }
 
 .editorial-h3 {
   font-family: var(--font-cormorant), "Cormorant Garamond", serif;
-  font-size: 30px;
+  font-size: clamp(1.5rem, 1.1rem + 1.8vw, 1.875rem);
   color: var(--ed-ink);
   margin: 30px 0 14px;
 }
@@ -707,7 +723,7 @@ body::after {
 
 .editorial-close-mark {
   font-family: var(--font-cormorant), "Cormorant Garamond", serif;
-  font-size: 48px;
+  font-size: clamp(2rem, 1.4rem + 2.6vw, 3rem);
   color: var(--ed-accent);
   margin-bottom: 24px;
 }
@@ -1047,9 +1063,6 @@ body::after {
   .editorial-two-col {
     grid-template-columns: 1fr;
   }
-  .editorial-intro-lead {
-    font-size: 30px;
-  }
 }
 
 /* ── Reader layout (Article Design Refresh preview) ─────────────────── */
@@ -1070,10 +1083,11 @@ body::after {
   --reader-font-serif: var(--font-cormorant), "Cormorant Garamond", Georgia, serif;
   --reader-font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
   min-height: 100vh;
+  min-height: 100svh;
   background: var(--reader-paper);
   color: var(--reader-ink);
   font-family: var(--reader-font-serif);
-  font-size: 17px;
+  font-size: clamp(1rem, 0.96rem + 0.2vw, 1.0625rem);
   line-height: 1.75;
 }
 
@@ -1162,6 +1176,9 @@ body::after {
   gap: 0;
   overflow-x: auto;
   padding: 0 24px;
+  touch-action: pan-x;
+  -webkit-overflow-scrolling: touch;
+  scroll-snap-type: x proximity;
   scrollbar-width: none;
 }
 
@@ -1195,6 +1212,19 @@ body::after {
   border-bottom-color: var(--reader-accent);
 }
 
+.reader-section-nav-link--locked {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.reader-section-nav-link--locked:hover {
+  color: var(--reader-ink-mid);
+}
+
+.reader-section-nav-lock {
+  font-size: 9px;
+}
+
 .reader-section-nav-num {
   font-family: var(--font-cormorant), "Cormorant Garamond", Georgia, serif;
   font-size: 14px;
@@ -1209,7 +1239,7 @@ body::after {
 .reader-wrapper {
   max-width: var(--reader-col);
   margin: 0 auto;
-  padding: 48px 24px 80px;
+  padding: 48px var(--reader-pad) 80px;
 }
 
 .reader-wrapper--bytesize {
@@ -1286,7 +1316,7 @@ body::after {
 .reader-dek,
 .reader-subtitle {
   font-family: var(--reader-font-serif);
-  font-size: 1.2rem;
+  font-size: clamp(1.05rem, 0.9rem + 0.6vw, 1.2rem);
   font-weight: 400;
   font-style: italic;
   color: var(--reader-ink-mid);
@@ -1368,7 +1398,7 @@ body::after {
   padding: 0;
   border: none;
   font-family: var(--reader-font-serif);
-  font-size: 1.125rem;
+  font-size: clamp(1.02rem, 0.94rem + 0.35vw, 1.125rem);
   font-weight: 500;
   font-style: normal;
   color: var(--reader-ink);
@@ -1408,7 +1438,7 @@ body::after {
 
 .reader-section-num {
   font-family: var(--font-cormorant), "Cormorant Garamond", Georgia, serif;
-  font-size: 3.2rem;
+  font-size: clamp(2.25rem, 1.6rem + 3vw, 3.2rem);
   font-weight: 700;
   color: var(--reader-card-bg);
   line-height: 1;
@@ -1668,6 +1698,8 @@ body::after {
 
 .reader-table-scroll {
   overflow-x: auto;
+  touch-action: pan-x;
+  -webkit-overflow-scrolling: touch;
   border: 1px solid rgba(44, 44, 44, 0.08);
   border-radius: 10px;
   background: rgba(254, 252, 248, 0.92);
@@ -1776,14 +1808,6 @@ body::after {
   background: var(--reader-accent);
 }
 
-.reader-chart-row-value {
-  font-family: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
-  font-size: 12px;
-  font-weight: 600;
-  color: var(--reader-ink);
-  text-align: right;
-}
-
 .reader-chart-caption {
   margin-top: 12px;
   font-family: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
@@ -1796,8 +1820,8 @@ body::after {
 }
 
 .reader-figure--full {
-  margin-left: -24px;
-  margin-right: -24px;
+  margin-left: calc(-1 * var(--reader-pad));
+  margin-right: calc(-1 * var(--reader-pad));
 }
 
 .reader-figure-frame {
@@ -2037,6 +2061,7 @@ body::after {
 /* Design preview hub */
 .design-preview-hub {
   min-height: 100vh;
+  min-height: 100svh;
   background: #f7f3ee;
   padding: 64px 24px;
 }
@@ -2139,7 +2164,7 @@ body::after {
   }
 
   .reader-wrapper {
-    padding: 32px 16px 60px;
+    padding: 32px var(--reader-pad) 60px;
   }
 
   .reader-framework-grid {
@@ -2164,17 +2189,42 @@ body::after {
   }
 
   .reader-chart-row {
-    grid-template-columns: 64px 1fr 40px;
+    grid-template-columns: minmax(56px, 30%) 1fr max-content;
   }
 
   .reader-case-body {
     padding: 18px 18px 4px;
+  }
+
+  .reader-section-nav-link {
+    padding-top: 14px;
+    padding-bottom: 14px;
+  }
+
+  .reader-hero-band-inner {
+    padding: 32px var(--reader-pad) 28px;
+  }
+
+  .reader-section {
+    scroll-margin-top: 88px;
+  }
+
+  .reader-drop-cap::first-letter {
+    font-size: 3.4em;
+    margin-right: 5px;
+  }
+
+  .reader-figure--full .reader-figure-frame {
+    border-left: none;
+    border-right: none;
+    border-radius: 0;
   }
 }
 
 /* ── Musings hub (reader / warm-editorial language) ──────────────────── */
 .musings-reader {
   min-height: 100vh;
+  min-height: 100svh;
 }
 
 .musings-r-hero {
@@ -2223,11 +2273,12 @@ body::after {
 
 .musings-r-hero-credit {
   position: absolute;
-  bottom: 10px;
-  right: 16px;
+  bottom: 4px;
+  right: 8px;
   z-index: 2;
+  padding: 6px 8px;
   font-family: var(--reader-font-sans);
-  font-size: 9.5px;
+  font-size: 11px;
   font-weight: 600;
   letter-spacing: 0.11em;
   text-transform: uppercase;
@@ -2386,6 +2437,10 @@ body::after {
   letter-spacing: 0.12em;
   text-transform: uppercase;
   padding: 10px 24px;
+  min-height: var(--tap);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   border-radius: 999px;
   border: none;
   background: transparent;
@@ -2474,7 +2529,8 @@ a.musings-r-card:hover {
 
 .musings-r-card-title {
   font-family: var(--reader-font-serif);
-  font-size: 1.4rem;
+  font-size: clamp(1.2rem, 1rem + 0.9vw, 1.4rem);
+  overflow-wrap: anywhere;
   font-weight: 600;
   letter-spacing: -0.01em;
   line-height: 1.2;

@@ -184,7 +184,7 @@ export const sections: Section[] = [
   {
     id: 'library',
     title: 'The Library',
-    marker: 1.1,
+    marker: 0.95,
     color: '#818cf8', // Indigo
     summary: 'Curated collection of influential narratives and media.',
     items: [
