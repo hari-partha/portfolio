@@ -240,8 +240,8 @@ export function CambrianReader() {
               </button>
             ) : (
               <span className="camb-foot-btn camb-foot-next camb-foot-ghost" aria-hidden="true">
-                <span className="camb-foot-lbl">Fin</span>
-                <span className="camb-foot-name">Thanks for reading</span>
+                <span className="camb-foot-lbl">More coming</span>
+                <span className="camb-foot-name">Sections III–VI arrive August 2026</span>
               </span>
             )}
           </div>

@@ -32,7 +32,7 @@ export default function GeneticAlphabetsPostPage() {
       authorMeta="M.E.T. '26 · UC Berkeley"
       date="May 2026"
       readingTime="7 min read"
-      introText="AI is changing the world — but only $0.22 of every venture dollar reaches healthcare. That gap might be the story."
+      introText="Only $0.22 of every AI dollar reaches healthcare. That gap might be the story."
       footer="Hari Parthasarathy · M.E.T. '26, UC Berkeley"
     >
       {introParagraphs.map((paragraph, index) => (

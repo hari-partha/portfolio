@@ -19,11 +19,11 @@ export default function CookingUpTheoryPostPage() {
       title="Cooking up a Theory"
       subtitle="A theory about kitchens, parents, and what your recipe style says about the way you move through the world."
       authorName="Hari Parthasarathy"
-      authorMeta="M.E.T. '26 · UC Berkeley"
+      authorMeta="MET '26 · UC Berkeley"
       date="May 2026"
       readingTime="4 min read"
       introText="On recipes, improvisation, and the personalities hiding in plain sight at the stove."
-      footer="Hari Parthasarathy · M.E.T. '26, UC Berkeley"
+      footer="Hari Parthasarathy · MET '26, UC Berkeley"
     >
       {paragraphs.slice(0, 5).map((paragraph, index) => (
         <ReaderParagraph key={paragraph.slice(0, 48)} dropCap={index === 0}>

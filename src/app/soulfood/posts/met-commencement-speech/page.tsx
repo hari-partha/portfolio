@@ -22,11 +22,11 @@ export default function MetCommencementSpeechPage() {
       }
       subtitle="Speed, serendipity, and what to carry — a three-act farewell to the cohort that built with me."
       authorName="Hari Parthasarathy"
-      authorMeta="M.E.T. '26 · UC Berkeley"
+      authorMeta="MET '26 · UC Berkeley"
       date="May 2026"
-      readingTime="8 min read"
+      readingTime="6 min read"
       introText="Delivered to the entire M.E.T. Class of 2026 cohort at our Commencement Reception — friends, families, faculty, and the village that got us here."
-      footer="Hari Parthasarathy · M.E.T. '26, UC Berkeley"
+      footer="Hari Parthasarathy · MET '26, UC Berkeley"
     >
       {COMMENCEMENT_ACTS.map((act, actIndex) => (
         <ReaderSubsection key={act.act} title={`${act.act} · ${act.theme}`}>

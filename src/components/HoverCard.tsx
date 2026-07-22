@@ -136,7 +136,7 @@ export function HoverCard() {
                                                             href={sub.href}
                                                             target="_blank"
                                                             rel="noopener noreferrer"
-                                                            className="block py-1 px-2 text-sm text-white/60 hover:text-accent-gold hover:bg-white/5 rounded transition-colors"
+                                                            className="flex items-center min-h-11 py-1 px-2 text-sm text-white/60 hover:text-accent-gold hover:bg-white/5 rounded transition-colors"
                                                         >
                                                             {sub.title}
                                                         </a>
@@ -146,8 +146,8 @@ export function HoverCard() {
                                         ) : (
                                             /* Standard Link Item */
                                             <a
-                                                href={item.href || '#'}
-                                                target="_blank"
+                                                href={item.href && item.href !== '#' ? item.href : undefined}
+                                                target={item.href && item.href !== '#' ? '_blank' : undefined}
                                                 rel="noopener noreferrer"
                                                 className="flex items-start gap-4 group/item cursor-pointer hover:bg-white/5 p-2 rounded-lg transition-colors"
                                             >

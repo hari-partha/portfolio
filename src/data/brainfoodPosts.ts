@@ -74,7 +74,7 @@ const allPosts: ArchivePost[] = [
     title: 'The Life Matrix',
     summary:
       'Systems biology meets productivity, motivation, and growth — without the hustle clichés. In the works.',
-    date: 'Summer 2026',
+    date: 'Late 2026',
     comingSoon: true,
   },
   {

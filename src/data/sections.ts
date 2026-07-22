@@ -176,7 +176,6 @@ export const sections: Section[] = [
         title: 'ShellGel',
         subtitle: 'Marine Bioreactor Co-founder',
         description: 'Developed a novel bioreactor design for sustainable marine compound production.',
-        href: '#',
         img: '/img/gear_1768202859954.png'
       },
     ],

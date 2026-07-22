@@ -54,10 +54,10 @@ export function HomePage({ onEnter }: HomePageProps) {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="z-30 pointer-events-auto"
           >
-            <div className="font-serif text-xl md:text-2xl tracking-[0.05em] uppercase leading-none font-light">
+            <h1 className="font-serif text-xl md:text-2xl tracking-[0.05em] uppercase leading-none font-light m-0">
               <span className="block opacity-90">Hari</span>
               <span className="block text-accent-gold font-normal">Parthasarathy</span>
-            </div>
+            </h1>
           </motion.div>
 
 
@@ -105,7 +105,7 @@ export function HomePage({ onEnter }: HomePageProps) {
                 >
                   Musings
                 </Link>
-                <span className="text-[9px] font-mono uppercase tracking-[0.18em] text-white/35">Optional shortcut · M</span>
+                <span className="text-[10px] font-mono uppercase tracking-[0.18em] text-white/55">Optional shortcut · M</span>
               </div>
             </motion.div>
 

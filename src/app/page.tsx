@@ -127,9 +127,9 @@ function ScrollSpacers() {
 function StaticSections() {
   return (
     <main className="relative z-10 mx-auto w-full max-w-3xl px-6 pt-28 pb-24">
-      <p className="font-ui text-[11px] tracking-[0.3em] uppercase text-accent-gold/80 mb-10">
+      <h1 className="font-ui text-[11px] tracking-[0.3em] uppercase text-accent-gold/80 mb-10">
         The Genome — Index
-      </p>
+      </h1>
       <div className="flex flex-col gap-14">
         {sections.map((s) => (
           <section key={s.id} aria-labelledby={`static-${s.id}`}>
@@ -220,14 +220,15 @@ export default function MainPage() {
       {/* 1. Background Layer (Text) */}
       {!isExploring && (
         <div className="fixed inset-0 flex items-center justify-center z-0 overflow-hidden pointer-events-none">
-          <motion.h1
+          <motion.div
+            aria-hidden="true"
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 0.05, scale: 1 }}
             transition={{ duration: 2, ease: "easeOut" }}
             className="font-serif text-[18vw] whitespace-nowrap select-none tracking-tight"
           >
             SYNTHESIS
-          </motion.h1>
+          </motion.div>
         </div>
       )}
 
@@ -324,7 +325,7 @@ export default function MainPage() {
                   </button>
                 </div>
 
-                <span className="opacity-20 text-white mt-2">© 2025 Hari Parthasarathy</span>
+                <span className="opacity-40 text-white mt-2">© 2026 Hari Parthasarathy</span>
               </div>
             </div>
           </footer>

@@ -897,10 +897,16 @@ body::after {
 }
 
 .reader-back-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--tap);
+  /* Negative block margin keeps the sticky bar's height while giving the link a
+     44px tap box (the primary nav on every reader page). */
+  margin-block: calc((1em - var(--tap)) / 2);
   font-family: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
   font-size: 12px;
   font-weight: 500;
-  color: var(--reader-accent);
+  color: var(--reader-accent-dark);
   text-decoration: none;
   letter-spacing: 0.04em;
   text-transform: uppercase;
@@ -909,6 +915,14 @@ body::after {
 
 .reader-back-link:hover {
   text-decoration: underline;
+}
+
+/* Branded keyboard-focus ring for the light reader / musings / cambrian themes */
+.reader-theme :focus-visible,
+.musings-reader :focus-visible {
+  outline: 2px solid var(--reader-accent-dark);
+  outline-offset: 2px;
+  border-radius: 2px;
 }
 
 .reader-breadcrumb {
@@ -1024,7 +1038,7 @@ body::after {
   font-weight: 600;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--reader-accent);
+  color: var(--reader-accent-dark);
   margin-bottom: 20px;
 }
 
@@ -1398,7 +1412,7 @@ body::after {
   margin: 28px 0;
   font-size: 1.08rem;
   font-style: italic;
-  color: var(--reader-accent);
+  color: var(--reader-accent-dark);
   line-height: 1.65;
 }
 
@@ -2054,7 +2068,7 @@ body::after {
   letter-spacing: 0.11em;
   text-transform: uppercase;
   color: var(--reader-accent-dark);
-  opacity: 0.45;
+  opacity: 0.72;
   text-decoration: none;
   transition: opacity 0.2s ease;
 }
@@ -2221,7 +2235,7 @@ body::after {
 }
 
 .musings-r-toggle-btn--active {
-  background: var(--reader-accent);
+  background: var(--reader-accent-dark);
   color: #fff;
   box-shadow: 0 2px 8px rgba(44, 44, 44, 0.16);
 }
@@ -2289,7 +2303,7 @@ a.musings-r-card:hover {
 }
 
 .musings-r-card-tag {
-  color: var(--reader-accent);
+  color: var(--reader-accent-dark);
   font-weight: 600;
 }
 
