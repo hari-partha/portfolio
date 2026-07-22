@@ -262,19 +262,23 @@ export function MolecularHelix() {
             setAtomPosition({ x, y });
         }
 
-        // --- MOBILE AUTO-TRIGGER ---
-        // --- MOBILE AUTO-TRIGGER ---
+        // --- MOBILE AUTO-TRIGGER (scroll-synced bottom sheet) ---
+        // Touch has no hover, so the sheet follows the scroll: it surfaces the
+        // sector whose marker band the helix is currently transcribing.
         if (isMobile && isExploring && activeSectionIndex !== -1) {
-            // Deduplicate state updates to prevent render spam/scroll jank
-            // Throttle to every 100ms
+            // Throttle to ~10fps to avoid render spam / scroll jank.
             const now = Date.now();
             if (now - lastScrollUpdateRef.current > 100) {
-                const currentHover = useScrollStore.getState().hoveredSectionIndex;
-                if (currentHover !== activeSectionIndex) {
-                    useScrollStore.setState({
-                        hoveredSectionIndex: activeSectionIndex
-                    });
-                    lastScrollUpdateRef.current = now;
+                lastScrollUpdateRef.current = now;
+                const st = useScrollStore.getState();
+                // Scrolling into a new sector clears an earlier dismissal.
+                if (st.mobileSheetDismissedFor !== null && st.mobileSheetDismissedFor !== activeSectionIndex) {
+                    useScrollStore.setState({ mobileSheetDismissedFor: null });
+                }
+                const dismissed = useScrollStore.getState().mobileSheetDismissedFor === activeSectionIndex;
+                // Don't fight a tap-locked card, and don't re-open a dismissed one.
+                if (!dismissed && !st.isLocked && st.hoveredSectionIndex !== activeSectionIndex) {
+                    useScrollStore.setState({ hoveredSectionIndex: activeSectionIndex });
                 }
             }
         }
@@ -288,7 +292,7 @@ export function MolecularHelix() {
                 ref={whiteAtomsRef}
                 args={[undefined, undefined, atomTransforms.length]} // Max count, will be less usually
             >
-                <sphereGeometry args={[0.32, 16, 16]} />
+                <sphereGeometry args={[0.32, isMobile ? 10 : 16, isMobile ? 10 : 16]} />
                 <primitive object={atomMaterial} />
             </instancedMesh>
 
@@ -298,7 +302,7 @@ export function MolecularHelix() {
                 args={[undefined, undefined, atomTransforms.length]}
                 visible={isExploring} // FIX: Hide on landing to remove "Yellow Artifact"
             >
-                <sphereGeometry args={[0.32, 16, 16]} />
+                <sphereGeometry args={[0.32, isMobile ? 10 : 16, isMobile ? 10 : 16]} />
                 <primitive object={goldPulseMaterial} />
             </instancedMesh>
 
@@ -372,7 +376,7 @@ export function MolecularHelix() {
                 ref={bondsMeshRef}
                 args={[undefined, undefined, bondTransforms.length]}
             >
-                <cylinderGeometry args={[0.12, 0.12, 1, 8]} />
+                <cylinderGeometry args={[0.12, 0.12, 1, isMobile ? 6 : 8]} />
                 <primitive object={bondMaterial} />
             </instancedMesh>
 

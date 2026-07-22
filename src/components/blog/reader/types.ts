@@ -8,6 +8,8 @@ export type ReaderSectionNavItem = {
   shortLabel: string;
   pillar: string;
   title: string;
+  /** Upcoming section: shown greyed + non-clickable, excluded from scroll tracking. */
+  locked?: boolean;
 };
 
 export type ReaderStat = {

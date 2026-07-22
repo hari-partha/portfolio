@@ -176,7 +176,6 @@ export const sections: Section[] = [
         title: 'ShellGel',
         subtitle: 'Marine Bioreactor Co-founder',
         description: 'Developed a novel bioreactor design for sustainable marine compound production.',
-        href: '#',
         img: '/img/gear_1768202859954.png'
       },
     ],
@@ -184,7 +183,7 @@ export const sections: Section[] = [
   {
     id: 'library',
     title: 'The Library',
-    marker: 1.1,
+    marker: 0.95,
     color: '#818cf8', // Indigo
     summary: 'Curated collection of influential narratives and media.',
     items: [

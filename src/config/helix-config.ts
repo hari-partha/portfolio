@@ -13,7 +13,7 @@ export const HELIX_CONFIG = {
 
     // Target Indices for Projects/Sections
     // Matches the index of the tile to the specific base-pair index on the helix
-    targetIndices: [15, 40, 65, 90],
+    targetIndices: [15, 40, 65, 90, 115, 135],
 
     // Anchors for specific Tiles (7 tiles total)
     tileAnchors: [10, 30, 40, 60, 70, 85, 95]

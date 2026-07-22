@@ -23,12 +23,12 @@ export default function AprilAdmissionsPostPage() {
       brand="soulfood"
       seriesLabel="Soulfood · Bitsize"
       title="Admissions Insights from a Graduating Senior"
-      subtitle="April is admissions season — short notes for admitted students, families, and friends. A living post; more days land here as I write them."
+      subtitle="April is admissions season — a set of short insights for admitted students, families, and friends, drawn from four years at Berkeley."
       authorName="Hari Parthasarathy"
-      authorMeta="MET '26, UC Berkeley"
+      authorMeta="MET '26 · UC Berkeley"
       date="Apr 2026"
       readingTime="16 min read"
-      introText="LinkedIn-length dispatches through April — for admits, parents, and friends. New days are added here as I write them."
+      introText="LinkedIn-length insights for admits, parents, and friends — the things I wish someone had told me on the way in."
       footer="Hari Parthasarathy · MET '26, UC Berkeley"
     >
       {admissionsIntroParagraphs.map((paragraph, index) => (

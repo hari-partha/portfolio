@@ -5,13 +5,34 @@ import { useScrollStore } from '@/store/useScrollStore';
 import { sections } from '@/data/sections';
 
 export function HoverCard() {
-    const { hoveredSectionIndex, isLocked } = useScrollStore();
+    const { hoveredSectionIndex, isLocked, isMobile } = useScrollStore();
 
     const activeSection = hoveredSectionIndex !== null ? sections[hoveredSectionIndex] : null;
+
+    // On touch there is no mouse-leave, so dismissal is explicit. Remember which
+    // sector was dismissed so the scroll auto-trigger doesn't immediately reopen it.
+    const dismiss = () =>
+        useScrollStore.setState({
+            isLocked: false,
+            isHoveringCard: false,
+            hoveredSectionIndex: null,
+            hoveredAtomPosition: null,
+            // Guard against the current scroll band (what the auto-trigger checks),
+            // not the shown sector — otherwise a nav-tap card reopens instantly.
+            mobileSheetDismissedFor: useScrollStore.getState().activeSectionIndex,
+        });
 
     return (
         <AnimatePresence mode="wait">
             {activeSection && (
+                <>
+                {isMobile && (
+                    <div
+                        className="fixed inset-0 z-40 pointer-events-auto"
+                        onClick={dismiss}
+                        aria-hidden="true"
+                    />
+                )}
                 <div
                     onMouseEnter={() => useScrollStore.setState({ isHoveringCard: true })}
                     onMouseLeave={() => {
@@ -23,12 +44,12 @@ export function HoverCard() {
                 >
                     <motion.div
                         key={activeSection.id}
-                        initial={{ opacity: 0, x: 20, scale: 0.95 }}
-                        animate={{ opacity: 1, x: 0, scale: 1 }}
-                        exit={{ opacity: 0, x: 20, scale: 0.95 }}
-                        transition={{ duration: 0.5, ease: 'easeOut' }}
-                        className="fixed md:right-12 md:top-1/2 md:-translate-y-1/2 md:w-[min(450px,94vw)] 
-                                   bottom-0 left-0 w-full md:max-h-[85vh] max-h-[78vh] rounded-t-2xl md:rounded-lg
+                        initial={isMobile ? { opacity: 0, y: 40 } : { opacity: 0, x: 20, scale: 0.95 }}
+                        animate={isMobile ? { opacity: 1, y: 0 } : { opacity: 1, x: 0, scale: 1 }}
+                        exit={isMobile ? { opacity: 0, y: 40 } : { opacity: 0, x: 20, scale: 0.95 }}
+                        transition={{ duration: 0.4, ease: 'easeOut' }}
+                        className="fixed md:right-12 md:top-1/2 md:-translate-y-1/2 md:w-[min(450px,94vw)]
+                                   bottom-0 left-0 w-full md:max-h-[85svh] max-h-[72dvh] rounded-t-2xl md:rounded-lg
                                    z-50 pointer-events-none"
                     >
                         {/* Glass Panel */}
@@ -40,11 +61,12 @@ export function HoverCard() {
                                 style={{ backgroundColor: activeSection.color }}
                             />
 
-                            {/* Close Button (Visible if Locked) */}
-                            {isLocked && (
+                            {/* Close — always available on touch (no mouse-leave), plus when locked */}
+                            {(isLocked || isMobile) && (
                                 <button
-                                    onClick={() => useScrollStore.setState({ isLocked: false, hoveredSectionIndex: null })}
-                                    className="absolute top-4 right-4 z-50 p-2 text-white/40 hover:text-white transition-colors"
+                                    onClick={dismiss}
+                                    aria-label="Close panel"
+                                    className="absolute top-3 right-3 z-50 inline-flex min-h-11 min-w-11 items-center justify-center rounded-full text-lg text-white/50 hover:text-white transition-colors"
                                 >
                                     ✕
                                 </button>
@@ -62,7 +84,7 @@ export function HoverCard() {
                                     </div>
                                 </div>
 
-                                <h2 className="font-serif text-4xl text-white mb-2 leading-tight">
+                                <h2 className="font-serif text-[clamp(1.75rem,6vw,2.25rem)] text-white mb-2 leading-tight">
                                     {activeSection.title}
                                 </h2>
 
@@ -72,7 +94,7 @@ export function HoverCard() {
                             </div>
 
                             {/* Items Grid */}
-                            <div className="p-8 pt-0 pb-8 flex-1 min-h-0 flex flex-col gap-4 overflow-y-auto overscroll-contain custom-scrollbar touch-pan-y">
+                            <div className="p-8 pt-0 pb-[max(2rem,env(safe-area-inset-bottom))] flex-1 min-h-0 flex flex-col gap-4 overflow-y-auto overscroll-contain custom-scrollbar touch-pan-y">
                                 {activeSection.items?.map((item, i) => (
                                     <div key={i}>
                                         {/* Dropdown / Sub-items logic */}
@@ -114,7 +136,7 @@ export function HoverCard() {
                                                             href={sub.href}
                                                             target="_blank"
                                                             rel="noopener noreferrer"
-                                                            className="block py-1 px-2 text-sm text-white/60 hover:text-accent-gold hover:bg-white/5 rounded transition-colors"
+                                                            className="flex items-center min-h-11 py-1 px-2 text-sm text-white/60 hover:text-accent-gold hover:bg-white/5 rounded transition-colors"
                                                         >
                                                             {sub.title}
                                                         </a>
@@ -124,8 +146,8 @@ export function HoverCard() {
                                         ) : (
                                             /* Standard Link Item */
                                             <a
-                                                href={item.href || '#'}
-                                                target="_blank"
+                                                href={item.href && item.href !== '#' ? item.href : undefined}
+                                                target={item.href && item.href !== '#' ? '_blank' : undefined}
                                                 rel="noopener noreferrer"
                                                 className="flex items-start gap-4 group/item cursor-pointer hover:bg-white/5 p-2 rounded-lg transition-colors"
                                             >
@@ -167,6 +189,7 @@ export function HoverCard() {
                         </div>
                     </motion.div>
                 </div>
+                </>
             )
             }
         </AnimatePresence >

@@ -23,6 +23,9 @@ interface ScrollState {
   setHoveringCard: (h: boolean) => void;
   isLocked: boolean;
   setLocked: (l: boolean) => void;
+  /** On touch, the sector whose auto-sheet the user dismissed; cleared when a new sector scrolls in. */
+  mobileSheetDismissedFor: number | null;
+  setMobileSheetDismissedFor: (i: number | null) => void;
   isMobile: boolean;
   setIsMobile: (m: boolean) => void;
 }
@@ -48,6 +51,8 @@ export const useScrollStore = create<ScrollState>((set) => ({
   setHoveringCard: (h) => set({ isHoveringCard: h }),
   isLocked: false,
   setLocked: (l) => set({ isLocked: l }),
+  mobileSheetDismissedFor: null,
+  setMobileSheetDismissedFor: (mobileSheetDismissedFor) => set({ mobileSheetDismissedFor }),
   isMobile: false,
   setIsMobile: (m) => set({ isMobile: m }),
 }));

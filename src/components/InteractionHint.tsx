@@ -4,7 +4,7 @@ import { useScrollStore } from '@/store/useScrollStore';
 import { useEffect, useState } from 'react';
 
 export function InteractionHint() {
-    const { isExploring } = useScrollStore();
+    const { isExploring, isMobile } = useScrollStore();
     const [visible, setVisible] = useState(false);
 
     useEffect(() => {
@@ -27,9 +27,9 @@ export function InteractionHint() {
                     transition={{ duration: 0.5, delay: 0.5 }}
                     className="fixed top-32 left-1/2 -translate-x-1/2 z-50 pointer-events-none"
                 >
-                    <div className="bg-bg-dark-teal/80 backdrop-blur-md border border-accent-gold/40 rounded-full px-8 py-3 shadow-[0_0_30px_-5px_var(--color-accent-gold)]">
-                        <span className="text-accent-gold font-ui text-xs tracking-[0.2em] uppercase font-bold">
-                            Hover Over Gold Regions to View Projects
+                    <div className="bg-bg-dark-teal/80 backdrop-blur-md border border-accent-gold/40 rounded-full px-5 sm:px-8 py-3 shadow-[0_0_30px_-5px_var(--color-accent-gold)] max-w-[calc(100vw-2rem)]">
+                        <span className="block text-center text-accent-gold font-ui text-xs tracking-[0.1em] sm:tracking-[0.2em] uppercase font-bold whitespace-normal">
+                            {isMobile ? 'Scroll to reveal each sector' : 'Hover Over Gold Regions to View Projects'}
                         </span>
                     </div>
                 </motion.div>

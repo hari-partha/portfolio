@@ -1,11 +1,4 @@
-import { Inter, Playfair_Display, Space_Grotesk, Cormorant_Garamond } from 'next/font/google';
-
-export const playfair = Playfair_Display({
-  subsets: ['latin'],
-  weight: ['400', '500', '600', '700'],
-  variable: '--font-playfair',
-  display: 'swap',
-});
+import { Inter, Space_Grotesk, Cormorant_Garamond } from 'next/font/google';
 
 export const inter = Inter({
   subsets: ['latin'],

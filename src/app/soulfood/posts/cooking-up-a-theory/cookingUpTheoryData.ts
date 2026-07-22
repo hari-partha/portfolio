@@ -1,6 +1,6 @@
 export const COOKING_UP_THEORY = {
   pullQuote:
-    'Hand someone a set of ingredients and watch what they do with them. You\u2019ll learn more about how they think than from any personality test.',
+    'Hand someone a set of ingredients, and watch what they do with them. You\u2019ll learn more about how they think than from any other personality test.',
   paragraphs: [
     'I have a theory. Hand someone a set of ingredients, and watch what they do with them. You\u2019ll learn more about how they think than from any other personality test.',
     'My mom cooks by the book. Precision measurements. Sound techniques. Solid foundations. Respecting the recipe. There\u2019s a certain cadence to the way she cooks that makes sense when you get to know her: she thinks like a chartered accountant, moves through problems the way a financial analyst may approach a balance sheet. She\u2019s methodical, metrics-minded, with very few things left to chance and predictions. The recipe doesn\u2019t serve as a constraint — it serves as the framework she trusts.',

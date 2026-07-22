@@ -2,9 +2,16 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useScrollStore } from '@/store/useScrollStore';
 
 export function HoverTooltip() {
-    const { hoveredAtomPosition, hoveredSectionIndex } = useScrollStore();
+    const { hoveredAtomPosition, hoveredSectionIndex, isMobile } = useScrollStore();
 
-    if (!hoveredAtomPosition || hoveredSectionIndex === null) return null;
+    // Desktop-only: on touch the bottom sheet is the affordance, and this
+    // tooltip would sit under the finger / clip at screen edges.
+    if (isMobile || !hoveredAtomPosition || hoveredSectionIndex === null) return null;
+
+    const clampedX = Math.min(
+        Math.max(hoveredAtomPosition.x, 96),
+        (typeof window !== 'undefined' ? window.innerWidth : 1024) - 96,
+    );
 
     return (
         <AnimatePresence>
@@ -14,7 +21,7 @@ export function HoverTooltip() {
                 exit={{ opacity: 0, scale: 0.9, y: 10 }}
                 className="fixed pointer-events-none z-50 flex flex-col items-center"
                 style={{
-                    left: hoveredAtomPosition.x,
+                    left: clampedX,
                     top: hoveredAtomPosition.y - 60, // Position above the cursor/atom
                     transform: 'translate(-50%, -50%)',
                 }}

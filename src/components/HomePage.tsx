@@ -45,7 +45,7 @@ export function HomePage({ onEnter }: HomePageProps) {
       {!isTransitioning && (
         <motion.div
           // ... initial/animate props same ...
-          className="fixed inset-0 z-[20] pointer-events-none flex flex-col justify-between p-8 md:p-12"
+          className="fixed inset-0 z-[20] pointer-events-none flex flex-col justify-between p-6 md:p-12 pb-[max(1.5rem,env(safe-area-inset-bottom))]"
         >
           {/* Top Left: Stacked Logo */}
           <motion.div
@@ -54,10 +54,10 @@ export function HomePage({ onEnter }: HomePageProps) {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="z-30 pointer-events-auto"
           >
-            <div className="font-serif text-xl md:text-2xl tracking-[0.05em] uppercase leading-none font-light">
+            <h1 className="font-serif text-xl md:text-2xl tracking-[0.05em] uppercase leading-none font-light m-0">
               <span className="block opacity-90">Hari</span>
               <span className="block text-accent-gold font-normal">Parthasarathy</span>
-            </div>
+            </h1>
           </motion.div>
 
 
@@ -71,7 +71,7 @@ export function HomePage({ onEnter }: HomePageProps) {
               className="max-w-xl z-30 pointer-events-auto bg-black/20 backdrop-blur-sm rounded-xl p-6 -ml-6 md:ml-0 md:bg-transparent md:backdrop-blur-none"
             >
               <div className="w-16 h-px bg-accent-gold/50 mb-6 md:mb-8" />
-              <p className="font-sans text-sm md:text-base text-text-secondary leading-loose mb-8 md:mb-12 font-light tracking-wide">
+              <p className="font-sans text-[clamp(0.9rem,2.5vw,1rem)] text-text-secondary leading-loose mb-8 md:mb-12 font-light tracking-wide">
                 Welcome to my portfolio. Mapping the intersection of <span className="text-white hover:text-accent-gold transition-colors duration-300">biotechnology</span>, <span className="text-white hover:text-accent-gold transition-colors duration-300">venture capital</span>, and <span className="text-white hover:text-accent-gold transition-colors duration-300">design</span> through the lens of genetic transcription and systemic evolution.
               </p>
 
@@ -85,7 +85,7 @@ export function HomePage({ onEnter }: HomePageProps) {
                 aria-label="Unlock portfolio — Explore the Genome"
               >
                 <div className="flex items-start justify-between gap-3">
-                  <span className="font-serif text-2xl md:text-4xl italic tracking-wide text-white transition-colors duration-300 group-hover:text-accent-gold leading-tight">
+                  <span className="font-serif text-[clamp(1.5rem,5vw,2.25rem)] italic tracking-wide text-white transition-colors duration-300 group-hover:text-accent-gold leading-tight">
                     Explore the Genome
                   </span>
                   <span className="mt-1 shrink-0 text-accent-gold/80 text-xl md:text-2xl transition-transform duration-300 group-hover:translate-x-0.5">
@@ -105,7 +105,7 @@ export function HomePage({ onEnter }: HomePageProps) {
                 >
                   Musings
                 </Link>
-                <span className="text-[9px] font-mono uppercase tracking-[0.18em] text-white/35">Optional shortcut · M</span>
+                <span className="text-[10px] font-mono uppercase tracking-[0.18em] text-white/55">Optional shortcut · M</span>
               </div>
             </motion.div>
 
@@ -122,7 +122,7 @@ export function HomePage({ onEnter }: HomePageProps) {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="LinkedIn"
-                  className="text-white/60 hover:text-accent-gold transition-colors hover:scale-110 p-2"
+                  className="inline-flex items-center justify-center min-h-11 min-w-11 text-white/60 hover:text-accent-gold transition-colors hover:scale-110"
                 >
                   <Icons.LinkedIn className="w-5 h-5" />
                 </a>
@@ -131,14 +131,14 @@ export function HomePage({ onEnter }: HomePageProps) {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="Resume (PDF)"
-                  className="text-white/60 hover:text-accent-gold transition-colors hover:scale-110 p-2"
+                  className="inline-flex items-center justify-center min-h-11 min-w-11 text-white/60 hover:text-accent-gold transition-colors hover:scale-110"
                 >
                   <Icons.Resume className="w-5 h-5" />
                 </a>
-                <a href="tel:+14084427278" className="text-white/60 hover:text-accent-gold transition-colors hover:scale-110 p-2">
+                <a href="tel:+14084427278" className="inline-flex items-center justify-center min-h-11 min-w-11 text-white/60 hover:text-accent-gold transition-colors hover:scale-110">
                   <Icons.Phone className="w-5 h-5" />
                 </a>
-                <a href="https://mail.google.com/mail/?view=cm&fs=1&to=hari.parthasarathy@berkeley.edu" target="_blank" rel="noopener noreferrer" className="text-white/60 hover:text-accent-gold transition-colors hover:scale-110 p-2">
+                <a href="https://mail.google.com/mail/?view=cm&fs=1&to=hari.parthasarathy@berkeley.edu" target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center min-h-11 min-w-11 text-white/60 hover:text-accent-gold transition-colors hover:scale-110">
                   <Icons.Email className="w-5 h-5" />
                 </a>
               </div>

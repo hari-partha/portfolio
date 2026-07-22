@@ -62,10 +62,11 @@ const allPosts: ArchivePost[] = [
   {
     brand: 'brainfood',
     format: 'bytesize',
-    title: 'AI in its Cambrian Evolution Era',
-    summary: 'How the AI wave maps onto biological metaphors — form, selection pressure, and what survives. In the works.',
-    date: 'Summer 2026',
-    comingSoon: true,
+    title: 'The Evolutionary Biologist\'s Guide to AI',
+    summary:
+      'A multi-part series drawing a formal parallel between the biological Cambrian explosion and the AI landscape — speciation at hyperscale, body plans, decimation, and what survives. Sections 0–II are live; III–VI arrive August 2026.',
+    href: '/brainfood/posts/evolutionary-biologists-guide-to-ai',
+    date: 'Jun 2026',
   },
   {
     brand: 'brainfood',
@@ -73,7 +74,7 @@ const allPosts: ArchivePost[] = [
     title: 'The Life Matrix',
     summary:
       'Systems biology meets productivity, motivation, and growth — without the hustle clichés. In the works.',
-    date: 'Summer 2026',
+    date: 'Late 2026',
     comingSoon: true,
   },
   {

@@ -36,16 +36,27 @@ function ScrollHint() {
 
 function ScrollHandler() {
   const setProgress = useScrollStore((s) => s.setProgress);
+  const setActiveSectionIndex = useScrollStore((s) => s.setActiveSectionIndex);
 
   useEffect(() => {
     let st: ScrollTrigger | null = null;
     let timer: ReturnType<typeof setTimeout> | null = null;
+    let resizeTimer: ReturnType<typeof setTimeout> | null = null;
 
-    const updateProgressFromNativeScroll = () => {
-      const doc = document.documentElement;
-      const scrollable = Math.max(1, doc.scrollHeight - window.innerHeight);
-      const p = Math.min(1, Math.max(0, window.scrollY / scrollable));
+    // Skip ScrollTrigger.refresh() on the vertical resize the mobile URL bar
+    // causes as it shows/hides — that refresh is what makes the helix jump.
+    ScrollTrigger.config({ ignoreMobileResize: true });
+
+    // Single source of truth for progress. Deriving the active sector here (not
+    // from a competing scroll listener) keeps the helix and the mobile bottom
+    // sheet in sync and removes the momentum-scroll jitter of two writers.
+    const applyProgress = (p: number) => {
       setProgress(p);
+      let idx = 0;
+      for (let i = 0; i < sections.length; i++) {
+        if (p >= sections[i].marker) idx = i;
+      }
+      setActiveSectionIndex(idx);
     };
 
     const setup = () => {
@@ -62,26 +73,32 @@ function ScrollHandler() {
         endTrigger: footer || undefined,
         scrub: 1,
         invalidateOnRefresh: true,
-        onUpdate: (self) => {
-          setProgress(self.progress);
-        }
+        onUpdate: (self) => applyProgress(self.progress),
       });
 
       ScrollTrigger.refresh();
-      updateProgressFromNativeScroll();
+    };
+
+    // Only re-setup on a real WIDTH change (orientation). Height-only resizes are
+    // the mobile URL bar showing/hiding — ignoring them keeps the helix from jumping.
+    let lastW = window.innerWidth;
+    const onResize = () => {
+      if (window.innerWidth === lastW) return;
+      lastW = window.innerWidth;
+      if (resizeTimer) clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(setup, 200);
     };
 
     timer = setTimeout(setup, 200);
-    window.addEventListener('resize', setup);
-    window.addEventListener('scroll', updateProgressFromNativeScroll, { passive: true });
+    window.addEventListener('resize', onResize);
 
     return () => {
       if (timer) clearTimeout(timer);
-      window.removeEventListener('resize', setup);
-      window.removeEventListener('scroll', updateProgressFromNativeScroll);
+      if (resizeTimer) clearTimeout(resizeTimer);
+      window.removeEventListener('resize', onResize);
       if (st) st.kill();
     };
-  }, [setProgress]);
+  }, [setProgress, setActiveSectionIndex]);
 
   return null;
 }
@@ -99,6 +116,73 @@ function ScrollSpacers() {
         />
       ))}
     </div>
+  );
+}
+
+/**
+ * Accessible fallback for prefers-reduced-motion: the scroll-driven helix and
+ * its hover cards are unreachable without motion, so render the same content as
+ * a plain, keyboard- and screen-reader-navigable index instead of empty spacers.
+ */
+function StaticSections() {
+  return (
+    <main className="relative z-10 mx-auto w-full max-w-3xl px-6 pt-28 pb-24">
+      <h1 className="font-ui text-[11px] tracking-[0.3em] uppercase text-accent-gold/80 mb-10">
+        The Genome — Index
+      </h1>
+      <div className="flex flex-col gap-14">
+        {sections.map((s) => (
+          <section key={s.id} aria-labelledby={`static-${s.id}`}>
+            <h2 id={`static-${s.id}`} className="font-serif text-3xl text-white mb-2">
+              {s.title}
+            </h2>
+            {s.summary && <p className="font-sans text-sm text-text-secondary mb-5">{s.summary}</p>}
+            <ul className="flex flex-col gap-4">
+              {s.items?.map((item, i) => (
+                <li key={i} className="border-l border-white/10 pl-4">
+                  {item.href ? (
+                    <a
+                      href={item.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="font-medium text-white transition-colors hover:text-accent-gold"
+                    >
+                      {item.title}
+                    </a>
+                  ) : (
+                    <span className="font-medium text-white">{item.title}</span>
+                  )}
+                  {item.subtitle && (
+                    <span className="mt-0.5 block font-mono text-[11px] uppercase tracking-wide text-accent-gold/70">
+                      {item.subtitle}
+                    </span>
+                  )}
+                  {item.description && (
+                    <p className="mt-1 text-xs leading-relaxed text-text-secondary">{item.description}</p>
+                  )}
+                  {item.subItems && (
+                    <ul className="mt-2 flex flex-wrap gap-x-4 gap-y-1">
+                      {item.subItems.map((sub, j) => (
+                        <li key={j}>
+                          <a
+                            href={sub.href}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-xs text-white/60 transition-colors hover:text-accent-gold"
+                          >
+                            {sub.title}
+                          </a>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </li>
+              ))}
+            </ul>
+          </section>
+        ))}
+      </div>
+    </main>
   );
 }
 
@@ -136,14 +220,15 @@ export default function MainPage() {
       {/* 1. Background Layer (Text) */}
       {!isExploring && (
         <div className="fixed inset-0 flex items-center justify-center z-0 overflow-hidden pointer-events-none">
-          <motion.h1
+          <motion.div
+            aria-hidden="true"
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 0.05, scale: 1 }}
             transition={{ duration: 2, ease: "easeOut" }}
             className="font-serif text-[18vw] whitespace-nowrap select-none tracking-tight"
           >
             SYNTHESIS
-          </motion.h1>
+          </motion.div>
         </div>
       )}
 
@@ -176,29 +261,36 @@ export default function MainPage() {
           setExploring(true);
           window.scrollTo({ top: 0, behavior: 'auto' });
           setProgress(0);
+          // Clear any stale sheet/lock state so re-entering the experience is clean.
+          useScrollStore.setState({ hoveredSectionIndex: null, mobileSheetDismissedFor: null, isLocked: false });
         }} />
       )}
 
       {isExploring && (
         <>
-          <Navigation />
-          {/* Main Scroll Container - Pointer Events ENABLED for native scrolling */}
-          <main className="relative z-10 w-full overflow-x-hidden">
-            <ScrollHint />
-            {/* Inlined Scroll Logic */}
-            <ScrollHandler />
-            <ScrollSpacers />
-            {/* Extra scrolling room to allow hovering last sector before footer */}
-            <div className="h-[50vh] w-full pointer-events-none" />
-          </main>
+          {reduced ? (
+            <StaticSections />
+          ) : (
+            <>
+              <Navigation />
+              {/* Main scroll container — native scroll drives the helix transcription */}
+              <main className="relative z-10 w-full overflow-x-hidden">
+                <ScrollHint />
+                <ScrollHandler />
+                <ScrollSpacers />
+                {/* Extra scrolling room to reveal the last sector before the footer */}
+                <div className="h-[50vh] w-full pointer-events-none" />
+              </main>
+            </>
+          )}
 
           <footer
             id="footer"
-            className="relative z-20 bg-bg-dark-teal/40 backdrop-blur-2xl border-t border-white/5 min-h-[40vh] py-24 px-12"
+            className="relative z-20 bg-bg-dark-teal/40 backdrop-blur-2xl border-t border-white/5 min-h-[40svh] py-[clamp(3rem,10vw,6rem)] px-[clamp(1.25rem,6vw,3rem)]"
           >
-            <div className="container flex flex-col md:flex-row justify-between items-end gap-12">
+            <div className="container flex flex-col md:flex-row justify-between items-start md:items-end gap-10 md:gap-12">
               <div className="font-serif">
-                <h2 className="text-5xl mb-4 text-white">Synthesis of Bio & Capital</h2>
+                <h2 className="text-[clamp(1.9rem,7vw,3rem)] mb-4 text-white">Synthesis of Bio & Capital</h2>
                 <p className="font-ui text-sm text-text-secondary max-w-sm leading-relaxed">
                   Exploring the fundamental code of venture and design. Built with Three.js and Framer Motion.
                 </p>
@@ -206,34 +298,34 @@ export default function MainPage() {
 
               <div className="flex flex-col items-end gap-8 font-ui uppercase tracking-[0.2em] text-[11px]">
                 {/* Socials (Replaces Email) */}
-                <div className="flex gap-12 text-base">
-                  <a href="https://linkedin.com/in/hari-a-parthasarathy" target="_blank" className="text-white hover:text-accent-gold transition-colors hover:scale-110 p-2">
+                <div className="flex gap-8 md:gap-12 text-base">
+                  <a href="https://linkedin.com/in/hari-a-parthasarathy" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="inline-flex items-center justify-center min-h-11 min-w-11 text-white hover:text-accent-gold transition-colors hover:scale-110">
                     <Icons.LinkedIn className="w-5 h-5" />
                   </a>
-                  <a href="tel:+14084427278" className="text-white hover:text-accent-gold transition-colors hover:scale-110 p-2">
+                  <a href="tel:+14084427278" aria-label="Call" className="inline-flex items-center justify-center min-h-11 min-w-11 text-white hover:text-accent-gold transition-colors hover:scale-110">
                     <Icons.Phone className="w-5 h-5" />
                   </a>
-                  <a href="https://mail.google.com/mail/?view=cm&fs=1&to=hari.parthasarathy@berkeley.edu" target="_blank" rel="noopener noreferrer" className="text-white hover:text-accent-gold transition-colors hover:scale-110 p-2">
+                  <a href="https://mail.google.com/mail/?view=cm&fs=1&to=hari.parthasarathy@berkeley.edu" target="_blank" rel="noopener noreferrer" aria-label="Email" className="inline-flex items-center justify-center min-h-11 min-w-11 text-white hover:text-accent-gold transition-colors hover:scale-110">
                     <Icons.Email className="w-5 h-5" />
                   </a>
                 </div>
 
                 {/* Functional Links */}
                 <div className="flex gap-8 text-white/40 mt-4">
-                  <a href="/musings" className="hover:text-white transition-colors">Musings</a>
+                  <a href="/musings" className="inline-flex items-center min-h-11 hover:text-white transition-colors">Musings</a>
                   <button
                     type="button"
                     onClick={() => {
                       window.scrollTo({ top: 0, behavior: 'smooth' });
                       setProgress(0);
                     }}
-                    className="hover:text-white transition-colors uppercase tracking-[0.2em] cursor-pointer"
+                    className="inline-flex items-center min-h-11 hover:text-white transition-colors uppercase tracking-[0.2em] cursor-pointer"
                   >
                     Back to Top
                   </button>
                 </div>
 
-                <span className="opacity-20 text-white mt-2">© 2025 Hari Parthasarathy</span>
+                <span className="opacity-40 text-white mt-2">© 2026 Hari Parthasarathy</span>
               </div>
             </div>
           </footer>

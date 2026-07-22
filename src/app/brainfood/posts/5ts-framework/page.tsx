@@ -13,7 +13,7 @@ import {
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'The 5Ts: A Framework for Evaluating Early-Stage Companies · Hari Parthasarathy',
+  title: 'The 5Ts: A Scout Framework for Startups · Hari Parthasarathy',
   description:
     'A scout framework for evaluating early-stage startups through TAM, Team, Technology, Traction, and Term Sheet — and the shadow question hiding behind each.',
 };
@@ -25,8 +25,7 @@ export default function FiveTsFrameworkPostPage() {
       seriesLabel="Brainfood · Bitsize"
       title={
         <>
-          The <span style={{ color: 'var(--reader-accent)' }}>5Ts</span>: A Framework for Evaluating Early-Stage
-          Companies
+          The <span style={{ color: 'var(--reader-accent)' }}>5Ts</span>: A Scout Framework for Startups
         </>
       }
       subtitle="What I learned from a family friend, two years of deal memos, and the questions I almost skipped."
