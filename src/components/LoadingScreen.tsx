@@ -133,12 +133,12 @@ export function LoadingScreen({ onComplete }: { onComplete: () => void }) {
         </motion.div>
 
         <div className="flex flex-col items-center gap-8">
-          <div className="font-ui text-[10px] tracking-[1em] uppercase text-accent-gold/60 font-medium">
+          <div className="font-ui text-[10px] tracking-[0.3em] sm:tracking-[1em] uppercase text-accent-gold/60 font-medium text-center">
             Mapping Genetic Sequence
           </div>
 
           {/* Loading Bar Container */}
-          <div className="w-80 h-[2px] bg-white/10 relative overflow-hidden rounded-full shadow-[0_0_20px_rgba(0,0,0,0.5)]">
+          <div className="w-[min(20rem,80vw)] h-[2px] bg-white/10 relative overflow-hidden rounded-full shadow-[0_0_20px_rgba(0,0,0,0.5)]">
             <motion.div
               className="absolute top-0 left-0 h-full bg-accent-gold shadow-[0_0_15px_rgba(236,179,101,0.8)]"
               initial={{ width: 0 }}

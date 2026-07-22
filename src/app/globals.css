@@ -1225,6 +1225,21 @@ body::after {
   font-size: 9px;
 }
 
+/* Touch-visible "coming soon" marker on locked section tabs (hover title alone
+   never surfaces on touch). */
+.reader-section-nav-soon {
+  flex-shrink: 0;
+  font-family: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--reader-accent);
+  background: var(--reader-accent-muted);
+  border-radius: 999px;
+  padding: 2px 6px;
+}
+
 .reader-section-nav-num {
   font-family: var(--font-cormorant), "Cormorant Garamond", Georgia, serif;
   font-size: 14px;

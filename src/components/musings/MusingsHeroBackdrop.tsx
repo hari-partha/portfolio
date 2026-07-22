@@ -68,6 +68,7 @@ export function MusingsHeroBackdrop({ color }: MusingsHeroBackdropProps) {
 
     let width = 0;
     let height = 0;
+    let lastWidth = -1;
     let cols = 0;
     let rows = 0;
     let alive = new Uint8Array(0);
@@ -78,6 +79,8 @@ export function MusingsHeroBackdrop({ color }: MusingsHeroBackdropProps) {
     let nextStepAt = 0;
     let lastFrame = 0;
     let raf = 0;
+    let running = false;
+    let resizeTimer = 0;
 
     const idx = (c: number, r: number) => r * cols + c;
     const wrapC = (c: number) => (c + cols) % cols;
@@ -154,6 +157,7 @@ export function MusingsHeroBackdrop({ color }: MusingsHeroBackdropProps) {
       const rect = par.getBoundingClientRect();
       width = rect.width;
       height = rect.height;
+      lastWidth = width;
       const dpr = Math.min(window.devicePixelRatio || 1, 2);
       cv.width = Math.round(width * dpr);
       cv.height = Math.round(height * dpr);
@@ -211,26 +215,63 @@ export function MusingsHeroBackdrop({ color }: MusingsHeroBackdropProps) {
         scheduleNext(now);
       }
       draw(dt);
+      if (running) raf = requestAnimationFrame(loop);
+    }
+
+    // Start/stop the rAF loop so it never runs while the hero is off-screen.
+    // Reduced-motion stays a single static frame and is never animated.
+    function startLoop() {
+      if (running || reduceMotion) return;
+      running = true;
+      lastFrame = 0; // avoid a large dt (and fade snap) after being paused
+      scheduleNext(performance.now());
       raf = requestAnimationFrame(loop);
     }
 
-    function handleResize() {
+    function stopLoop() {
+      running = false;
+      cancelAnimationFrame(raf);
+      raf = 0;
+    }
+
+    function applyResize() {
+      const rect = par.getBoundingClientRect();
+      // Ignore height-only reflows (mobile URL/toolbar show/hide fires 'resize'
+      // during scroll); only rebuild when the width — and thus the cell grid —
+      // actually changes, so the pattern never re-seeds/flickers.
+      if (Math.abs(rect.width - lastWidth) < 1) return;
       build();
       if (reduceMotion) draw(16);
+    }
+
+    function handleResize() {
+      window.clearTimeout(resizeTimer);
+      resizeTimer = window.setTimeout(applyResize, 200);
     }
 
     build();
     if (reduceMotion) {
       draw(16);
-    } else {
-      const now = performance.now();
-      scheduleNext(now);
-      raf = requestAnimationFrame(loop);
     }
+
+    // Pause the draw loop whenever the hero scrolls out of view (battery/main-
+    // thread savings on mobile); resume when it re-enters. No-op for reduced motion.
+    const io = new IntersectionObserver(
+      (entries) => {
+        const visible = entries.some((e) => e.isIntersecting);
+        if (visible) startLoop();
+        else stopLoop();
+      },
+      { threshold: 0 },
+    );
+    io.observe(cv);
+
     window.addEventListener('resize', handleResize);
 
     return () => {
-      cancelAnimationFrame(raf);
+      stopLoop();
+      io.disconnect();
+      window.clearTimeout(resizeTimer);
       window.removeEventListener('resize', handleResize);
     };
   }, []);

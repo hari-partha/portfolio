@@ -34,7 +34,7 @@ export function ExploreScreen({ onExplore }: { onExplore: () => void }) {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.2, duration: 0.6 }}
-              className="font-serif text-5xl md:text-7xl font-normal text-black mb-6 leading-tight"
+              className="font-serif text-[clamp(2rem,9vw,4.5rem)] text-balance font-normal text-black mb-6 leading-tight"
             >
               Builder | Researcher | Strategist
             </motion.h1>

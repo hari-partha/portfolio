@@ -59,17 +59,17 @@ export function Navigation() {
                     useScrollStore.setState({ isExploring: false, progress: 0 });
                     window.scrollTo({ top: 0, behavior: 'auto' });
                 }}
-                className="md:hidden absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-black/40 backdrop-blur-md rounded-full flex items-center justify-center text-white/50 border border-white/10 active:scale-95 transition-transform pointer-events-auto"
+                className="md:hidden shrink-0 w-12 h-12 bg-black/40 backdrop-blur-md rounded-full flex items-center justify-center text-white/50 border border-white/10 active:scale-95 transition-transform pointer-events-auto"
             >
                 ←
             </button>
 
-            <div className="bg-bg-dark-teal/40 backdrop-blur-xl border border-white/10 rounded-full px-8 py-3 shadow-2xl flex gap-8 overflow-x-auto max-w-[90vw] md:max-w-none no-scrollbar pointer-events-auto">
+            <div className="bg-bg-dark-teal/40 backdrop-blur-xl border border-white/10 rounded-full px-8 py-3 shadow-2xl flex gap-8 overflow-x-auto flex-1 min-w-0 md:flex-none max-w-[90vw] md:max-w-none no-scrollbar pointer-events-auto">
                 {sections.map((section, i) => (
                     <button
                         key={section.id}
                         onClick={() => handleScrollTo(section.marker, i)}
-                        className="group flex flex-col items-center gap-1 cursor-pointer shrink-0"
+                        className="group flex flex-col items-center justify-center gap-1 cursor-pointer shrink-0 min-h-11"
                     >
                         <span className="font-ui text-xs md:text-[10px] uppercase tracking-[0.2em] text-white/50 group-hover:text-accent-gold transition-colors whitespace-nowrap">
                             {section.id}
