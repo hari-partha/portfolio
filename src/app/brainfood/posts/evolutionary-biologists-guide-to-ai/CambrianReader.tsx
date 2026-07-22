@@ -120,8 +120,9 @@ function SectionBody({ id }: { id: SectionId }) {
   );
 }
 
-// Prev/next wiring across the three live sections.
+// Prev/next only across LIVE (unlocked) sections; locked ones aren't navigable.
 const ORDER: SectionId[] = ['intro', 's0', 's1', 's2', 's3', 's4', 's5', 's6'];
+const LIVE_ORDER: SectionId[] = ORDER.filter((id) => !LOCKED_IDS.has(id));
 
 export function CambrianReader() {
   const [active, setActive] = useState<SectionId>('intro');
@@ -129,7 +130,8 @@ export function CambrianReader() {
   // Deep-link support: open the section named in the URL hash (#s0 / #s1 / #intro).
   useEffect(() => {
     const hash = window.location.hash.replace('#', '');
-    if (['intro', 's0', 's1', 's2', 's3', 's4', 's5', 's6'].includes(hash)) setActive(hash as SectionId);
+    // Live sections only — deep-linking a locked section would show an empty tab strip.
+    if ((ORDER as string[]).includes(hash) && !LOCKED_IDS.has(hash)) setActive(hash as SectionId);
   }, []);
 
   const go = (id: SectionId) => {
@@ -139,9 +141,9 @@ export function CambrianReader() {
   };
 
   const section = SECTIONS[active];
-  const idx = ORDER.indexOf(active);
-  const prev = idx > 0 ? ORDER[idx - 1] : null;
-  const next = idx < ORDER.length - 1 ? ORDER[idx + 1] : null;
+  const idx = LIVE_ORDER.indexOf(active);
+  const prev = idx > 0 ? LIVE_ORDER[idx - 1] : null;
+  const next = idx >= 0 && idx < LIVE_ORDER.length - 1 ? LIVE_ORDER[idx + 1] : null;
 
   return (
     <main className="reader-theme reader-theme--brainfood reader-theme--bytesize">

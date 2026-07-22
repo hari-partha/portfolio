@@ -269,6 +269,7 @@ export function MolecularHelix() {
             // Throttle to ~10fps to avoid render spam / scroll jank.
             const now = Date.now();
             if (now - lastScrollUpdateRef.current > 100) {
+                lastScrollUpdateRef.current = now;
                 const st = useScrollStore.getState();
                 // Scrolling into a new sector clears an earlier dismissal.
                 if (st.mobileSheetDismissedFor !== null && st.mobileSheetDismissedFor !== activeSectionIndex) {
@@ -278,7 +279,6 @@ export function MolecularHelix() {
                 // Don't fight a tap-locked card, and don't re-open a dismissed one.
                 if (!dismissed && !st.isLocked && st.hoveredSectionIndex !== activeSectionIndex) {
                     useScrollStore.setState({ hoveredSectionIndex: activeSectionIndex });
-                    lastScrollUpdateRef.current = now;
                 }
             }
         }

@@ -17,7 +17,9 @@ export function HoverCard() {
             isHoveringCard: false,
             hoveredSectionIndex: null,
             hoveredAtomPosition: null,
-            mobileSheetDismissedFor: hoveredSectionIndex,
+            // Guard against the current scroll band (what the auto-trigger checks),
+            // not the shown sector — otherwise a nav-tap card reopens instantly.
+            mobileSheetDismissedFor: useScrollStore.getState().activeSectionIndex,
         });
 
     return (

@@ -79,8 +79,12 @@ function ScrollHandler() {
       ScrollTrigger.refresh();
     };
 
-    // Debounce resize so the address-bar show/hide micro-resizes don't thrash refresh().
+    // Only re-setup on a real WIDTH change (orientation). Height-only resizes are
+    // the mobile URL bar showing/hiding — ignoring them keeps the helix from jumping.
+    let lastW = window.innerWidth;
     const onResize = () => {
+      if (window.innerWidth === lastW) return;
+      lastW = window.innerWidth;
       if (resizeTimer) clearTimeout(resizeTimer);
       resizeTimer = setTimeout(setup, 200);
     };
@@ -256,6 +260,8 @@ export default function MainPage() {
           setExploring(true);
           window.scrollTo({ top: 0, behavior: 'auto' });
           setProgress(0);
+          // Clear any stale sheet/lock state so re-entering the experience is clean.
+          useScrollStore.setState({ hoveredSectionIndex: null, mobileSheetDismissedFor: null, isLocked: false });
         }} />
       )}
 
@@ -281,7 +287,7 @@ export default function MainPage() {
             id="footer"
             className="relative z-20 bg-bg-dark-teal/40 backdrop-blur-2xl border-t border-white/5 min-h-[40svh] py-[clamp(3rem,10vw,6rem)] px-[clamp(1.25rem,6vw,3rem)]"
           >
-            <div className="container flex flex-col md:flex-row justify-between items-start md:items-end gap-10">
+            <div className="container flex flex-col md:flex-row justify-between items-start md:items-end gap-10 md:gap-12">
               <div className="font-serif">
                 <h2 className="text-[clamp(1.9rem,7vw,3rem)] mb-4 text-white">Synthesis of Bio & Capital</h2>
                 <p className="font-ui text-sm text-text-secondary max-w-sm leading-relaxed">
@@ -291,28 +297,28 @@ export default function MainPage() {
 
               <div className="flex flex-col items-end gap-8 font-ui uppercase tracking-[0.2em] text-[11px]">
                 {/* Socials (Replaces Email) */}
-                <div className="flex gap-8 text-base">
-                  <a href="https://linkedin.com/in/hari-a-parthasarathy" target="_blank" className="text-white hover:text-accent-gold transition-colors hover:scale-110 p-2">
+                <div className="flex gap-8 md:gap-12 text-base">
+                  <a href="https://linkedin.com/in/hari-a-parthasarathy" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="inline-flex items-center justify-center min-h-11 min-w-11 text-white hover:text-accent-gold transition-colors hover:scale-110">
                     <Icons.LinkedIn className="w-5 h-5" />
                   </a>
-                  <a href="tel:+14084427278" className="text-white hover:text-accent-gold transition-colors hover:scale-110 p-2">
+                  <a href="tel:+14084427278" aria-label="Call" className="inline-flex items-center justify-center min-h-11 min-w-11 text-white hover:text-accent-gold transition-colors hover:scale-110">
                     <Icons.Phone className="w-5 h-5" />
                   </a>
-                  <a href="https://mail.google.com/mail/?view=cm&fs=1&to=hari.parthasarathy@berkeley.edu" target="_blank" rel="noopener noreferrer" className="text-white hover:text-accent-gold transition-colors hover:scale-110 p-2">
+                  <a href="https://mail.google.com/mail/?view=cm&fs=1&to=hari.parthasarathy@berkeley.edu" target="_blank" rel="noopener noreferrer" aria-label="Email" className="inline-flex items-center justify-center min-h-11 min-w-11 text-white hover:text-accent-gold transition-colors hover:scale-110">
                     <Icons.Email className="w-5 h-5" />
                   </a>
                 </div>
 
                 {/* Functional Links */}
                 <div className="flex gap-8 text-white/40 mt-4">
-                  <a href="/musings" className="hover:text-white transition-colors">Musings</a>
+                  <a href="/musings" className="inline-flex items-center min-h-11 hover:text-white transition-colors">Musings</a>
                   <button
                     type="button"
                     onClick={() => {
                       window.scrollTo({ top: 0, behavior: 'smooth' });
                       setProgress(0);
                     }}
-                    className="hover:text-white transition-colors uppercase tracking-[0.2em] cursor-pointer"
+                    className="inline-flex items-center min-h-11 hover:text-white transition-colors uppercase tracking-[0.2em] cursor-pointer"
                   >
                     Back to Top
                   </button>
