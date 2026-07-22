@@ -1,0 +1,1173 @@
+/* ───────────────────────────────────────────────────────────────────────────
+   Cambrian Bytesize — figure + prose styles, ported from the source HTML draft
+   and scoped under `.cambrian`. Design tokens are remapped to the site's
+   brainfood reader values so prose/figures adopt Cormorant/Inter + brainfood
+   blue + cream paper, while every figure stays structurally identical.
+   ─────────────────────────────────────────────────────────────────────────── */
+
+.cambrian {
+  /* Fonts → site tokens */
+  --serif: var(--font-cormorant), "Cormorant Garamond", Georgia, serif;
+  --sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --mono: var(--font-space-grotesk), ui-monospace, "Space Mono", monospace;
+
+  /* Paper/ink → site reader values */
+  --cream: #f7f3ee;
+  --cream-card: #f0e6d6;
+  --cream-in: #ece3d2;
+  --border: #d9c9b0;
+  --charcoal: #2c2c2c;
+  --mid: #6b6b6b;
+  --light: #9a9080;
+  --white: #fefcf8;
+
+  /* Blue → brainfood accent family */
+  --blue: #4f74ad;
+  --blue-mid: #6286bf;
+  --blue-light: #89a7cc;
+  --blue-pale: #dde7f3;
+  --blue-dark: #345583;
+
+  /* Figure palette */
+  --fig-dark: #2c2c2c;
+  --fig-mid: #b3a48a;
+  --fig-warm: #c4a882;
+
+  font-family: var(--serif);
+  color: var(--charcoal);
+  line-height: 1.78;
+}
+
+/* SVG label text → site sans (overrides the source's DM Sans presentation attr) */
+.cambrian svg text {
+  font-family: var(--sans);
+}
+
+/* ── Prose ─────────────────────────────────────────────────────────────── */
+.cambrian p {
+  margin-bottom: 1.4em;
+  font-size: 1.05rem;
+}
+.cambrian .lead {
+  font-size: 1.12rem;
+  color: var(--charcoal);
+  margin-bottom: 1.5em;
+}
+.cambrian .drop-cap::first-letter {
+  float: left;
+  font-family: var(--serif);
+  font-size: 4.6em;
+  font-weight: 700;
+  font-style: normal;
+  line-height: 0.75;
+  margin-right: 5px;
+  margin-top: 9px;
+  color: var(--blue);
+}
+.cambrian .rule {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 32px 0;
+}
+.cambrian .post-lede {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 1.12rem;
+  color: var(--mid);
+  line-height: 1.62;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 30px;
+}
+
+/* ── Sub-heads ─────────────────────────────────────────────────────────── */
+.cambrian h3.sub {
+  font-family: var(--sans);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--charcoal);
+  margin: 40px 0 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border);
+}
+
+/* ── Pull quote ────────────────────────────────────────────────────────── */
+.cambrian blockquote.pull {
+  border-left: 2px solid var(--blue);
+  padding: 4px 0 4px 24px;
+  margin: 36px 0;
+  font-family: var(--serif);
+  font-size: 1.2rem;
+  font-style: italic;
+  color: var(--blue-dark);
+  line-height: 1.72;
+}
+.cambrian blockquote.pull cite {
+  display: block;
+  margin-top: 10px;
+  font-family: var(--sans);
+  font-size: 11px;
+  font-style: normal;
+  color: var(--mid);
+  letter-spacing: 0.02em;
+}
+
+/* ── Callout ───────────────────────────────────────────────────────────── */
+.cambrian .callout {
+  background: var(--blue-pale);
+  border-left: 3px solid var(--blue);
+  border-radius: 0 4px 4px 0;
+  padding: 18px 22px;
+  margin: 28px 0;
+}
+.cambrian .callout-tag {
+  font-family: var(--sans);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--blue);
+  margin-bottom: 8px;
+}
+.cambrian .callout p {
+  font-size: 0.98rem;
+  margin-bottom: 0;
+  line-height: 1.65;
+}
+.cambrian .callout p + p {
+  margin-top: 10px;
+}
+
+/* ── Stat boxes (2×2) ──────────────────────────────────────────────────── */
+.cambrian .stat-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
+  margin: 24px 0 28px;
+}
+.cambrian .stat-grid .stat-box {
+  flex: 1 1 150px;
+  max-width: calc(50% - 6px);
+}
+.cambrian .stat-box {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-top: 3px solid var(--blue);
+  border-radius: 4px;
+  padding: 20px 18px;
+}
+.cambrian .stat-val {
+  font-family: var(--mono);
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--blue);
+  display: block;
+  line-height: 1.1;
+  margin-bottom: 7px;
+  letter-spacing: -0.02em;
+}
+.cambrian .stat-label {
+  font-family: var(--sans);
+  font-size: 11px;
+  font-weight: 400;
+  color: var(--mid);
+  line-height: 1.55;
+}
+
+/* ── Figure shell ──────────────────────────────────────────────────────── */
+.cambrian .fig {
+  background: var(--white);
+  border: 1px solid rgba(44, 44, 44, 0.1);
+  border-radius: 8px;
+  padding: 28px 24px 24px;
+  margin: 32px 0;
+  box-shadow: 0 1px 2px rgba(44, 44, 44, 0.04);
+}
+.cambrian .fig-hd {
+  margin-bottom: 28px;
+}
+.cambrian .fig-title {
+  font-family: var(--sans);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--blue);
+  margin-bottom: 6px;
+}
+.cambrian .fig-sub {
+  font-family: var(--sans);
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--charcoal);
+  line-height: 1.4;
+}
+.cambrian .fig-divider {
+  border: none;
+  border-top: 1px solid #eee8df;
+  margin: 20px 0;
+}
+.cambrian .fig-cap {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 1rem;
+  color: var(--mid);
+  margin-top: 18px;
+  line-height: 1.65;
+  padding-top: 16px;
+  border-top: 1px solid #eee8df;
+}
+.cambrian .fig-source {
+  font-family: var(--sans);
+  font-size: 10.5px;
+  font-weight: 400;
+  color: var(--light);
+  margin-top: 10px;
+  line-height: 1.6;
+}
+
+/* ── Bar chart ─────────────────────────────────────────────────────────── */
+.cambrian .bc-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.cambrian .bc-row {
+  display: flex;
+  align-items: center;
+  gap: 0;
+}
+.cambrian .bc-label {
+  font-family: var(--sans);
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--mid);
+  width: 160px;
+  min-width: 160px;
+  text-align: right;
+  padding-right: 18px;
+  flex-shrink: 0;
+  line-height: 1.45;
+}
+.cambrian .bc-track {
+  flex: 1;
+  height: 44px;
+  position: relative;
+  background: #ede8df;
+  border-radius: 3px;
+  overflow: hidden;
+}
+.cambrian .bc-fill {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  padding: 0 12px;
+  justify-content: flex-start;
+}
+.cambrian .bc-fill span {
+  font-family: var(--mono);
+  font-size: 11.5px;
+  font-weight: 700;
+  color: var(--white);
+  white-space: nowrap;
+}
+.cambrian .bc-zero {
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--mid);
+  padding-left: 10px;
+  line-height: 38px;
+}
+
+/* ── Comparison layout ─────────────────────────────────────────────────── */
+.cambrian .comp {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  width: 100%;
+}
+.cambrian .comp-side-lbl {
+  font-family: var(--sans);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--border);
+}
+.cambrian .comp-bio .comp-side-lbl {
+  color: var(--mid);
+}
+.cambrian .comp-ai .comp-side-lbl {
+  color: var(--blue);
+}
+.cambrian .comp-note {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 1rem;
+  color: var(--mid);
+  margin-top: 20px;
+  line-height: 1.62;
+}
+
+/* ── Catalyst cards ────────────────────────────────────────────────────── */
+.cambrian .cat-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  justify-content: center;
+}
+.cambrian .cat-grid .cat-card {
+  flex: 1 1 260px;
+  max-width: calc(50% - 8px);
+}
+.cambrian .cat-card {
+  border: 1px solid rgba(44, 44, 44, 0.1);
+  border-radius: 5px;
+  padding: 30px 26px;
+  background: var(--white);
+  display: flex;
+  flex-direction: column;
+}
+.cambrian .cat-n {
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  color: var(--blue-light);
+  margin-bottom: 12px;
+  display: block;
+}
+.cambrian .cat-title {
+  font-family: var(--sans);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--charcoal);
+  margin-bottom: 12px;
+  line-height: 1.35;
+}
+.cambrian .cat-body {
+  font-family: var(--sans);
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--mid);
+  line-height: 1.72;
+}
+.cambrian .cat-stat {
+  font-family: var(--mono);
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--blue);
+  display: block;
+  margin-top: auto;
+  padding-top: 16px;
+  letter-spacing: -0.01em;
+}
+
+/* ── Creature cards ────────────────────────────────────────────────────── */
+.cambrian .creature-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  justify-content: center;
+}
+.cambrian .creature-grid .cc {
+  flex: 1 1 240px;
+  max-width: calc(50% - 8px);
+}
+.cambrian .cc {
+  background: var(--white);
+  border: 1px solid rgba(44, 44, 44, 0.1);
+  border-top: 2.5px solid var(--blue);
+  border-radius: 5px;
+  padding: 22px 18px;
+  display: flex;
+  flex-direction: column;
+}
+.cambrian .cc-name {
+  font-family: var(--serif);
+  font-size: 1.25rem;
+  font-weight: 700;
+  font-style: italic;
+  color: var(--charcoal);
+  margin-bottom: 4px;
+}
+.cambrian .cc-tag {
+  font-family: var(--sans);
+  font-size: 9.5px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--blue);
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  flex-wrap: wrap;
+}
+.cambrian .cc-tag .p {
+  color: #c0b8b0;
+  font-weight: 300;
+  padding: 0 5px;
+}
+.cambrian .cc svg {
+  width: 100%;
+  height: 64px;
+  display: block;
+  margin: 14px 0 16px;
+}
+.cambrian .cc-facts {
+  font-family: var(--sans);
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--mid);
+  line-height: 1.7;
+  margin-bottom: 12px;
+}
+.cambrian .cc-size {
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 400;
+  color: var(--charcoal);
+  line-height: 1.65;
+  margin-top: auto;
+  padding-top: 12px;
+  border-top: 1px solid #eee8df;
+}
+.cambrian .cc-size .p {
+  color: #c0b8b0;
+  padding: 0 6px;
+}
+
+/* ── CaaS funnel ───────────────────────────────────────────────────────── */
+.cambrian .funnel {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin: 4px 0;
+}
+.cambrian .f-layer {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 16px 20px;
+  border-radius: 4px;
+}
+.cambrian .f-num {
+  font-family: var(--mono);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.14);
+  line-height: 1;
+  flex-shrink: 0;
+  width: 28px;
+  padding-top: 2px;
+}
+.cambrian .f-body {
+  flex: 1;
+  min-width: 0;
+}
+.cambrian .f-title {
+  font-family: var(--sans);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: white;
+  margin-bottom: 3px;
+}
+.cambrian .f-desc {
+  font-family: var(--sans);
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.62);
+  line-height: 1.5;
+  margin-bottom: 4px;
+}
+.cambrian .f-bio {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.42);
+  margin-bottom: 7px;
+  line-height: 1.45;
+}
+.cambrian .fchips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+.cambrian .fc {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 20px;
+  padding: 3px 9px;
+  font-family: var(--sans);
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.82);
+  white-space: nowrap;
+}
+
+/* ── YC company map ────────────────────────────────────────────────────── */
+.cambrian .yc-outer {
+  border: 1px solid rgba(44, 44, 44, 0.1);
+  border-radius: 5px;
+  overflow: hidden;
+}
+.cambrian .yc-hdr {
+  background: var(--charcoal);
+  padding: 14px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+.cambrian .yc-title {
+  font-family: var(--sans);
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--cream);
+}
+.cambrian .yc-sub {
+  font-family: var(--sans);
+  font-size: 10.5px;
+  color: rgba(255, 255, 255, 0.72);
+}
+.cambrian .yc-body {
+  padding: 16px;
+  background: #efe9df;
+}
+.cambrian .yc-grid {
+  display: grid;
+  /* Auto-fit so the map steps 4→3→2→1 across the tablet dead-zone instead of
+     staying pinned at 4 crushed columns. */
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 12px;
+  margin-bottom: 14px;
+}
+.cambrian .ycol {
+  background: var(--white);
+  border: 1px solid rgba(44, 44, 44, 0.1);
+  border-radius: 6px;
+  overflow: hidden;
+}
+/* Colored vertical header bar (category color set inline), PitchBook-style. */
+.cambrian .ycolh {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 8px 11px;
+  font-family: var(--sans);
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: #fff;
+  line-height: 1.25;
+}
+.cambrian .ycolh-n {
+  flex-shrink: 0;
+  font-size: 9px;
+  font-weight: 600;
+  background: rgba(255, 255, 255, 0.22);
+  border-radius: 10px;
+  padding: 1px 7px;
+}
+.cambrian .ycol-body {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 11px;
+}
+.cambrian .yco {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+/* Uniform white logo tile (favicon contained, or colored monogram). */
+.cambrian .ylogo {
+  width: 30px;
+  height: 30px;
+  flex-shrink: 0;
+  border-radius: 6px;
+  background: #fff;
+  border: 1px solid rgba(44, 44, 44, 0.12);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.cambrian .ylogo--img {
+  width: 30px;
+  height: 30px;
+  object-fit: contain;
+  padding: 3px;
+}
+.cambrian .ylogo--mono {
+  font-family: var(--sans);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+}
+.cambrian .yco-text {
+  min-width: 0;
+}
+.cambrian .yname {
+  font-family: var(--sans);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--charcoal);
+  display: block;
+  line-height: 1.25;
+}
+.cambrian .ybatch {
+  font-family: var(--sans);
+  font-size: 9px;
+  color: var(--light);
+  display: block;
+  margin-top: 1px;
+}
+.cambrian .yc-prog {
+  background: #3a3a3a;
+  border-radius: 3px;
+  height: 24px;
+  position: relative;
+  overflow: hidden;
+  margin-top: 3px;
+}
+.cambrian .yc-prog-fill {
+  height: 100%;
+  background: var(--blue);
+  display: flex;
+  align-items: center;
+  padding: 0 11px;
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 700;
+  color: white;
+}
+.cambrian .yc-prog-rest {
+  position: absolute;
+  right: 9px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-family: var(--sans);
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.78);
+}
+.cambrian .yc-leg {
+  margin-top: 11px;
+  display: flex;
+  gap: 18px;
+  font-family: var(--sans);
+  font-size: 10.5px;
+  color: var(--mid);
+  align-items: center;
+}
+.cambrian .ydot {
+  width: 9px;
+  height: 9px;
+  border-radius: 2px;
+  display: inline-block;
+}
+
+/* ── Image wrappers ────────────────────────────────────────────────────── */
+.cambrian .bf-img {
+  overflow: hidden;
+  border: 1px solid rgba(44, 44, 44, 0.1);
+  border-radius: 5px;
+  background: var(--white);
+}
+.cambrian .bf-img img {
+  width: 100%;
+  display: block;
+}
+.cambrian .bf-credit {
+  padding: 14px 18px;
+  border-top: 1px solid #eee8df;
+  font-family: var(--sans);
+  font-size: 11px;
+  font-weight: 400;
+  color: var(--mid);
+  line-height: 1.6;
+}
+
+/* ── Diptych ───────────────────────────────────────────────────────────── */
+.cambrian .diptych {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+.cambrian .diptych .dip {
+  flex: 1 1 260px;
+}
+.cambrian .dip {
+  padding: 20px 18px;
+  border-radius: 5px;
+  border: 1px solid rgba(44, 44, 44, 0.1);
+}
+.cambrian .dip.spec {
+  background: var(--blue-pale);
+}
+.cambrian .dip.deci {
+  background: var(--white);
+}
+.cambrian .diph {
+  font-family: var(--sans);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 14px;
+  padding-bottom: 9px;
+  border-bottom: 1px solid var(--border);
+}
+.cambrian .dip.spec .diph {
+  color: var(--blue);
+}
+.cambrian .dip.deci .diph {
+  color: var(--mid);
+}
+.cambrian .di {
+  font-family: var(--serif);
+  font-size: 1.02rem;
+  margin-bottom: 10px;
+  line-height: 1.58;
+  padding-left: 12px;
+  border-left: 2px solid var(--border);
+}
+.cambrian .di strong {
+  color: var(--blue-dark);
+  font-weight: 700;
+}
+
+/* ── Vertical spend ────────────────────────────────────────────────────── */
+.cambrian .vgrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+}
+.cambrian .vc {
+  background: var(--white);
+  border: 1px solid rgba(44, 44, 44, 0.1);
+  border-top: 3px solid var(--blue);
+  border-radius: 4px;
+  padding: 20px 18px;
+}
+.cambrian .vname {
+  font-family: var(--sans);
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--blue);
+  margin-bottom: 6px;
+}
+.cambrian .vspend {
+  font-family: var(--mono);
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--charcoal);
+  margin-bottom: 6px;
+  letter-spacing: -0.02em;
+}
+.cambrian .vcos {
+  font-family: var(--sans);
+  font-size: 11.5px;
+  font-weight: 400;
+  color: var(--mid);
+  line-height: 1.58;
+}
+
+/* ── Ending ornament ───────────────────────────────────────────────────── */
+.cambrian .end-orn {
+  text-align: center;
+  font-family: var(--serif);
+  font-size: 1rem;
+  color: var(--reader-accent-secondary);
+  letter-spacing: 0.7em;
+  margin: 16px 0 0;
+}
+
+/* ── Locked-section placeholder (staged August 2026 release) ────────────── */
+.cambrian .camb-locked-note {
+  text-align: center;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--white);
+  padding: 48px 28px;
+  margin: 24px 0;
+}
+.cambrian .camb-locked-badge {
+  display: inline-block;
+  font-family: var(--sans);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--blue);
+  background: var(--blue-pale);
+  border-radius: 20px;
+  padding: 6px 16px;
+  margin-bottom: 16px;
+}
+.cambrian .camb-locked-note p {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 1.12rem;
+  color: var(--mid);
+  line-height: 1.6;
+  max-width: 420px;
+  margin: 0 auto;
+}
+
+/* ── Tab strip (one section per tab — mirrors the source HTML) ──────────── */
+/* Lives in the sticky reader top bar; uses the site reader tokens (not the
+   .cambrian-scoped ones) since it is article chrome, not figure content. */
+.camb-tabstrip {
+  border-top: 1px solid var(--reader-rule);
+  background: var(--reader-paper-dark);
+  overflow-x: auto;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-x;
+  /* Right-edge fade hints there is more to scroll horizontally. */
+  -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 24px), transparent);
+  mask-image: linear-gradient(to right, #000 calc(100% - 24px), transparent);
+}
+.camb-tabstrip::-webkit-scrollbar {
+  display: none;
+}
+.camb-tabs {
+  display: inline-flex;
+  white-space: nowrap;
+  padding: 0 24px;
+}
+.camb-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 14px 18px;
+  min-height: 44px;
+  font-family: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--reader-ink-mid);
+  background: none;
+  border: none;
+  border-right: 1px solid var(--reader-rule);
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: color 0.15s ease, border-color 0.15s ease;
+}
+.camb-tab:first-child {
+  padding-left: 0;
+}
+.camb-tab:last-child {
+  border-right: none;
+}
+.camb-tab:hover:not(.camb-tab--locked) {
+  color: var(--reader-ink);
+}
+.camb-tab--active {
+  color: var(--reader-ink);
+  font-weight: 600;
+  border-bottom-color: var(--reader-accent);
+}
+.camb-tab--locked {
+  opacity: 0.4;
+  cursor: default;
+}
+.camb-tab-num {
+  font-family: var(--font-space-grotesk), ui-monospace, monospace;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--reader-accent);
+}
+.camb-tab--active .camb-tab-num {
+  color: var(--reader-accent-dark);
+}
+.camb-tab-sep {
+  color: var(--reader-rule);
+  font-weight: 300;
+}
+.camb-tab-lock {
+  font-size: 9px;
+}
+/* Visible "Aug 2026" chip on locked tabs (title tooltips don't show on touch). */
+.camb-tab-soon {
+  font-family: var(--font-space-grotesk), ui-monospace, monospace;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--reader-accent);
+  background: var(--reader-paper);
+  border: 1px solid var(--reader-rule);
+  border-radius: 10px;
+  padding: 1px 7px;
+  white-space: nowrap;
+}
+
+/* ── Section page + footer nav ──────────────────────────────────────────── */
+.camb-page {
+  position: relative;
+}
+.camb-wrap {
+  position: relative;
+  z-index: 1;
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 26px 24px 40px;
+}
+/* Full-width footer band (mirrors the source HTML .page-foot). */
+.camb-foot {
+  background: var(--reader-paper-dark);
+  border-top: 1px solid var(--reader-rule);
+  padding: 28px 24px 36px;
+}
+.camb-foot-inner {
+  max-width: 720px;
+  margin: 0 auto;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+.camb-foot-btn {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  text-align: left;
+}
+.camb-foot-next {
+  align-items: flex-end;
+  text-align: right;
+}
+.camb-foot-ghost {
+  opacity: 0.28;
+  cursor: default;
+}
+.camb-foot-lbl {
+  font-family: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--reader-ink-mid);
+}
+.camb-foot-name {
+  font-family: var(--font-cormorant), "Cormorant Garamond", Georgia, serif;
+  font-size: 1.08rem;
+  font-style: italic;
+  color: var(--reader-accent-dark);
+}
+.camb-foot-center {
+  align-self: center;
+  font-family: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  font-size: 10.5px;
+  color: var(--reader-ink-mid);
+  text-align: center;
+}
+.camb-foot-pipe {
+  color: var(--reader-rule);
+  margin: 0 5px;
+}
+
+/* ── Header hero with BioRender-style scene behind it ──────────────────── */
+/* The illustration lives ONLY behind the section header, washed with cream and
+   masked so it dissolves into the page before the body begins (à la the source
+   HTML hero). The body itself stays plain cream. */
+.camb-hero {
+  position: relative;
+  overflow: hidden;
+  min-height: 580px;
+  margin-bottom: -120px;
+  display: flex;
+  align-items: center;
+  padding: 52px 24px 48px;
+  text-align: center;
+  background: var(--reader-paper);
+}
+/* The Canva scene fills the entire banner rectangle (no fade mask). */
+.camb-hero-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image: var(--camb-img, none);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+/* Cream scrim: strong at the center (behind the text) → light at the edges, so
+   the scene stays vivid edge-to-edge while the centered content reads cleanly. */
+.camb-hero-scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    linear-gradient(to bottom, transparent 55%, rgba(247, 243, 238, 0.97) 100%),
+    radial-gradient(
+      ellipse 78% 96% at 50% 50%,
+      rgba(247, 243, 238, 0.9) 0%,
+      rgba(247, 243, 238, 0.62) 66%,
+      rgba(247, 243, 238, 0.2) 100%
+    );
+}
+.camb-hero--museum {
+  --camb-img: url("/images/cambrian/museum.png");
+}
+.camb-hero--ocean {
+  --camb-img: url("/images/cambrian/ocean.png");
+}
+.camb-hero--forest {
+  --camb-img: url("/images/cambrian/forest.png");
+}
+.camb-hero--boundary {
+  --camb-img: url("/images/cambrian/boundary.png");
+}
+.camb-hero--reef {
+  --camb-img: url("/images/cambrian/reef.png");
+}
+.camb-hero--foodweb {
+  --camb-img: url("/images/cambrian/foodweb.png");
+}
+.camb-hero--crab {
+  --camb-img: url("/images/cambrian/crab.png");
+}
+.camb-hero--finches {
+  --camb-img: url("/images/cambrian/finches.png");
+}
+.camb-hero-inner {
+  position: relative;
+  z-index: 2;
+  max-width: 600px;
+  margin: 0 auto;
+}
+.camb-hero-bc {
+  font-family: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--reader-accent);
+  margin-bottom: 14px;
+}
+.camb-hero-title {
+  font-family: var(--font-cormorant), "Cormorant Garamond", Georgia, serif;
+  font-size: clamp(2.2rem, 5vw, 3.4rem);
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -0.015em;
+  color: var(--reader-ink);
+  margin: 0 0 14px;
+}
+.camb-hero-dek {
+  font-family: var(--font-cormorant), "Cormorant Garamond", Georgia, serif;
+  font-style: italic;
+  font-size: 1.16rem;
+  color: var(--reader-ink-mid);
+  line-height: 1.55;
+  max-width: 560px;
+  margin: 0 auto 22px;
+}
+/* Clean byline (à la the musings header) — avatar + name/meta, no pill. */
+.camb-hero-byline {
+  display: inline-flex;
+  align-items: center;
+  gap: 11px;
+  padding-top: 20px;
+  border-top: 1px solid var(--reader-rule);
+}
+.camb-hero-byline-text {
+  text-align: left;
+}
+.camb-hero-name {
+  font-family: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--reader-ink);
+  line-height: 1.3;
+  text-shadow: 0 1px 3px rgba(247, 243, 238, 0.9);
+}
+.camb-hero-meta {
+  font-family: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  font-size: 11px;
+  color: var(--reader-ink-mid);
+  margin-top: 1px;
+  text-shadow: 0 1px 3px rgba(247, 243, 238, 0.9);
+}
+
+/* ── Responsive ────────────────────────────────────────────────────────── */
+@media (max-width: 560px) {
+  .camb-hero {
+    min-height: 440px;
+    margin-bottom: -80px;
+  }
+  .cambrian .creature-grid .cc,
+  .cambrian .cat-grid .cat-card,
+  .cambrian .diptych .dip,
+  .cambrian .stat-grid .stat-box {
+    flex-basis: 100%;
+    max-width: 100%;
+  }
+  .cambrian .yc-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .cambrian .vgrid {
+    grid-template-columns: 1fr;
+  }
+  .cambrian .fig {
+    padding: 20px 14px 16px;
+  }
+  .cambrian .bc-label {
+    width: 84px;
+    font-size: 11px;
+    padding-right: 10px;
+  }
+  /* Stack the prev / center / next footer nav vertically on phones. */
+  .camb-foot-inner {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 20px;
+  }
+  .camb-foot-next {
+    align-items: flex-start;
+    text-align: left;
+  }
+  /* Raise the tiniest fixed sizes off the sub-11px legibility floor. */
+  .cambrian .ybatch,
+  .cambrian .cc-tag,
+  .cambrian .ycolh,
+  .cambrian .cat-n,
+  .cambrian .callout-tag,
+  .cambrian .fc {
+    font-size: 11px;
+  }
+}
+
+/* Wide data SVG figures: force intrinsic width so the overflow-x:auto wrapper
+   scrolls instead of shrinking labels to ~4px. Targets only the two 960-wide
+   data figures via their viewBox — never the small decorative creature/finch/
+   logo SVGs — so the hand-maintained content strings stay untouched. */
+@media (max-width: 640px) {
+  .cambrian svg[viewBox^="0 0 960"] {
+    width: auto !important;
+    max-width: none !important;
+    min-width: 960px;
+  }
+}
