@@ -800,7 +800,7 @@
   margin: 16px 0 0;
 }
 
-/* ── Locked-section placeholder (staged August 2026 release) ────────────── */
+/* ── Locked-section placeholder (for sections not yet released) ────────────── */
 .cambrian .camb-locked-note {
   text-align: center;
   border: 1px solid var(--border);
@@ -956,6 +956,7 @@
   padding: 0;
   cursor: pointer;
   text-align: left;
+  text-decoration: none;
 }
 .camb-foot-next {
   align-items: flex-end;
@@ -1139,10 +1140,19 @@
   .cambrian .fig {
     padding: 20px 14px 16px;
   }
+  /* Row label sits above its bar so the bar gets the full figure width. */
+  .cambrian .bc-row {
+    flex-wrap: wrap;
+  }
   .cambrian .bc-label {
-    width: 84px;
+    width: 100%;
+    min-width: 0;
     font-size: 11px;
-    padding-right: 10px;
+    text-align: left;
+    padding: 0 0 5px;
+  }
+  .cambrian .bc-track {
+    flex-basis: 100%;
   }
   /* Stack the prev / center / next footer nav vertically on phones. */
   .camb-foot-inner {
