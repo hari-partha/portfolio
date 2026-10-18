@@ -22,10 +22,10 @@ const TABS: Tab[] = [
   { id: 's0', num: '0', title: 'Welcome to Cambria' },
   { id: 's1', num: 'I', title: 'Speciation at Hyperscale' },
   { id: 's2', num: 'II', title: 'Transforming the Landscape' },
-  { id: 's3', num: 'III', title: 'Body Plans & Exoskeletons', locked: true },
-  { id: 's4', num: 'IV', title: 'Organic Spatial Hierarchy', locked: true },
-  { id: 's5', num: 'V', title: 'Pinnacle of Evolution is a Crab?!', locked: true },
-  { id: 's6', num: 'VI', title: 'Finches and Futures', locked: true },
+  { id: 's3', num: 'III', title: 'Body Plans & Exoskeletons' },
+  { id: 's4', num: 'IV', title: 'Organic Spatial Hierarchy' },
+  { id: 's5', num: 'V', title: 'Pinnacle of Evolution is a Crab?!' },
+  { id: 's6', num: 'VI', title: 'Finches and Futures' },
 ];
 
 // Locked section ids derived from TABS — single source of truth for gating.
@@ -66,28 +66,28 @@ const SECTIONS: Record<SectionId, { eyebrow: string; title: string; dek: string;
     eyebrow: "The Evolutionary Biologist's Guide to AI",
     title: 'Body Plans & Exoskeletons',
     dek: 'Contingency or convergence? Gould and Conway Morris were both right — on different axes — and that split decides how to underwrite AI.',
-    date: 'August 2026 · Section III of VI',
+    date: 'October 2026 · Section III of VI',
     bg: 'reef',
   },
   s4: {
     eyebrow: "The Evolutionary Biologist's Guide to AI",
     title: 'Organic Spatial Hierarchy',
     dek: "Pry one species off the rock and watch what collapses — Robert Paine's crowbar test is how you find the labs that actually structure the ecosystem.",
-    date: 'August 2026 · Section IV of VI',
+    date: 'October 2026 · Section IV of VI',
     bg: 'foodweb',
   },
   s5: {
     eyebrow: "The Evolutionary Biologist's Guide to AI",
     title: 'Pinnacle of Evolution is a Crab?!',
     dek: 'Line up every 2024–26 flagship like pinned specimens, and the rivals turn out to be the same animal. They have all become crabs.',
-    date: 'August 2026 · Section V of VI',
+    date: 'October 2026 · Section V of VI',
     bg: 'crab',
   },
   s6: {
     eyebrow: "The Evolutionary Biologist's Guide to AI",
     title: 'Finches and Futures',
     dek: 'Short-run the niches fill, medium-run the agents go to work, and long-run the next phylum is already hiding in plain sight.',
-    date: 'August 2026 · Section VI of VI',
+    date: 'October 2026 · Section VI of VI',
     bg: 'finches',
   },
 };
@@ -97,8 +97,8 @@ function SectionBody({ id }: { id: SectionId }) {
     return (
       <div className="cambrian">
         <div className="camb-locked-note">
-          <div className="camb-locked-badge">Coming August 2026</div>
-          <p>This section is still being written. It publishes in August 2026, alongside the rest of the series.</p>
+          <div className="camb-locked-badge">Coming soon</div>
+          <p>This section is still being written. It publishes alongside the rest of the series.</p>
         </div>
       </div>
     );
@@ -164,7 +164,7 @@ export function CambrianReader() {
                   key={tab.id}
                   className="camb-tab camb-tab--locked"
                   aria-disabled="true"
-                  title={`${tab.title} — Coming August 2026`}
+                  title={`${tab.title} — Coming soon`}
                 >
                   <span className="camb-tab-num">{tab.num}</span>
                   <span className="camb-tab-sep">|</span>
@@ -239,10 +239,10 @@ export function CambrianReader() {
                 <span className="camb-foot-name">{SECTIONS[next].title}</span>
               </button>
             ) : (
-              <span className="camb-foot-btn camb-foot-next camb-foot-ghost" aria-hidden="true">
-                <span className="camb-foot-lbl">More coming</span>
-                <span className="camb-foot-name">Sections III–VI arrive August 2026</span>
-              </span>
+              <Link href="/musings" className="camb-foot-btn camb-foot-next">
+                <span className="camb-foot-lbl">End of series</span>
+                <span className="camb-foot-name">Back to Musings</span>
+              </Link>
             )}
           </div>
         </footer>

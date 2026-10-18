@@ -64,7 +64,7 @@ const allPosts: ArchivePost[] = [
     format: 'bytesize',
     title: 'The Evolutionary Biologist\'s Guide to AI',
     summary:
-      'A multi-part series drawing a formal parallel between the biological Cambrian explosion and the AI landscape — speciation at hyperscale, body plans, decimation, and what survives. Sections 0–II are live; III–VI arrive August 2026.',
+      'A multi-part series drawing a formal parallel between the biological Cambrian explosion and the AI landscape — speciation at hyperscale, body plans, decimation, and what survives. All seven parts, from the intro through Section VI, are now live.',
     href: '/brainfood/posts/evolutionary-biologists-guide-to-ai',
     date: 'Jun 2026',
   },
